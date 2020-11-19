@@ -56,69 +56,159 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _phoneController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _codeController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var email,phone;
 
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(32),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Login", style: TextStyle(color: Colors.lightBlue, fontSize: 36, fontWeight: FontWeight.w500),),
+        key: _scaffoldKey,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(32),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 50,),
+                  Text("SignUp", style: TextStyle(color: Colors.lightBlue, fontSize: 36, fontWeight: FontWeight.w500),),
 
-                SizedBox(height: 16,),
+                  SizedBox(height:100,),
 
-                TextFormField(
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[200])
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[300])
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      hintText: "Phone Number"
+                  TextFormField(
+                    validator: (value) {
+                      Pattern pattern =r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                      RegExp regex = new RegExp(pattern);
+                      if (value.isEmpty) {
+                        return 'ph';
+                      }
 
-                  ),
-                  keyboardType: TextInputType.number,
-                  controller: _phoneController,
-                ),
+                      else if (!regex.hasMatch(value))
+                        return 'Invalid phone number';
+                      else
+                        return null;
 
-                SizedBox(height: 16,),
-
-
-
-                SizedBox(height: 16,),
-
-                Container(
-                  width: double.infinity,
-                  child: FlatButton(
-                    child: Text("Login"),
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(16),
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (
-                          context) => LoginSample(_phoneController.text)),
-                      );
-                      //code for sign in
-                     // Place B
-                     //  final phone = _phoneController.text.trim();
-                     //
-                     //  loginUser(phone, context);
                     },
-                    color: Colors.blue,
+                    onSaved:(v){
+                      phone=v;
+
+                    },
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[200])
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[300])
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        hintText: "Phone Number"
+                    ),
+
+                    keyboardType: TextInputType.number,
+                    controller: _phoneController,
                   ),
-                )
-              ],
+
+                  SizedBox(height: 16,),
+                  // TextFormField(
+                  //
+                  //   decoration: InputDecoration(
+                  //       enabledBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.all(Radius.circular(8)),
+                  //           borderSide: BorderSide(color: Colors.grey[200])
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.all(Radius.circular(8)),
+                  //           borderSide: BorderSide(color: Colors.grey[300])
+                  //       ),
+                  //       filled: true,
+                  //       fillColor: Colors.grey[100],
+                  //       hintText: "Name"
+                  //
+                  //   ),
+                  //   //keyboardType: TextInputType.number,
+                  //   controller: _nameController,
+                  // ),
+                  // SizedBox(height: 16,),
+                  // TextFormField(
+                  //   validator: (value) {
+                  //     if (value.isEmpty) {
+                  //       return 'email';
+                  //     }
+                  //     /*else if (!value.contains("@"))
+                  //       return "Please enter valid email";
+                  //     else
+                  //       return null;*/
+                  //     Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  //     RegExp regex = new RegExp(pattern);
+                  //     if (!regex.hasMatch(value))
+                  //       return 'Invalid Email';
+                  //     else
+                  //       return null;
+                  //     },
+                  //       onSaved:(v) {
+                  //         email = v;
+                  //       },
+                  //       decoration: InputDecoration(
+                  //       enabledBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.all(Radius.circular(8)),
+                  //           borderSide: BorderSide(color: Colors.grey[200])
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.all(Radius.circular(8)),
+                  //           borderSide: BorderSide(color: Colors.grey[300])
+                  //       ),
+                  //
+                  //       filled: true,
+                  //       fillColor: Colors.grey[100],
+                  //       hintText: "Email"
+                  //
+                  //   ),
+                  //
+                  //   //keyboardType: TextInputType.number,
+                  //   controller: _emailController,
+                  // ),
+
+
+
+                  SizedBox(height: 16,),
+                  SizedBox(height: 16,),
+
+                  Container(
+                    width: double.infinity,
+                    child: FlatButton(
+                      child: Text("Get OTP"),
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(16),
+                      onPressed: (){
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          Navigator.push(context, MaterialPageRoute(builder: (
+                              context) => LoginSample(_phoneController.text)),
+                          );
+                        }
+
+                        //code for sign in
+                       // Place B
+                       //  final phone = _phoneController.text.trim();
+                       //
+                       //  loginUser(phone, context);
+                      },
+                      color: Colors.blue,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )
