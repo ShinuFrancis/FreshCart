@@ -6,26 +6,28 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/AddProduct.dart';
+import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
-import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
 import 'package:freshcart_seller/main.dart';
 import 'package:http/http.dart' as http;
-class AddProfile extends StatefulWidget {
+class ViewCategory extends StatefulWidget {
   @override
-  _AddProfile createState() => _AddProfile();
+  _ViewCategory createState() => _ViewCategory();
 }
 
 
-class _AddProfile extends State<AddProfile> {
+class _ViewCategory extends State<ViewCategory> {
   void initState(){
     super.initState();
     viewprofile();
+    category();
+
 
   }
   var profile ;
   var pro;
- bool progress=true;
+  bool progress=true;
   void  viewprofile() async {
     print("pro");
     var url =  Prefmanager.baseurl+'/user/profile';
@@ -56,6 +58,40 @@ class _AddProfile extends State<AddProfile> {
 
     });
     progress=false;
+  }
+  var listcat=[];
+  bool prog=true;
+  void  category() async {
+    print("pro");
+    var url =  Prefmanager.baseurl+'/category/getlist';
+    var token = await Prefmanager.getToken();
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'x-auth-token':token
+    };
+    var response = await http.get(url,headers:requestHeaders);
+    print(json.decode(response.body));
+    if (json.decode(response.body)['status']) {
+      listcat = json.decode(response.body)['data'];
+
+      print(listcat[0]['name']);
+    }
+
+    else
+      Fluttertoast.showToast(
+          msg: json.decode(response.body)['msg'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
+
+    setState(() {
+
+    });
+    prog=false;
   }
 
   @override
@@ -146,7 +182,7 @@ class _AddProfile extends State<AddProfile> {
                       padding: EdgeInsets.all(10),
 
                       child:Text(profile["name"],style: TextStyle(fontSize: 20,
-                             //fontStyle: FontStyle.italic,
+                          //fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -179,9 +215,9 @@ class _AddProfile extends State<AddProfile> {
               ListTile(
                 leading: Icon(Icons.add), title: Text("Add Product"),
                 onTap: () {
-                  Navigator.push(
-                      context, new MaterialPageRoute(
-                      builder: (context) => new ViewCategory()));
+                  // Navigator.push(
+                  //     context, new MaterialPageRoute(
+                  //     builder: (context) => new ViewCategory());
                 },
               ),
 
@@ -198,7 +234,7 @@ class _AddProfile extends State<AddProfile> {
                 onTap: () {
                   //Navigator.pop(context);
                   Prefmanager.clear();
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
                 },
               ),
             ],
@@ -211,69 +247,64 @@ class _AddProfile extends State<AddProfile> {
             children: <Widget>[
 
               Container(
-                padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
                   constraints: BoxConstraints.expand(
                       height: 200
                   ),
                   child: imageSlider(context)
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                height: 45,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 3,
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
+              progress?Center( child: CircularProgressIndicator(),):
+              GridView.count(
+
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 3 ,
+                children: List.generate(listcat.length,(index){
+                  return GestureDetector(
+                      child: Container(
+                        child: Card(
+
+                          child: Column(
+
+                            children: [
+                              SizedBox(
+                                height: 30,
+
+                              ),
+
+                              //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
+
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(listcat[index]['name'],style: TextStyle(color: Colors.blue),textAlign: TextAlign.center),
+
+                            ],
+
+                          ),
+
+                        ),
                       ),
-                      child: Text("View order",),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 3,
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: Text("Set Delivery date"),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: Text("Add Product"),
-                    ),
-                  ],
-                ),
+                      onTap:() {
+
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => AddProduct(listcat[index]["_id"])));
+
+                      }
+
+                  );
 
 
+                }),
               ),
 
-
-
-
-
-
-
-            ],
+            ]
           ),
+
         ),
       ),
     );
-
-
-
   }
-
 
 }
 Swiper imageSlider(context){

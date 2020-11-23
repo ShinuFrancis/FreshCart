@@ -31,7 +31,7 @@ class _LoginSample extends State<LoginSample> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var verify;
-  var email,phone;
+  var email,phone,otp;
   var verificationId;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -41,7 +41,10 @@ class _LoginSample extends State<LoginSample> {
     check();
     _getCurrentLocation();
     verifyPhone();
+
   }
+  bool pro=false;
+  var progress=true;
   bool isnew=false;
   void check()async{
     var url = 'http://192.168.50.75:3300/user/check/phone';
@@ -55,17 +58,20 @@ class _LoginSample extends State<LoginSample> {
     setState(() {
 
     });
+    progress=false;
     }
 
 
+
   signIn(BuildContext context) async {
-
-
+    setState(() {
+      pro=true;
+    });
     try {
 
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId,
-        smsCode: codeController.text,
+        smsCode: otp,
       );
       final User user = (await _auth.signInWithCredential(credential)).user;
       print(user.getIdToken());
@@ -94,6 +100,7 @@ class _LoginSample extends State<LoginSample> {
              await Prefmanager.setToken(json.decode(response.body)['signindata']['token']);
              await Prefmanager.setuserid(json.decode(response.body)['signindata']['id']);
             print("Navigation");
+            pro=false;
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (
                 context) =>AddProfile()),
             );
@@ -105,7 +112,7 @@ class _LoginSample extends State<LoginSample> {
                 textColor: Colors.white,
                 fontSize: 20.0
             );
-          progress=false;
+
           setState(() {
 
           });
@@ -160,6 +167,8 @@ class _LoginSample extends State<LoginSample> {
                       style: TextStyle(fontSize: 20),
                     )
                 ),
+                SizedBox(height:100,),
+               // Image(image: AssetImage('Assets/verification.jpg'),width:300,height: 300, fit:BoxFit.cover,),
                 isnew ? TextFormField(
 
                   decoration: InputDecoration(
@@ -226,46 +235,27 @@ class _LoginSample extends State<LoginSample> {
 
                 SizedBox(height: 16,),
 
+
                 Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'number';
-                      }
-                      /*else if (!value.contains("@"))
-                        return "Please enter valid email";
-                      else
-                        return null;*/
-
-
-                      else
-                        return null;
-                    },
-
-                    onSaved: (v) {
-                      verify = v;
-                    },
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(color: Colors.grey[200])
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(color: Colors.grey[300])
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        hintText: "Otp"
-                    ),
-                    keyboardType: TextInputType.number,
-                    controller: codeController,
-
-                  ),
+                    alignment: Alignment.centerLeft,
+                    child: Text("Enter OTP:", style:TextStyle(fontWeight:FontWeight.bold, fontSize: 20, color: Colors.blue))
                 ),
-
-
+          OTPTextField(
+            length: 6,
+            width: MediaQuery.of(context).size.width,
+            textFieldAlignment: MainAxisAlignment.spaceAround,
+            keyboardType: TextInputType.number,
+            fieldWidth: 50,
+            fieldStyle: FieldStyle.underline,
+            style: TextStyle(
+                fontSize: 17
+            ),
+            onCompleted: (pin) {
+              print("Completed: " + pin);
+              otp=pin;
+              print(otp);
+            }
+            ),
 
                 // MaterialButton(
                 //   onPressed: ()=>signIn(context),
@@ -274,7 +264,7 @@ class _LoginSample extends State<LoginSample> {
                 // ),
                 SizedBox(height: 16,),
                 SizedBox(height: 16,),
-
+                pro?Center(child: CircularProgressIndicator(),):
                 Container(
                   color: Colors.blue,
                   width: double.infinity,
@@ -282,10 +272,16 @@ class _LoginSample extends State<LoginSample> {
                     child: Text("Submit"),
                     textColor: Colors.white,
                     padding: EdgeInsets.all(16),
-                    onPressed: ()=>signIn(context)
-
+                    onPressed: (){
+                      if (_formKey.currentState.validate())
+                        {
+                      _formKey.currentState.save();
+                          signIn(context);
+                             }
+                          }
+                        )
                   ),
-                )
+
               ]
           ),
         ),
