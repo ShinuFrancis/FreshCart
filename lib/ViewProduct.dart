@@ -1,7 +1,6 @@
 import 'dart:convert';
-
+import 'package:freshcart_seller/DetailProductView.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
-import 'package:freshcart_seller/ProductListView.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -11,8 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class ViewProduct extends StatefulWidget {
-  final String id;
-  ViewProduct(this.id);
+  // final String id;
+  // ViewProduct(this.id);
 
   @override
   _ViewProduct createState() => new _ViewProduct();
@@ -31,13 +30,13 @@ class _ViewProduct extends State<ViewProduct>{
   bool progress=false;
 
   int len,total;
-  int page=1,count=5;
+  int page=1,count=10;
   List product=[] ;
   void ProductView () async {
   setState(() {
   progress=true;
   });
-  var url = Prefmanager.baseurl +'/product/all?category='+widget.id +'&count='+count.toString()+'&page='+page.toString();
+  var url = Prefmanager.baseurl +'/product/myproducts';
   print("ghjkjklk");
   var token = await Prefmanager.getToken();
   Map<String, String> requestHeaders = {
@@ -83,9 +82,9 @@ class _ViewProduct extends State<ViewProduct>{
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back,color:Colors.black12),
         onPressed: () {
-          Navigator.push(
-              context, new MaterialPageRoute(
-              builder: (context) => new ViewCategory()));
+          // Navigator.push(
+          //     context, new MaterialPageRoute(
+          //     builder: (context) => new ViewCategory()));
         }
       ),
   backgroundColor: Colors.white,
@@ -127,12 +126,19 @@ class _ViewProduct extends State<ViewProduct>{
   itemBuilder:(BuildContext context,int index) {
 
   return
-  Column(
-  children: [
-
-
   Card(
   child: InkWell(
+  onTap: ()async{
+    bool pro=await
+
+    Navigator.push(
+        context, new MaterialPageRoute(
+        builder: (context) => DetailProductView(product[index]['_id'])));
+    product.clear();
+    page =1;
+    ProductView();
+
+  },
 
   child: new Container(
 
@@ -140,22 +146,7 @@ class _ViewProduct extends State<ViewProduct>{
 
   child: Row(
   children: [
-  // Container(
-  // padding: EdgeInsets.all(20),
-  // // alignment: Alignment.center,
-  // child: ClipRRect(
-  // borderRadius: BorderRadius.circular(55.0),
-  // child: FadeInImage(
-  //
-  // //image: NetworkImage(Prefmanager.baseurl+"/document/get/"+product[index]["icon"]),
-  // placeholder: AssetImage("Assets/sigup.png"),
-  // fit: BoxFit.cover,
-  // width:80,
-  // height: 80,
-  //
-  // ),
-  // ),
-  // ),
+
     Container(
       padding: EdgeInsets.all(20),
       // alignment: Alignment.center,
@@ -195,26 +186,27 @@ class _ViewProduct extends State<ViewProduct>{
   SizedBox(
   height: 10,
   ),
+
   Row(
   children: [
   //Text("Mobile::",style: TextStyle(fontSize: 20)),
-  Text(product[index]['unit'],style: TextStyle(fontSize: 15)
+  Text(product[index]['description']??" ",style: TextStyle(fontSize: 15)
   ),
   ],
   ),
   SizedBox(
   height: 10,
   ),
-  Row(
-  children: [
-  //Text("Mobile::",style: TextStyle(fontSize: 20)),
-  //Text(product[index]['category']['name'],style: TextStyle(fontSize: 15)
-  //),
-  ],
-  ),
-  SizedBox(
-  height: 10,
-  ),
+    Row(
+      children: [
+        //Text("Mobile::",style: TextStyle(fontSize: 20)),
+        Text(product[index]['category']['name'],style: TextStyle(fontSize: 15)
+       ),
+      ],
+    ),
+    SizedBox(
+      height: 10,
+    ),
 
 
   ],
@@ -224,23 +216,9 @@ class _ViewProduct extends State<ViewProduct>{
   ),
 
   ),
-  onTap: ()async{
-  // bool pro= await
-  // Navigator.push(
-  // context, new MaterialPageRoute(
-  // builder: (context) => ProductListView()));
-  // print(pro);
-  // print("Haiii");
-  // if(pro){
-  // ProductView();
-  // }
-  // else{}
-  // print("Success");
-  },
+
 
   ),
-  ),
-  ]
   );
 
 

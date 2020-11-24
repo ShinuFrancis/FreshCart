@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/AddProduct.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
+import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
 import 'package:freshcart_seller/main.dart';
 import 'package:http/http.dart' as http;
@@ -74,10 +75,10 @@ class _AddProfile extends State<AddProfile> {
             backgroundColor: Colors.blue,
             actions: <Widget>[
               IconButton(icon: Icon(Icons.person), onPressed: ()  {
-                // Navigator.push(
-                // context, new MaterialPageRoute(
-                // builder: (context) =>  Search(),),
-                // );
+                Navigator.push(
+                  context, new MaterialPageRoute(
+                  builder: (context) =>  Viewprofile(),),
+                );
               }
               ),
 
@@ -171,9 +172,11 @@ class _AddProfile extends State<AddProfile> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.collections), title: Text("View orders"),
+                leading: Icon(Icons.collections), title: Text("View Products"),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context, new MaterialPageRoute(
+                      builder: (context) => new ViewProduct()));
                 },
               ),
               ListTile(
@@ -207,55 +210,157 @@ class _AddProfile extends State<AddProfile> {
         body:
         SingleChildScrollView(
           child: Column(
-
             children: <Widget>[
-
-              Container(
-                padding: EdgeInsets.all(10),
-                  constraints: BoxConstraints.expand(
-                      height: 200
-                  ),
-                  child: imageSlider(context)
-              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 height: 45,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 3,
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width / 3,
+                        height: 100,
+                        margin: const EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Colors.white,
+                        ),
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: 20,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Add Product"),
+                          ],
+                        ), // icon is 48px widget.,
                       ),
-                      child: Text("View order",),
+                      onTap:() {
+                        Navigator.push(
+                            context, new MaterialPageRoute(
+                            builder: (context) => new ViewCategory()));
+
+                      }
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 100,
+                        width: MediaQuery.of(context).size.width / 3,
+                        margin: const EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Colors.white,
+                        ),
+
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.collections,
+                              size: 20,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+
+                            Text("View Products"),
+                          ],
+                        ),
+                      ),
+                      onTap: (){
+                        Navigator.push(
+                            context, new MaterialPageRoute(
+                            builder: (context) => new ViewProduct()));
+                      },
                     ),
                     Container(
                       alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 3,
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: Text("Set Delivery date"),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
+                      height: 100,
                       width: MediaQuery.of(context).size.width / 3,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         color: Colors.white,
                       ),
-                      child: Text("Add Product"),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add_alarm_rounded,
+                            size: 20,
+                            color: Colors.blue,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+
+                          Text("Set Delivery Date"),
+                        ],
+                      ),
                     ),
                   ],
                 ),
 
 
+              ),
+              Container(
+                  padding: EdgeInsets.all(10),
+                  constraints: BoxConstraints.expand(
+                      height: 300,
+                    width: double.infinity,
+                  ),
+                  child: imageSlider(context)
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("NOTIFICATIONS",style: TextStyle(color: Colors.blue,fontSize: 15),textAlign: TextAlign.start,),
+                FlatButton(
+                      textColor: Colors.blue,
+                      //color: Colors.blue,
+                      child: Text('See All',style: TextStyle(color: Colors.blue,fontSize: 15)),
+                    onPressed: () {
+
+                  }
+
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+                Card(
+                  child: Container(
+                  padding: EdgeInsets.all(20),
+                  height: 200,
+                  child: ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (BuildContext context,int index) {
+                        return Container(
+                          padding: EdgeInsets.all(10),
+                          height: 50,
+                          width: double.infinity,
+
+                          //child: Text("Notifications" + index.toString()),
+                          child: ListTile(
+                            leading: Icon(Icons.play_circle_filled,color: Colors.green,),
+                            title: Text("Notifications" + index.toString()),
+                            trailing: Icon(Icons.close),
+                          ),
+                        );
+                      }
+                  ),
+                ),
               ),
 
 
@@ -282,7 +387,7 @@ Swiper imageSlider(context){
     autoplay: true,
     itemBuilder: (BuildContext context, int index) {
       return new Image.network(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQULSPRITweJUsEVCo4TVpDV6wwKYbHDPol_A&usqp=CAU', fit: BoxFit.fitHeight,
+        'https://thumbs.dreamstime.com/b/balanced-diet-concept-fresh-meat-fish-pasta-fruits-vegetables-nuts-seeds-balanced-diet-concept-fresh-meat-fish-pasta-fruits-137873813.jpg', fit: BoxFit.fitHeight,
       );
 
     },

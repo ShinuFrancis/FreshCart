@@ -110,10 +110,10 @@ class _ViewCategory extends State<ViewCategory> {
             backgroundColor: Colors.blue,
             actions: <Widget>[
               IconButton(icon: Icon(Icons.person), onPressed: ()  {
-                // Navigator.push(
-                // context, new MaterialPageRoute(
-                // builder: (context) =>  Search(),),
-                // );
+                Navigator.push(
+                context, new MaterialPageRoute(
+                builder: (context) =>  Viewprofile(),),
+                );
               }
               ),
 
@@ -149,153 +149,167 @@ class _ViewCategory extends State<ViewCategory> {
           ),
         ),
 
-        drawer: Drawer(
-          child:progress?Center( child: CircularProgressIndicator(),):
-          ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(30),
-                    alignment: Alignment.bottomCenter,
-                    child: profile[ "photo"] !=null ? CircleAvatar(
-
-                      radius: 60.0,
-                      backgroundColor: Colors.white,
-
-                      backgroundImage:NetworkImage(Prefmanager.baseurl+"/u/"+profile[ "photo"]),
-
-                    ) : CircleAvatar(
-                      radius: 60.0,
-                      backgroundColor: Colors.blue,
-                      backgroundImage: AssetImage('Assets/sigup.png'),
-
-                    ),
-                  ),
-
-
-                  Expanded(
-                    flex:1,
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-
-                      child:Text(profile["name"],style: TextStyle(fontSize: 20,
-                          //fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-
-                ],
-              ),
-
-
-              ListTile(
-                leading: Icon(Icons.home), title: Text("Home"),
-                onTap: () {
-                  //Navigator.pop(context);
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => AddProfile()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle), title: Text("My Account"),
-                onTap: () {
-                  Navigator.push(
-                      context, new MaterialPageRoute(
-                      builder: (context) => new Viewprofile()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.collections), title: Text("View orders"),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.add), title: Text("Add Product"),
-                onTap: () {
-                  // Navigator.push(
-                  //     context, new MaterialPageRoute(
-                  //     builder: (context) => new ViewCategory());
-                },
-              ),
-
-              ListTile(
-                leading: Icon(Icons.home), title: Text("Change Password"),
-                onTap: () {
-                  // Navigator.pushReplacement(
-                  //     context, new MaterialPageRoute(builder: (context) => new ChangePassword()));
-                },
-              ),
-
-              ListTile(
-                leading: Icon(Icons.account_circle), title: Text("Logout"),
-                onTap: () {
-                  //Navigator.pop(context);
-                  Prefmanager.clear();
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
-                },
-              ),
-            ],
-          ),
-        ),
+        // drawer: Drawer(
+        //   child:progress?Center( child: CircularProgressIndicator(),):
+        //   ListView(
+        //     // Important: Remove any padding from the ListView.
+        //     padding: EdgeInsets.zero,
+        //     children: <Widget>[
+        //       Row(
+        //         children: [
+        //           Container(
+        //             padding: EdgeInsets.all(30),
+        //             alignment: Alignment.bottomCenter,
+        //             child: profile[ "photo"] !=null ? CircleAvatar(
+        //
+        //               radius: 60.0,
+        //               backgroundColor: Colors.white,
+        //
+        //               backgroundImage:NetworkImage(Prefmanager.baseurl+"/u/"+profile[ "photo"]),
+        //
+        //             ) : CircleAvatar(
+        //               radius: 60.0,
+        //               backgroundColor: Colors.blue,
+        //               backgroundImage: AssetImage('Assets/sigup.png'),
+        //
+        //             ),
+        //           ),
+        //
+        //
+        //           Expanded(
+        //             flex:1,
+        //             child: Container(
+        //               padding: EdgeInsets.all(10),
+        //
+        //               child:Text(profile["name"],style: TextStyle(fontSize: 20,
+        //                   //fontStyle: FontStyle.italic,
+        //                   fontWeight: FontWeight.bold)),
+        //             ),
+        //           ),
+        //
+        //         ],
+        //       ),
+        //
+        //
+        //       ListTile(
+        //         leading: Icon(Icons.home), title: Text("Home"),
+        //         onTap: () {
+        //           //Navigator.pop(context);
+        //           Navigator.push(context,MaterialPageRoute(builder: (context) => AddProfile()));
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.account_circle), title: Text("My Account"),
+        //         onTap: () {
+        //           Navigator.push(
+        //               context, new MaterialPageRoute(
+        //               builder: (context) => new Viewprofile()));
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.collections), title: Text("View orders"),
+        //         onTap: () {
+        //           Navigator.pop(context);
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.add), title: Text("Add Product"),
+        //         onTap: () {
+        //           // Navigator.push(
+        //           //     context, new MaterialPageRoute(
+        //           //     builder: (context) => new ViewCategory());
+        //         },
+        //       ),
+        //
+        //       ListTile(
+        //         leading: Icon(Icons.home), title: Text("Change Password"),
+        //         onTap: () {
+        //           // Navigator.pushReplacement(
+        //           //     context, new MaterialPageRoute(builder: (context) => new ChangePassword()));
+        //         },
+        //       ),
+        //
+        //       ListTile(
+        //         leading: Icon(Icons.account_circle), title: Text("Logout"),
+        //         onTap: () {
+        //           //Navigator.pop(context);
+        //           Prefmanager.clear();
+        //           Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body:
         SingleChildScrollView(
           child: Column(
 
             children: <Widget>[
 
+
+              progress?Center( child: CircularProgressIndicator(),):
+              Container(
+                  padding: EdgeInsets.all(10),
+
+                  child:Text("View Category", style: TextStyle(fontSize: 18,color:Colors.blue)),
+              ),
               Container(
                   padding: EdgeInsets.all(10),
                   constraints: BoxConstraints.expand(
-                      height: 200
+                      height: 300
+                    //width: double.infinity,
                   ),
                   child: imageSlider(context)
               ),
-              progress?Center( child: CircularProgressIndicator(),):
-              GridView.count(
+              Container(
+                padding: EdgeInsets.all(10),
+                child: GridView.count(
 
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisCount: 3 ,
-                children: List.generate(listcat.length,(index){
-                  return GestureDetector(
-                      child: Container(
-                        child: Card(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3 ,
+                  children: List.generate(listcat.length,(index){
+                    return GestureDetector(
+                        child: Container(
+                          child: Card(
 
-                          child: Column(
+                            child: Column(
 
-                            children: [
-                              SizedBox(
-                                height: 30,
+                              children: [
+                                SizedBox(
+                                  height: 30,
 
-                              ),
+                                ),
+                                Icon(
+                                  Icons.description,
+                                  size: 20,
+                                  color: Colors.blue,
+                                ),
+                                //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
 
-                              //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(listcat[index]['name'],style: TextStyle(color: Colors.blue),textAlign: TextAlign.center),
 
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(listcat[index]['name'],style: TextStyle(color: Colors.blue),textAlign: TextAlign.center),
+                              ],
 
-                            ],
+                            ),
 
                           ),
-
                         ),
-                      ),
-                      onTap:() {
+                        onTap:() {
 
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => AddProduct(listcat[index]["_id"])));
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => AddProduct(listcat[index]["_id"])));
 
-                      }
+                        }
 
-                  );
+                    );
 
 
-                }),
+                  }),
+                ),
               ),
 
             ]
@@ -313,7 +327,7 @@ Swiper imageSlider(context){
     autoplay: true,
     itemBuilder: (BuildContext context, int index) {
       return new Image.network(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQULSPRITweJUsEVCo4TVpDV6wwKYbHDPol_A&usqp=CAU', fit: BoxFit.fitHeight,
+        'https://thumbs.dreamstime.com/b/balanced-diet-concept-fresh-meat-fish-pasta-fruits-vegetables-nuts-seeds-balanced-diet-concept-fresh-meat-fish-pasta-fruits-137873813.jpg', fit: BoxFit.fitHeight,
       );
 
     },
@@ -323,3 +337,6 @@ Swiper imageSlider(context){
   );
 
 }
+
+
+

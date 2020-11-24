@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,8 @@ class _AddProduct extends State<AddProduct> {
 
   var name,description,unit;
   var myselection;
+
+  var  selectedvalue;
 
 
   @override
@@ -186,21 +189,40 @@ class _AddProduct extends State<AddProduct> {
                 SizedBox(
                   height:20,
                 ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Product Count',
-                  ),validator: (v){
-                  if(v.isEmpty)
-                    return "Cannot be empty";
-                  else
-                    return null;
-                },
-                  onSaved: (v) {
-                    unit = v;
+                // TextFormField(
+                //   autofocus: true,
+                //   decoration: InputDecoration(
+                //     labelText: 'Product Count',
+                //   ),
+                //     //   validator: (v){
+                // //   if(v.isEmpty)
+                // //     return "Cannot be empty";
+                // //   else
+                // //     return null;
+                // // },
+                // //   onSaved: (v) {
+                // //     unit = v;
+                // //   },
+                // ),
+                new DropdownButton<String>(
+                  items: <String>['Count', 'Kg', 'gm', 'litre'].map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedvalue = newValue;
+                    });
+                    print(selectedvalue);
                   },
+                  value: selectedvalue,
                 ),
-                SizedBox(
+
+
+
+    SizedBox(
                   height:10,
                 ),
                 Container(
@@ -282,7 +304,7 @@ class _AddProduct extends State<AddProduct> {
       "productname":name,
       "description":description,
       "category":widget.id,
-      "unit":unit
+      "unit":selectedvalue
     };
     print(token);
     print(data.toString());
@@ -299,7 +321,7 @@ class _AddProduct extends State<AddProduct> {
         }
         Navigator.push(
             context, new MaterialPageRoute(
-            builder: (context) => new ViewProduct(widget.id)));
+            builder: (context) => new AddProfile()));
         Fluttertoast.showToast(
             msg: json.decode(response.body)['msg'],
             toastLength: Toast.LENGTH_SHORT,
@@ -345,7 +367,7 @@ class _AddProduct extends State<AddProduct> {
       if(json.decode(response.body)['status'])
         Navigator.push(
             context, new MaterialPageRoute(
-            builder: (context) => new ViewProduct(widget.id)));
+            builder: (context) => new AddProfile()));
 
    ;} catch (e) {
       print(e);

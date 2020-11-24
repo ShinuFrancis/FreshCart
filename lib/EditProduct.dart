@@ -1,20 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/ViewProfile.dart';
 import 'package:http/http.dart' as http;
-class EditProduct extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class ProfileEdit extends StatefulWidget {
+  final String _id;
+  ProfileEdit(this._id);
 
   @override
-  _EditProduct createState() => _EditProduct();
-
+  _ProfileEdit createState() => _ProfileEdit();
 }
 
-class _EditProduct extends State<EditProduct> {
+class _ProfileEdit extends State<ProfileEdit> {
+
   File _image;
-  bool progress=false;
 
   _imgFromCamera() async {
     File image = await ImagePicker.pickImage(
@@ -31,7 +34,6 @@ class _EditProduct extends State<EditProduct> {
         source: ImageSource.gallery, imageQuality: 50
     );
 
-
     setState(() {
       _image = image;
     });
@@ -41,12 +43,14 @@ class _EditProduct extends State<EditProduct> {
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
+
             child: Container(
               child: new Wrap(
                 children: <Widget>[
+
                   new ListTile(
                       leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+                      title: new Text('Gallery'),
                       onTap: () {
                         _imgFromGallery();
                         Navigator.of(context).pop();
@@ -59,296 +63,328 @@ class _EditProduct extends State<EditProduct> {
                       Navigator.of(context).pop();
                     },
                   ),
+
                 ],
               ),
             ),
+
           );
         }
+
     );
   }
-  TextEditingController descriptionController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController unitController = TextEditingController();
-
-  //TextEditingController _mySelectionController = TextEditingController();
-
+  TextEditingController categoryController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  String dercription,name,unit;
-  var _mySelection;
-
-
-  @override
-  void initState() {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var name,email;
+  void initState(){
     super.initState();
-
+    ProductView();
+    print(widget._id);
 
   }
+  var description,unit,category;
+  bool progress=false;
+  var product;
+  void ProductView () async {
+    setState(() {
+      progress=true;
+    });
+    var url = Prefmanager.baseurl +'/product/info?id='+widget._id;
 
+    var token = await Prefmanager.getToken();
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'x-auth-token':token
+    };
+    var response = await http.get(url,headers:requestHeaders);
+    print(json.decode(response.body));
+    if (json.decode(response.body)['status']) {
+      product=json.decode(response.body)['data'];
+      print(product);
+      nameController.text=product['productname'];
+      descriptionController.text=product['description'];
+      unitController.text=product['unit'];
+      categoryController.text=product['category']['name'];
+    }
+    else
+      Fluttertoast.showToast(
+        msg: json.decode(response.body)['msg'],
+        backgroundColor: Colors.grey,
+        textColor: Colors.black,
+      );
+    progress=false;
+    setState(() {
 
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    //progress?Center(child:CircularProgressIndicator(),):
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Edit Fish Information",style: TextStyle(color: Colors.blue,fontSize: 25),),
-        centerTitle: true,
-        elevation: 0.0,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back,color:Colors.black12),
-          onPressed: () => Navigator.of(context).pop(),
+        key: _scaffoldKey,
+        appBar: AppBar(
+          // iconTheme: IconThemeData(
+          //   color: Colors.black12, //change your color here
+          // ),
+
+          backgroundColor: Colors.blue,
+          elevation:0.0,
+          leading: new IconButton(
+              icon: new Icon(Icons.arrow_back),
+              color:Colors.black,
+              onPressed: () {
+                //Navigator.of(context).pop(),
+
+                Navigator.push(
+                    context, new MaterialPageRoute(
+                    builder: (context) => new Viewprofile()));
+              }
+          ),
+          title: Text(
+            'Edit Product',
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:Colors.black),
+          ),
+          centerTitle: true,
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment.bottomCenter,
-                  child: Stack(
-                      children:[
+        body:progress?Center(child:CircularProgressIndicator(),):
+        Form(
+            key: _formKey,
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical:30,horizontal: 30),
+                child: ListView(
+                  children: <Widget>[
+                    Container(
+                      alignment:Alignment.topCenter,
+                      padding: new EdgeInsets.all(30.0),
+                      //padding:EdgeInsets.fromLTRB(20, 0, 20, 0),
 
 
-                        CircleAvatar(
-                          radius: 80.0,
-                          backgroundColor: Colors.white,
-                          backgroundImage:_image == null ?NetworkImage("https://scitechdaily.com/images/Twain-Betta-Fish.jpg"):
-                          //backgroundImage:_image == null ?AssetImage('Assets/login.jpg'):
-                          //_image == null ?NetworkImage(Prefmanager.baseurl+"/file/get/"+profile[ "pro_pic"]):
-                          FileImage(_image),
+                      child:Stack(
+                        children: [
 
+                          CircleAvatar(
 
-                        ),
+                            radius: 80,
+                            backgroundColor: Color(0xFFE3F2FD),
 
-                        new Positioned(
+                            // backgroundImage: _image!=null?
+                            // FileImage(_image):profile['photo']!=null?
+                            // NetworkImage(Prefmanager.baseurl+"/u/"+profile['photo']):
+                            // AssetImage("Assets/sigup.png" ),
 
-                          bottom: 0, right: 0,left: 100, //give the values according to your requirement
-                          child:IconButton(
-                            icon:Icon(Icons.camera_alt,
-                            ),
-                            iconSize: 40,
-                            color: Colors.blue,
-                            onPressed: (){
-                              _showPicker(context);
-
-                            },
+                            //_image,
+                            // width: 120,
+                            // height: 120,
+                            // fit: BoxFit.contain,
                           ),
-
-                        ),
-
-
-                      ]
-
-                  ),
-
-                ),
-
-               SizedBox(
-                  height:10,
-                ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Product Name',
-                  ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'name';
-                    }
-
-                    Pattern pattern = r'^[a-zA-Z]';
-                    RegExp regex = new RegExp(pattern);
-                    if (!regex.hasMatch(value))
-                      return 'Invalid';
-                    else
-                      return null;
-                  },
-
-                  onSaved: (v) {
-                    name = v;
-                  },
-                ),
-
-                SizedBox(
-                  height:20,
-                ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Product Dercription',
-                  ),validator: (v){
-                  if(v.isEmpty)
-                    return "Cannot be empty";
-                  else
-                    return null;
-                },
-                  onSaved: (v) {
-                    description = v;
-                  },
-                ),
-
-                SizedBox(
-                  height:20,
-                ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: 'Product Count',
-                  ),validator: (v){
-                  if(v.isEmpty)
-                    return "Cannot be empty";
-                  else
-                    return null;
-                },
-                  onSaved: (v) {
-                    unit = v;
-                  },
-                ),
-                SizedBox(
-                  height:10,
-                ),
-                DropdownButton(
-                  autofocus: true,
-                  isExpanded: true,
-                  hint: new Text('Category'),
-                  items: listcat.map((item) {
-                    return new DropdownMenuItem(
-                      child: new Text(item['cname']),
-                      value: item['_id'].toString(),
-                    );
-                  }).toList(),
-                  onChanged: (newVal) {
-                    setState(() {
-                      _mySelection = newVal;
-                      print(_mySelection);
-                    });
-                  },
-                  value: _mySelection,
-
-                ),
-
-
-
-
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                ),
-
-
-                Container(
-                    height: 50,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    width: double.infinity,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: Text('Save'),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-
-                          //sentData();
+                          new Positioned(
+                              bottom: 0,
+                              right:0,
+                              child:ClipOval(
+                                child:Container(
+                                  color:Colors.blue,
+                                  child: IconButton(
+                                    icon:Icon(Icons.camera_alt,color:Colors.white),
+                                    onPressed: (){
+                                      _showPicker(context);
+                                    },
+                                  ),
+                                ),
+                              )
+                          )
+                        ],
+                      ) ,
+                    ),
+                    TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Product Name',
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'name';
                         }
 
-
+                        Pattern pattern = r'^[a-zA-Z]';
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(value))
+                          return 'Invalid';
+                        else
+                          return null;
                       },
-                    )),
-                //
-              ]
-          ),
-        ),
-      ),
-    );
-  }
-// _getCurrentLocation() {
-//   final Geolocator geolocator = Geolocator()
-//     ..forceAndroidLocationManager;
-//
-//   geolocator
-//       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-//       .then((Position position) {
-//     setState(() {
-//       _currentPosition = position;
-//       lat= _currentPosition.latitude;
-//       lon= _currentPosition.longitude;
-//       print("latitude $lat");
-//       print("longitude $lon");
-//     });
-//   }).catchError((e) {
-//     print(e);
-//   });
-// }
-// Position _currentPosition;
-//
-//
-// var lat,lon;
-//
-// void sentData() async {
-//   var url = 'http://13.234.186.200/edit/branch/initial';
-//   var token = await Prefmanager.getToken();
-//   Map<String, dynamic> data = {
-//     "to": token,
-//     "branchid":widget.branchId,
-//     "aboutBranch":aboutBranchController.text,
-//     "contactPerson":contactPersonController.text,
-//     "contactEmail":contactEmailController.text,
-//     "mobile":mobileController.text,
-//     "landline":landlineController.text,
-//     "whatsapp":whatsappController.text,
-//     "buildingName":buildingNameController.text,
-//     "place":placeController.text,
-//     "city":cityController.text,
-//     "street":streetController.text,
-//     "area":areaController.text,
-//     "pincode":pincodeController.text,
-//     "landmark":landmarkController.text,
-//     "lat":lat.toString(),
-//     "lon":lon.toString(),
-//     "subcategory":_mySelection,
-//   };
-//   // data.addAll({"subcategory":_mySelection});
-//   print(data.toString());
-//   //print(_mySelection);
-//   _mySelection.forEach((element) {print(element);});
-//   var body = json.encode(data);
-//   var response = await http.post(url,headers: {"Content-Type":"application/json"}, body: body);
-//   print(json.decode(response.body));
-//   // Await the http get response, then decode the json-formatted response.
-//   //var response = await http.get(url);
-//   print(json.decode(response.body));
-//   if (json.decode(response.body)['status']) {
-//     Fluttertoast.showToast(
-//         msg:json.decode(response.body)['msg'],
-//         toastLength: Toast.LENGTH_SHORT,
-//         gravity: ToastGravity.CENTER,
-//         backgroundColor: Colors.grey,
-//         textColor: Colors.white,
-//         fontSize: 20.0
-//     );
-//     //Prefmanager.getToken(json.decode(response.body)['token']);
-//     Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) =>BranchView(widget.branchId)));
-//   }
-//
-//   else {
-//     print(json.decode(response.body)['msg']);
-//     Fluttertoast.showToast(
-//         gravity: ToastGravity.CENTER,
-//         backgroundColor: Colors.white,
-//
-//         textColor: Colors.black,
-//         msg: json.decode(response.body)['msg'],
-//         fontSize: 20.0
-//     );
-//   }
-//
-//
-// }
-}
 
+                      onSaved: (v) {
+                        name = v;
+                      },
+                      controller: nameController,
+                    ),
+
+                    SizedBox(
+                      height:20,
+                    ),
+                    TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Product Dercription',
+                      ),validator: (v){
+                      if(v.isEmpty)
+                        return "Cannot be empty";
+                      else
+                        return null;
+                    },
+                      onSaved: (v) {
+                        description = v;
+                      },
+                      controller: descriptionController,
+                    ),
+
+                    SizedBox(
+                      height:20,
+                    ),
+                    TextFormField(
+                      readOnly: true,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Product Count',
+                      ),validator: (v){
+                      if(v.isEmpty)
+                        return "Cannot be empty";
+                      else
+                        return null;
+                    },
+                      onSaved: (v) {
+                        unit = v;
+                      },
+                      controller: unitController,
+                    ),
+                    TextFormField(
+                      readOnly: true,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Product Category',
+                      ),validator: (v){
+                      if(v.isEmpty)
+                        return "Cannot be empty";
+                      else
+                        return null;
+                    },
+                      onSaved: (v) {
+                        category = v;
+                      },
+                      controller: categoryController,
+                    ),
+
+                    SizedBox(
+                      height:30,
+                      width:50,
+
+                    ),
+                    Container(
+                        height: 50,
+                        width:80,
+                        padding:EdgeInsets.symmetric(vertical:2,horizontal: 2),
+                        //padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: RaisedButton(
+                          // shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(10.0)),
+                          textColor: Colors.white,
+                          color: Colors.blue,
+                          child: Text('Update'),
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+                              senddata();
+
+                              //_scaffoldKey.currentState.showSnackBar(new SnackBar(
+                              //content: new Text("Your email: $_email and Password: $_password"),
+
+                            }
+
+
+                          },
+                        )),
+                  ],
+                ) )));
+
+  }
+  void senddata() async {
+
+    var url = Prefmanager.baseurl +'/Product/Edit';
+    var token = await Prefmanager.getToken();
+    Map data={
+      "id":widget._id,
+      "productname":nameController.text,
+      "description":descriptionController.text,
+    };
+    print(token);
+    print(data.toString());
+    var body =json.encode(data);
+    var response = await http.post(url, headers:{"Content-Type":"application/json", "x-auth-token":token}, body:body);
+    print("yyu"+response.statusCode.toString());
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      print(json.decode(response.body));
+      if(json.decode(response.body)['status'])
+      {
+        if(_image!=null){
+          addSinglePhoto();
+        }
+        else{
+          Navigator.of(context).pop(true);
+        }
+      }
+      else{
+
+        print(json.decode(response.body)['msg']);
+        Fluttertoast.showToast(
+          //msg: "This is Toast messaget",
+
+          msg:json.decode(response.body)['msg'],
+
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+
+        );
+      }
+    }
+    else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+  addSinglePhoto() async {
+
+    var request = http.MultipartRequest('POST', Uri.parse(Prefmanager.baseurl + '/user/photo'));
+    String token = await Prefmanager.getToken();
+
+    request.headers.addAll({'Content-Type': 'application/form-data', 'x-auth-token': token});
+    //request.fields.addAll(data);
+
+    if (_image != null) {
+      request.files.add(http.MultipartFile.fromBytes(
+          'photo', _image.readAsBytesSync(),
+          filename: _image.path.split('/').last));
+
+    }
+    try {
+      http.Response response =
+      await http.Response.fromStream(await request.send());
+      if(json.decode(response.body)['status'])
+        print("dfgghlljg");
+      Navigator.of(context).pop(true);
+    } catch (e) {
+      print(e);
+      //return CustomResponse(500, '');
+    }
+  }
+
+}
