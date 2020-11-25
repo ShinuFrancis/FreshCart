@@ -6,7 +6,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/AddProduct.dart';
+import 'package:freshcart_seller/EditProduct.dart';
+import 'package:freshcart_seller/EditProfile.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/SetDeliveryDate.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
@@ -72,15 +75,9 @@ class _AddProfile extends State<AddProfile> {
 
             //leading: Icon(Icons.menu),
 
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.green,
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.person), onPressed: ()  {
-                Navigator.push(
-                  context, new MaterialPageRoute(
-                  builder: (context) =>  Viewprofile(),),
-                );
-              }
-              ),
+
 
 
 
@@ -91,28 +88,28 @@ class _AddProfile extends State<AddProfile> {
         ),
 
 
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(child: IconButton(icon: Icon(Icons.home),onPressed: () {
-                Navigator.pushReplacement(
-                    context, new MaterialPageRoute(
-                    builder: (context) => new AddProfile()));
-              }
-              ),
-              ),
-
-              Expanded(child: IconButton(icon: Icon(Icons.person),onPressed: () {
-                Navigator.push(
-                    context, new MaterialPageRoute(
-                    builder: (context) => new Viewprofile()));
-              },),
-              ),
-            ],
-          ),
-        ),
+        // bottomNavigationBar: BottomAppBar(
+        //   color: Colors.green,
+        //   child: new Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       Expanded(child: IconButton(icon: Icon(Icons.home,color: Colors.white,),onPressed: () {
+        //         Navigator.pushReplacement(
+        //             context, new MaterialPageRoute(
+        //             builder: (context) => new AddProfile()));
+        //       }
+        //       ),
+        //       ),
+        //
+        //       Expanded(child: IconButton(icon: Icon(Icons.person,color: Colors.white,),onPressed: () {
+        //         Navigator.push(
+        //             context, new MaterialPageRoute(
+        //             builder: (context) => new Viewprofile()));
+        //       },),
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
         drawer: Drawer(
           child:progress?Center( child: CircularProgressIndicator(),):
@@ -125,16 +122,9 @@ class _AddProfile extends State<AddProfile> {
                   Container(
                     padding: EdgeInsets.all(30),
                     alignment: Alignment.bottomCenter,
-                    child: profile[ "photo"] !=null ? CircleAvatar(
-
+                    child:CircleAvatar(
                       radius: 60.0,
                       backgroundColor: Colors.white,
-
-                      backgroundImage:NetworkImage(Prefmanager.baseurl+"/u/"+profile[ "photo"]),
-
-                    ) : CircleAvatar(
-                      radius: 60.0,
-                      backgroundColor: Colors.blue,
                       backgroundImage: AssetImage('Assets/sigup.png'),
 
                     ),
@@ -146,10 +136,8 @@ class _AddProfile extends State<AddProfile> {
                     child: Container(
                       padding: EdgeInsets.all(10),
 
-                      child:Text(profile["name"],style: TextStyle(fontSize: 20,
-                             //fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold)),
-                    ),
+                     child:Text(profile['name']),
+                     ),
                   ),
 
                 ],
@@ -207,193 +195,224 @@ class _AddProfile extends State<AddProfile> {
             ],
           ),
         ),
-        body:
-        SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                height: 45,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 3,
-                        height: 100,
-                        margin: const EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
-                        ),
-                        child:Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 20,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("Add Product"),
-                          ],
-                        ), // icon is 48px widget.,
-                      ),
-                      onTap:() {
-                        Navigator.push(
-                            context, new MaterialPageRoute(
-                            builder: (context) => new ViewCategory()));
 
-                      }
-                    ),
-                    GestureDetector(
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 100,
-                        width: MediaQuery.of(context).size.width / 3,
-                        margin: const EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
-                        ),
-
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.collections,
-                              size: 20,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-
-                            Text("View Products"),
-                          ],
-                        ),
-                      ),
-                      onTap: (){
-                        Navigator.push(
-                            context, new MaterialPageRoute(
-                            builder: (context) => new ViewProduct()));
-                      },
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_alarm_rounded,
-                            size: 20,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-
-                          Text("Set Delivery Date"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-
+    body:Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 50.0,
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage('Assets/sigup.png'),
               ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  constraints: BoxConstraints.expand(
-                      height: 300,
-                    width: double.infinity,
-                  ),
-                  child: imageSlider(context)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(profile['name']),
+                  Text(profile['phone']),
+                  Text(profile['email'])
+                ],
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("NOTIFICATIONS",style: TextStyle(color: Colors.blue,fontSize: 15),textAlign: TextAlign.start,),
-                FlatButton(
-                      textColor: Colors.blue,
-                      //color: Colors.blue,
-                      child: Text('See All',style: TextStyle(color: Colors.blue,fontSize: 15)),
-                    onPressed: () {
-
+              IconButton(
+                  icon: new Icon(Icons.edit),
+                  color:Colors.black,
+                  onPressed: () async{
+                    bool pro=await
+                    Navigator.push(
+                        context, new MaterialPageRoute(builder: (context) =>new Profile()));
+                    if(pro){
+                      print("pro");
+                      viewprofile();
+                    }
+                    else{}
                   }
-
-                      ),
-                  ],
-                ),
               ),
-              SizedBox(
-                height: 5,
-              ),
-                Card(
-                  child: Container(
-                  padding: EdgeInsets.all(20),
-                  height: 200,
-                  child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (BuildContext context,int index) {
-                        return Container(
-                          padding: EdgeInsets.all(10),
-                          height: 50,
-                          width: double.infinity,
-
-                          //child: Text("Notifications" + index.toString()),
-                          child: ListTile(
-                            leading: Icon(Icons.play_circle_filled,color: Colors.green,),
-                            title: Text("Notifications" + index.toString()),
-                            trailing: Icon(Icons.close),
-                          ),
-                        );
-                      }
-                  ),
-                ),
-              ),
-
-
-
-
-
 
 
             ],
           ),
-        ),
+              SizedBox(
+                height: 10,
+              ),
+
+          Container(
+            //height: 300,
+            //width:MediaQuery.of(context).size.width/1,
+            height:MediaQuery.of(context).size.height-320,
+
+            child: GridView.extent(
+              shrinkWrap: true,
+
+              primary: false,
+              padding: const EdgeInsets.all(10),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 20,
+              maxCrossAxisExtent: 180.0,
+              children: <Widget>[
+                GestureDetector(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            size: 30,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Add Product"),
+
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                    onTap:() {Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new ViewCategory()));
+
+                    }
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.collections,
+                          size: 30,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("View Products"),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new ViewProduct()));
+                  },
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.date_range,
+                          size: 30,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("Set Delivery Date"),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new SetDeliveryDate()));
+                  },
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_shopping_cart,
+                        size: 30,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("Purchase Request"),
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.description,
+                        size: 30,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("Delivery History"),
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.collections,
+                        size: 30,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("View Orders"),
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_location_alt_outlined,
+                        size: 30,
+                        color: Colors.green,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text("Delivery Locations"),
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
+    ),
+
+    ),
     );
-
-
-
   }
-
-
 }
-Swiper imageSlider(context){
 
-  return new Swiper(
-    autoplay: true,
-    itemBuilder: (BuildContext context, int index) {
-      return new Image.network(
-        'https://thumbs.dreamstime.com/b/balanced-diet-concept-fresh-meat-fish-pasta-fruits-vegetables-nuts-seeds-balanced-diet-concept-fresh-meat-fish-pasta-fruits-137873813.jpg', fit: BoxFit.fitHeight,
-      );
 
-    },
-    itemCount: 10,
-    viewportFraction: 0.8,
-    scale: 0.9,
-  );
-
-}

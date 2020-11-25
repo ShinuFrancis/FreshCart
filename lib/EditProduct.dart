@@ -135,17 +135,14 @@ class _ProfileEdit extends State<ProfileEdit> {
           //   color: Colors.black12, //change your color here
           // ),
 
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           elevation:0.0,
           leading: new IconButton(
               icon: new Icon(Icons.arrow_back),
               color:Colors.black,
               onPressed: () {
-                //Navigator.of(context).pop(),
+                Navigator.of(context).pop();
 
-                Navigator.push(
-                    context, new MaterialPageRoute(
-                    builder: (context) => new Viewprofile()));
               }
           ),
           title: Text(
@@ -190,7 +187,7 @@ class _ProfileEdit extends State<ProfileEdit> {
                               right:0,
                               child:ClipOval(
                                 child:Container(
-                                  color:Colors.blue,
+                                  color:Colors.green,
                                   child: IconButton(
                                     icon:Icon(Icons.camera_alt,color:Colors.white),
                                     onPressed: (){
@@ -296,9 +293,10 @@ class _ProfileEdit extends State<ProfileEdit> {
                           // shape: RoundedRectangleBorder(
                           //     borderRadius: BorderRadius.circular(10.0)),
                           textColor: Colors.white,
-                          color: Colors.blue,
+                          color: Colors.green,
                           child: Text('Update'),
-                          onPressed: () {
+                          onPressed: (){
+
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               senddata();

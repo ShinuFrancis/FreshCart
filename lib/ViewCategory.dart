@@ -105,17 +105,14 @@ class _ViewCategory extends State<ViewCategory> {
 
             title: Text("FRESH CART"),
 
-            //leading: Icon(Icons.menu),
-
-            backgroundColor: Colors.blue,
+            //leading: Icon(Icons.arrow_back),
+           leading: new IconButton(
+              icon: new Icon(Icons.arrow_back,color:Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: Colors.green,
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.person), onPressed: ()  {
-                Navigator.push(
-                context, new MaterialPageRoute(
-                builder: (context) =>  Viewprofile(),),
-                );
-              }
-              ),
+
 
 
 
@@ -126,28 +123,28 @@ class _ViewCategory extends State<ViewCategory> {
         ),
 
 
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(child: IconButton(icon: Icon(Icons.home),onPressed: () {
-                Navigator.pushReplacement(
-                    context, new MaterialPageRoute(
-                    builder: (context) => new AddProfile()));
-              }
-              ),
-              ),
-
-              Expanded(child: IconButton(icon: Icon(Icons.person),onPressed: () {
-                Navigator.push(
-                    context, new MaterialPageRoute(
-                    builder: (context) => new Viewprofile()));
-              },),
-              ),
-            ],
-          ),
-        ),
+        // bottomNavigationBar: BottomAppBar(
+        //   color: Colors.green,
+        //   child: new Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       Expanded(child: IconButton(icon: Icon(Icons.home,color: Colors.white,),onPressed: () {
+        //         Navigator.pushReplacement(
+        //             context, new MaterialPageRoute(
+        //             builder: (context) => new AddProfile()));
+        //       }
+        //       ),
+        //       ),
+        //
+        //       Expanded(child: IconButton(icon: Icon(Icons.person,color: Colors.white,),onPressed: () {
+        //         Navigator.push(
+        //             context, new MaterialPageRoute(
+        //             builder: (context) => new Viewprofile()));
+        //       },),
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
         // drawer: Drawer(
         //   child:progress?Center( child: CircularProgressIndicator(),):
@@ -251,18 +248,13 @@ class _ViewCategory extends State<ViewCategory> {
               Container(
                   padding: EdgeInsets.all(10),
 
-                  child:Text("View Category", style: TextStyle(fontSize: 18,color:Colors.blue)),
+                  child:Text("View Category", style: TextStyle(fontSize: 18,color:Colors.green)),
               ),
+             SizedBox(
+               height: 20,
+             ),
               Container(
-                  padding: EdgeInsets.all(10),
-                  constraints: BoxConstraints.expand(
-                      height: 300
-                    //width: double.infinity,
-                  ),
-                  child: imageSlider(context)
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(20),
                 child: GridView.count(
 
                   scrollDirection: Axis.vertical,
@@ -284,14 +276,14 @@ class _ViewCategory extends State<ViewCategory> {
                                 Icon(
                                   Icons.description,
                                   size: 20,
-                                  color: Colors.blue,
+                                  color: Colors.green,
                                 ),
                                 //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
 
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(listcat[index]['name'],style: TextStyle(color: Colors.blue),textAlign: TextAlign.center),
+                                Text(listcat[index]['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
 
                               ],
 
@@ -321,22 +313,7 @@ class _ViewCategory extends State<ViewCategory> {
   }
 
 }
-Swiper imageSlider(context){
 
-  return new Swiper(
-    autoplay: true,
-    itemBuilder: (BuildContext context, int index) {
-      return new Image.network(
-        'https://thumbs.dreamstime.com/b/balanced-diet-concept-fresh-meat-fish-pasta-fruits-vegetables-nuts-seeds-balanced-diet-concept-fresh-meat-fish-pasta-fruits-137873813.jpg', fit: BoxFit.fitHeight,
-      );
-
-    },
-    itemCount: 10,
-    viewportFraction: 0.8,
-    scale: 0.9,
-  );
-
-}
 
 
 

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:otp_text_field/otp_field.dart';
@@ -31,7 +32,7 @@ class _LoginSample extends State<LoginSample> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var verify;
-  var email,phone,otp;
+  var email,phone,otp,name;
   var verificationId;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -102,7 +103,7 @@ class _LoginSample extends State<LoginSample> {
             print("Navigation");
             pro=false;
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (
-                context) =>AddProfile()),
+                context) =>ViewCategory()),
             );
           }
           else
@@ -137,152 +138,169 @@ class _LoginSample extends State<LoginSample> {
   //var username,pass;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: _scaffoldKey,
 
-      appBar: AppBar(
-        // iconTheme: IconThemeData(
-        //     color: Colors.blue
-        // ),
-        backgroundColor: Colors.blue,
-        elevation: 0.0,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.black12),
-          onPressed: () => Navigator.of(context).pop(),
+        appBar: AppBar(
+          // iconTheme: IconThemeData(
+          //     color: Colors.blue
+          // ),
+          backgroundColor: Colors.green,
+          elevation: 0.0,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black12),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          //automaticallyImplyLeading: true,
         ),
-        //automaticallyImplyLeading: true,
-      ),
 
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: ListView(
-              children: <Widget>[
-                Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Verify',
-                      style: TextStyle(fontSize: 20),
-                    )
-                ),
-                SizedBox(height:100,),
-               // Image(image: AssetImage('Assets/verification.jpg'),width:300,height: 300, fit:BoxFit.cover,),
-                isnew ? TextFormField(
-
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[200])
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[300])
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      hintText: "Name"
-
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: ListView(
+                children: <Widget>[
+                  Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        'Verify',
+                        style: TextStyle(fontSize: 20),
+                      )
                   ),
-                  //keyboardType: TextInputType.number,
-                  controller: _nameController,
-                ): SizedBox.shrink(),
-                SizedBox(height: 16,),
-                SizedBox(height: 16,),
-                isnew?TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'email';
-                    }
-                    /*else if (!value.contains("@"))
-                      return "Please enter valid email";
-                    else
-                      return null;*/
-                    Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                    RegExp regex = new RegExp(pattern);
-                    if (!regex.hasMatch(value))
-                      return 'Invalid Email';
-                    else
-                      return null;
+                  SizedBox(height:100,),
+                 // Image(image: AssetImage('Assets/verification.jpg'),width:300,height: 300, fit:BoxFit.cover,),
+                  isnew ? TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'name';
+                      }
+                      /*else if (!value.contains("@"))
+                        return "Please enter valid email";
+                      else
+                        return null;*/
+
+                      else
+                        return null;
                     },
-                      onSaved:(v) {
-                        email = v;
+                    onSaved:(v) {
+                      name = v;
+                    },
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[200])
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[300])
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        hintText: "Name"
+
+                    ),
+                    //keyboardType: TextInputType.number,
+                    controller: _nameController,
+                  ): SizedBox.shrink(),
+                  SizedBox(height: 16,),
+                  SizedBox(height: 16,),
+                  isnew?TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'email';
+                      }
+                      /*else if (!value.contains("@"))
+                        return "Please enter valid email";
+                      else
+                        return null;*/
+                      Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                      RegExp regex = new RegExp(pattern);
+                      if (!regex.hasMatch(value))
+                        return 'Invalid Email';
+                      else
+                        return null;
                       },
-                      decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[200])
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: Colors.grey[300])
-                      ),
+                        onSaved:(v) {
+                          email = v;
+                        },
+                        decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[200])
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            borderSide: BorderSide(color: Colors.grey[300])
+                        ),
 
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      hintText: "Email"
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        hintText: "Email"
 
+                    ),
+
+                    //keyboardType: TextInputType.number,
+                    controller: _emailController,
+                  ):SizedBox.shrink(),
+                  SizedBox(height: 16,),
+                  SizedBox(height: 16,),
+
+
+
+                  SizedBox(height: 16,),
+
+
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Enter OTP:", style:TextStyle(fontWeight:FontWeight.bold, fontSize: 20, color: Colors.blue))
                   ),
+            OTPTextField(
+              length: 6,
+              width: MediaQuery.of(context).size.width,
+              textFieldAlignment: MainAxisAlignment.spaceAround,
+              keyboardType: TextInputType.number,
+              fieldWidth: 50,
+              fieldStyle: FieldStyle.underline,
+              style: TextStyle(
+                  fontSize: 17
+              ),
+              onCompleted: (pin) {
+                print("Completed: " + pin);
+                otp=pin;
+                print(otp);
+              }
+              ),
 
-                  //keyboardType: TextInputType.number,
-                  controller: _emailController,
-                ):SizedBox.shrink(),
-                SizedBox(height: 16,),
-                SizedBox(height: 16,),
+                  // MaterialButton(
+                  //   onPressed: ()=>signIn(context),
+                  //   child: Text("submit"),
+                  //   minWidth: 500,
+                  // ),
+                  SizedBox(height: 16,),
+                  SizedBox(height: 16,),
+                  pro?Center(child: CircularProgressIndicator(),):
+                  Container(
+                    color: Colors.green,
+                    width: double.infinity,
+                    child: FlatButton(
+                      child: Text("Submit"),
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(16),
+                      onPressed: (){
+                        if (_formKey.currentState.validate())
+                          {
+                        _formKey.currentState.save();
+                            signIn(context);
+                               }
+                            }
+                          )
+                    ),
 
-
-
-                SizedBox(height: 16,),
-
-
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Enter OTP:", style:TextStyle(fontWeight:FontWeight.bold, fontSize: 20, color: Colors.blue))
-                ),
-          OTPTextField(
-            length: 6,
-            width: MediaQuery.of(context).size.width,
-            textFieldAlignment: MainAxisAlignment.spaceAround,
-            keyboardType: TextInputType.number,
-            fieldWidth: 50,
-            fieldStyle: FieldStyle.underline,
-            style: TextStyle(
-                fontSize: 17
+                ]
             ),
-            onCompleted: (pin) {
-              print("Completed: " + pin);
-              otp=pin;
-              print(otp);
-            }
-            ),
-
-                // MaterialButton(
-                //   onPressed: ()=>signIn(context),
-                //   child: Text("submit"),
-                //   minWidth: 500,
-                // ),
-                SizedBox(height: 16,),
-                SizedBox(height: 16,),
-                pro?Center(child: CircularProgressIndicator(),):
-                Container(
-                  color: Colors.blue,
-                  width: double.infinity,
-                  child: FlatButton(
-                    child: Text("Submit"),
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(16),
-                    onPressed: (){
-                      if (_formKey.currentState.validate())
-                        {
-                      _formKey.currentState.save();
-                          signIn(context);
-                             }
-                          }
-                        )
-                  ),
-
-              ]
           ),
         ),
       ),

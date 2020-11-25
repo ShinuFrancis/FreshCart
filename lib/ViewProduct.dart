@@ -81,11 +81,7 @@ class _ViewProduct extends State<ViewProduct>{
       elevation: 0.0,
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back,color:Colors.black12),
-        onPressed: () {
-          // Navigator.push(
-          //     context, new MaterialPageRoute(
-          //     builder: (context) => new ViewCategory()));
-        }
+        onPressed: () => Navigator.of(context).pop(),
       ),
   backgroundColor: Colors.white,
   //elevation: 0.0,

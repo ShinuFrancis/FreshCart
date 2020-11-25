@@ -131,7 +131,7 @@ class _AddProduct extends State<AddProduct> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title:Text("Add Product",style: TextStyle(color: Colors.blue,fontSize: 20),),
+        title:Text("Add Product",style: TextStyle(color: Colors.black,fontSize: 20),),
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(
@@ -205,6 +205,7 @@ class _AddProduct extends State<AddProduct> {
                 // //   },
                 // ),
                 new DropdownButton<String>(
+                  hint: new Text('Category'),
                   items: <String>['Count', 'Kg', 'gm', 'litre'].map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,
@@ -272,7 +273,7 @@ class _AddProduct extends State<AddProduct> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                       textColor: Colors.white,
-                      color: Colors.blue,
+                      color: Colors.green,
                       child: Text('Save'),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'FRESH CART',
       theme: ThemeData(
 
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -96,7 +96,7 @@ class SecondScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 50,),
-                  Text("SignUp", style: TextStyle(color: Colors.lightBlue, fontSize: 36, fontWeight: FontWeight.w500),),
+                  Text("SignUp", style: TextStyle(color: Colors.green, fontSize: 36, fontWeight: FontWeight.w500),),
 
                   SizedBox(height:100,),
                   //Image(image: AssetImage('Assets/sigup.png'),width:300,height: 300, fit:BoxFit.cover,),
@@ -139,13 +139,11 @@ class SecondScreen extends StatelessWidget {
 
                   SizedBox(height: 16,),
 
-
-
-
                   SizedBox(height: 16,),
                   SizedBox(height: 16,),
 
                   Container(
+                    color: Colors.green,
                     width: double.infinity,
                     child: FlatButton(
                       child: Text("Get OTP"),

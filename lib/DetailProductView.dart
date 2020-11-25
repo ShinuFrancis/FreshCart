@@ -107,7 +107,7 @@ class _DetailProductView extends State<DetailProductView>{
                       Container(
                         alignment: Alignment.center,
                         //child: Text("Fringescale sardinella",style: TextStyle(fontSize: 25,color: Colors.blue,fontWeight: FontWeight.bold)),
-                        child:Text(product['productname'],textAlign:TextAlign.center,style: TextStyle(fontSize: 25,color: Colors.blue,fontWeight: FontWeight.bold))
+                        child:Text(product['productname'],textAlign:TextAlign.center,style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.bold))
                       ),
 
                       Container(
@@ -156,7 +156,7 @@ class _DetailProductView extends State<DetailProductView>{
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
                             textColor: Colors.white,
-                            color: Colors.blue,
+                            color: Colors.green,
                             child: Text('Update'),
                             onPressed: () async{
                               bool pro=await
@@ -174,7 +174,7 @@ class _DetailProductView extends State<DetailProductView>{
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
                             textColor: Colors.white,
-                            color: Colors.blue,
+                            color: Colors.green,
                             child: Text('Delete'),
                             onPressed: () {
                               // Navigator.push(context, new MaterialPageRoute(builder: (context) =>EditFish()));

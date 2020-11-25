@@ -9,12 +9,12 @@ import 'package:image_picker/image_picker.dart';
 
 
 
-class ProfileEdit extends StatefulWidget {
+class Profile extends StatefulWidget {
   @override
-  _ProfileEdit createState() => _ProfileEdit();
+  _Profile createState() => _Profile();
 }
 
-class _ProfileEdit extends State<ProfileEdit> {
+class _Profile extends State<Profile> {
 
   File _image;
 
@@ -130,7 +130,7 @@ class _ProfileEdit extends State<ProfileEdit> {
           //   color: Colors.black12, //change your color here
           // ),
 
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           elevation:0.0,
           leading: new IconButton(
               icon: new Icon(Icons.arrow_back),
@@ -145,7 +145,7 @@ class _ProfileEdit extends State<ProfileEdit> {
           ),
           title: Text(
             'Edit Profile',
-            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:Colors.black),
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:Colors.white),
           ),
           centerTitle: true,
         ),
@@ -185,7 +185,7 @@ class _ProfileEdit extends State<ProfileEdit> {
                               right:0,
                               child:ClipOval(
                                 child:Container(
-                                  color:Colors.blue,
+                                  color:Colors.green,
                                   child: IconButton(
                                     icon:Icon(Icons.camera_alt,color:Colors.white),
                                     onPressed: (){
@@ -274,10 +274,11 @@ class _ProfileEdit extends State<ProfileEdit> {
                           // shape: RoundedRectangleBorder(
                           //     borderRadius: BorderRadius.circular(10.0)),
                           textColor: Colors.white,
-                          color: Colors.blue,
+                          color: Colors.green,
                           child: Text('Update'),
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
+
+                              if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               senddata();
 

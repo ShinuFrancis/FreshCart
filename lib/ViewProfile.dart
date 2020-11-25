@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/EditProfile.dart';
 import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/main.dart';
 
 
 import 'package:http/http.dart' as http;
@@ -75,7 +76,7 @@ class _Viewprofile extends State<Viewprofile>{
         //  backgroundColor: Colors.white,
         // ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Colors.white,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -106,7 +107,7 @@ class _Viewprofile extends State<Viewprofile>{
                     children: <Widget>[
                       new Card(
 
-                        color:Colors.blue,
+                        color:Colors.green,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         child: new Container(
@@ -133,16 +134,10 @@ class _Viewprofile extends State<Viewprofile>{
                                 Container(
                                   padding: EdgeInsets.all(10),
                                   alignment: Alignment.bottomCenter,
-                                  child: profile[ "photo"] !=null ? CircleAvatar(
+                                  child: CircleAvatar(
 
                                     radius: 60.0,
                                     backgroundColor: Colors.white,
-
-                                    backgroundImage:NetworkImage(Prefmanager.baseurl+"/u/"+profile[ "photo"]),
-
-                                  ) : CircleAvatar(
-                                    radius: 60.0,
-                                    backgroundColor: Colors.blue,
                                     backgroundImage: AssetImage('Assets/sigup.png'),
 
                                   ),
@@ -168,11 +163,11 @@ class _Viewprofile extends State<Viewprofile>{
                                         //fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.bold)),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0),),
-                                    color: Colors.blueAccent,
+                                    color: Colors.green,
                                     textColor: Colors.white,
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context, new MaterialPageRoute(builder: (context) => new ProfileEdit()));
+                                      Navigator.push(
+                                          context, new MaterialPageRoute(builder: (context) => new Profile()));
                                       },
                                   ),
                                 ),
@@ -196,22 +191,10 @@ class _Viewprofile extends State<Viewprofile>{
                           padding: new EdgeInsets.all(10.0),
                           child: new Column(
                             children: <Widget>[
-                              ListTile(
-                                leading:  Icon(Icons.person),
-                                title: Text('My Data'),
-                                trailing:  Icon(Icons.arrow_right),
-                                onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => Viewprofile()));},
 
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.collections),
-                                title: Text('Add Product'),
-                                trailing: Icon(Icons.arrow_right),
-                                //onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => AddFish()));},
-                              ),
                               ListTile(
                                 leading: Icon(Icons.person),
-                                title: Text('My Orders'),
+                                title: Text('Change Password'),
                                 trailing: Icon(Icons.arrow_right),
                                 //onTap: () {Navigator.push(context,MaterialPageRoute(builder: (context) => NewOrder()));},
                               ),
@@ -220,8 +203,8 @@ class _Viewprofile extends State<Viewprofile>{
                                 title: Text('Logout'),
                                 trailing: Icon(Icons.arrow_right),
                                 onTap: () {
-                                  //Prefmanager.clear();
-                                  //Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
+                                  Prefmanager.clear();
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
                                 },
 
                               ),
