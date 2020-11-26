@@ -205,7 +205,7 @@ class _AddProduct extends State<AddProduct> {
                 // //   },
                 // ),
                 new DropdownButton<String>(
-                  hint: new Text('Category'),
+                  hint: new Text('Unit'),
                   items: <String>['Count', 'Kg', 'gm', 'litre'].map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,

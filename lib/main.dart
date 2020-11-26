@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       color: Colors.white,
       //child:FlutterLogo(size:MediaQuery.of(context).size.height)
-      child:Image(image: AssetImage('Assets/splashh.jpg'),width:50,height: 50,),
+      child:Image(image: AssetImage('Assets/spl.png'),width:50,height: 50,),
     );
   }
 }
@@ -84,93 +84,96 @@ class SecondScreen extends StatelessWidget {
   var email,phone;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(32),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 50,),
-                  Text("SignUp", style: TextStyle(color: Colors.green, fontSize: 36, fontWeight: FontWeight.w500),),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          key: _scaffoldKey,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(32),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 50,),
+                    Text("SignUp", style: TextStyle(color: Colors.green, fontSize: 36, fontWeight: FontWeight.w500),),
 
-                  SizedBox(height:100,),
-                  //Image(image: AssetImage('Assets/sigup.png'),width:300,height: 300, fit:BoxFit.cover,),
+                    SizedBox(height:100,),
+                    //Image(image: AssetImage('Assets/sigup.png'),width:300,height: 300, fit:BoxFit.cover,),
 
-                  TextFormField(
-                    validator: (value) {
-                      Pattern pattern =r'(^(?:[+0]9)?[0-9]{10,12}$)';
-                      RegExp regex = new RegExp(pattern);
-                      if (value.isEmpty) {
-                        return 'ph';
-                      }
-
-                      else if (!regex.hasMatch(value))
-                        return 'Invalid phone number';
-                      else
-                        return null;
-
-                    },
-                    onSaved:(v){
-                      phone=v;
-
-                    },
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(color: Colors.grey[200])
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            borderSide: BorderSide(color: Colors.grey[300])
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        hintText: "Phone Number"
-                    ),
-
-                    keyboardType: TextInputType.number,
-                    controller: _phoneController,
-                  ),
-
-                  SizedBox(height: 16,),
-
-                  SizedBox(height: 16,),
-                  SizedBox(height: 16,),
-
-                  Container(
-                    color: Colors.green,
-                    width: double.infinity,
-                    child: FlatButton(
-                      child: Text("Get OTP"),
-                      textColor: Colors.white,
-                      padding: EdgeInsets.all(16),
-                      onPressed: (){
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          Navigator.push(context, MaterialPageRoute(builder: (
-                              context) => LoginSample(_phoneController.text)),
-                          );
+                    TextFormField(
+                      validator: (value) {
+                        Pattern pattern =r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                        RegExp regex = new RegExp(pattern);
+                        if (value.isEmpty) {
+                          return 'ph';
                         }
 
-                        //code for sign in
-                       // Place B
-                       //  final phone = _phoneController.text.trim();
-                       //
-                       //  loginUser(phone, context);
+                        else if (!regex.hasMatch(value))
+                          return 'Invalid phone number';
+                        else
+                          return null;
+
                       },
-                      color: Colors.blue,
+                      onSaved:(v){
+                        phone=v;
+
+                      },
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(8)),
+                              borderSide: BorderSide(color: Colors.grey[200])
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(8)),
+                              borderSide: BorderSide(color: Colors.grey[300])
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          hintText: "Phone Number"
+                      ),
+
+                      keyboardType: TextInputType.number,
+                      controller: _phoneController,
                     ),
-                  )
-                ],
+
+                    SizedBox(height: 16,),
+
+                    SizedBox(height: 16,),
+                    SizedBox(height: 16,),
+
+                    Container(
+                      color: Colors.green,
+                      width: double.infinity,
+                      child: FlatButton(
+                        child: Text("Get OTP"),
+                        textColor: Colors.white,
+                        padding: EdgeInsets.all(16),
+                        onPressed: (){
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            Navigator.push(context, MaterialPageRoute(builder: (
+                                context) => LoginSample(_phoneController.text)),
+                            );
+                          }
+
+                          //code for sign in
+                         // Place B
+                         //  final phone = _phoneController.text.trim();
+                         //
+                         //  loginUser(phone, context);
+                        },
+                        color: Colors.green,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        )
+          )
+      ),
     );
   }
 

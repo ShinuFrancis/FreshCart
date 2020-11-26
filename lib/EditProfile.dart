@@ -166,35 +166,25 @@ class _Profile extends State<Profile> {
                         children: [
 
                           CircleAvatar(
-
-                            radius: 80,
-                            backgroundColor: Color(0xFFE3F2FD),
-
-                            backgroundImage: _image!=null?
-                            FileImage(_image):profile['photo']!=null?
-                            NetworkImage(Prefmanager.baseurl+"/u/"+profile['photo']):
-                            AssetImage("Assets/sigup.png" ),
-
-                            //_image,
-                            // width: 120,
-                            // height: 120,
-                            // fit: BoxFit.contain,
+                            radius: 50.0,
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage('Assets/sigup.png'),
                           ),
-                          new Positioned(
-                              bottom: 0,
-                              right:0,
-                              child:ClipOval(
-                                child:Container(
-                                  color:Colors.green,
-                                  child: IconButton(
-                                    icon:Icon(Icons.camera_alt,color:Colors.white),
-                                    onPressed: (){
-                                      _showPicker(context);
-                                    },
-                                  ),
-                                ),
-                              )
-                          )
+                          // new Positioned(
+                          //     bottom: 0,
+                          //     right:0,
+                          //     child:ClipOval(
+                          //       child:Container(
+                          //         color:Colors.green,
+                          //         child: IconButton(
+                          //           icon:Icon(Icons.camera_alt,color:Colors.white),
+                          //           onPressed: (){
+                          //             _showPicker(context);
+                          //           },
+                          //         ),
+                          //       ),
+                          //     )
+                          // )
                         ],
                       ) ,
                     ),

@@ -71,166 +71,169 @@ class _ViewProduct extends State<ViewProduct>{
   @override
   Widget build(BuildContext context) {
 
-  return  Scaffold(
-  appBar: AppBar(
-  title: Text("Product List",style: TextStyle(color: Colors.blue,fontSize: 20),),
-  centerTitle: true,
-  // iconTheme: IconThemeData(
-  // color: Colors.black
-  // ),
-      elevation: 0.0,
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back,color:Colors.black12),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-  backgroundColor: Colors.white,
-  //elevation: 0.0,
-  actions: <Widget>[
-  ]
+  return  WillPopScope(
+    onWillPop: ()async=>false,
+    child: Scaffold(
+    appBar: AppBar(
+    title: Text("Product List",style: TextStyle(color: Colors.blue,fontSize: 20),),
+    centerTitle: true,
+    // iconTheme: IconThemeData(
+    // color: Colors.black
+    // ),
+        elevation: 0.0,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back,color:Colors.black12),
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
+    backgroundColor: Colors.white,
+    //elevation: 0.0,
+    actions: <Widget>[
+    ]
 
-  ),
-  body:progress?Center( child: CircularProgressIndicator(),):
-  Column(
-  children: [
-  Expanded(
-  child: NotificationListener<ScrollNotification>(
-  onNotification: (ScrollNotification scrollInfo) {
-  if (!pageLoading && scrollInfo.metrics.pixels ==
-  scrollInfo.metrics.maxScrollExtent) {
-  print(total);
-  print(product.length);
-  if(total>product.length){
-  ProductView();
-  setState(() {
-  pageLoading = true;
-  });
-  }
-  else{
-  setState(() {
-  pageLoading = false;
-  });
-  }
-
-
-  }
-  return true;
-  },
-
-  child: ListView.builder(
-
-  itemCount:product.length,
-  itemBuilder:(BuildContext context,int index) {
-
-  return
-  Card(
-  child: InkWell(
-  onTap: ()async{
-    bool pro=await
-
-    Navigator.push(
-        context, new MaterialPageRoute(
-        builder: (context) => DetailProductView(product[index]['_id'])));
-    product.clear();
-    page =1;
+    ),
+    body:progress?Center( child: CircularProgressIndicator(),):
+    Column(
+    children: [
+    Expanded(
+    child: NotificationListener<ScrollNotification>(
+    onNotification: (ScrollNotification scrollInfo) {
+    if (!pageLoading && scrollInfo.metrics.pixels ==
+    scrollInfo.metrics.maxScrollExtent) {
+    print(total);
+    print(product.length);
+    if(total>product.length){
     ProductView();
+    setState(() {
+    pageLoading = true;
+    });
+    }
+    else{
+    setState(() {
+    pageLoading = false;
+    });
+    }
 
-  },
 
-  child: new Container(
+    }
+    return true;
+    },
 
-  padding: new EdgeInsets.all(10.0),
+    child: ListView.builder(
 
-  child: Row(
-  children: [
+    itemCount:product.length,
+    itemBuilder:(BuildContext context,int index) {
 
-    Container(
-      padding: EdgeInsets.all(20),
-      // alignment: Alignment.center,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(70.0),
-        child: FadeInImage(
+    return
+    Card(
+    child: InkWell(
+    onTap: ()async{
+      bool pro=await
 
-          image: NetworkImage(
-              "https://scitechdaily.com/images/Twain-Betta-Fish.jpg"),
-          placeholder: AssetImage(
-              "Assets/sigup.png"),
-          fit: BoxFit.cover,
-          width: 50,
-          height: 50,
+      Navigator.push(
+          context, new MaterialPageRoute(
+          builder: (context) => DetailProductView(product[index]['_id'])));
+      product.clear();
+      page =1;
+      ProductView();
 
+    },
+
+    child: new Container(
+
+    padding: new EdgeInsets.all(10.0),
+
+    child: Row(
+    children: [
+
+      Container(
+        padding: EdgeInsets.all(20),
+        // alignment: Alignment.center,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(70.0),
+          child: FadeInImage(
+
+            image: NetworkImage(
+                "https://scitechdaily.com/images/Twain-Betta-Fish.jpg"),
+            placeholder: AssetImage(
+                "Assets/sigup.png"),
+            fit: BoxFit.cover,
+            width: 50,
+            height: 50,
+
+          ),
         ),
       ),
-    ),
 
-  Expanded(
-  flex: 1,
-  child: new Column(
-  children: <Widget>[
+    Expanded(
+    flex: 1,
+    child: new Column(
+    children: <Widget>[
 
-  Row(
-  children: [
-  Expanded(
-  flex: 1,
-  child: Text(product[index]['productname'],style: TextStyle(fontSize: 15),maxLines:2,overflow: TextOverflow.ellipsis,)),
-
-  ],
-  ),
-    SizedBox(
-      height: 10,
-    ),
-
-  SizedBox(
-  height: 10,
-  ),
-
-  Row(
-  children: [
-  //Text("Mobile::",style: TextStyle(fontSize: 20)),
-  Text(product[index]['description']??" ",style: TextStyle(fontSize: 15)
-  ),
-  ],
-  ),
-  SizedBox(
-  height: 10,
-  ),
     Row(
-      children: [
-        //Text("Mobile::",style: TextStyle(fontSize: 20)),
-        Text(product[index]['category']['name'],style: TextStyle(fontSize: 15)
-       ),
-      ],
+    children: [
+    Expanded(
+    flex: 1,
+    child: Text(product[index]['productname'],style: TextStyle(fontSize: 15),maxLines:2,overflow: TextOverflow.ellipsis,)),
+
+    ],
+    ),
+      SizedBox(
+        height: 10,
+      ),
+
+    SizedBox(
+    height: 10,
+    ),
+
+    Row(
+    children: [
+    //Text("Mobile::",style: TextStyle(fontSize: 20)),
+    Text(product[index]['description']??" ",style: TextStyle(fontSize: 15)
+    ),
+    ],
     ),
     SizedBox(
-      height: 10,
+    height: 10,
+    ),
+      Row(
+        children: [
+          //Text("Mobile::",style: TextStyle(fontSize: 20)),
+          Text(product[index]['category']['name'],style: TextStyle(fontSize: 15)
+         ),
+        ],
+      ),
+      SizedBox(
+        height: 10,
+      ),
+
+
+    ],
+    ),
+    ),
+    ],
+    ),
+
     ),
 
 
-  ],
-  ),
-  ),
-  ],
-  ),
-
-  ),
+    ),
+    );
 
 
-  ),
-  );
-
-
-  }
-  ),
-  ),
-  ),
-  Container(
-  height: pageLoading ? 50.0 : 0,
-  color: Colors.transparent,
-  child: Center(
-  child: new CircularProgressIndicator(),
-  ),
-  ),
-  ]
-  )
+    }
+    ),
+    ),
+    ),
+    Container(
+    height: pageLoading ? 50.0 : 0,
+    color: Colors.transparent,
+    child: Center(
+    child: new CircularProgressIndicator(),
+    ),
+    ),
+    ]
+    )
+    ),
   );
 
 

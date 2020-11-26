@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:freshcart_seller/AddDeliveryDate.dart';
 import 'package:freshcart_seller/AddProduct.dart';
+import 'package:freshcart_seller/AddSaleLocation.dart';
 import 'package:freshcart_seller/EditProduct.dart';
 import 'package:freshcart_seller/EditProfile.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
@@ -22,6 +24,7 @@ class AddProfile extends StatefulWidget {
 
 
 class _AddProfile extends State<AddProfile> {
+  @override
   void initState(){
     super.initState();
     viewprofile();
@@ -39,6 +42,7 @@ class _AddProfile extends State<AddProfile> {
       'Accept': 'application/json',
       'x-auth-token':token
     };
+    print(token);
     var response = await http.get(url,headers:requestHeaders);
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
@@ -151,14 +155,7 @@ class _AddProfile extends State<AddProfile> {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => AddProfile()));
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.account_circle), title: Text("My Account"),
-                onTap: () {
-                  Navigator.push(
-                      context, new MaterialPageRoute(
-                      builder: (context) => new Viewprofile()));
-                },
-              ),
+
               ListTile(
                 leading: Icon(Icons.collections), title: Text("View Products"),
                 onTap: () {
@@ -196,7 +193,8 @@ class _AddProfile extends State<AddProfile> {
           ),
         ),
 
-    body:Container(
+    body:progress ? Center(child:  CircularProgressIndicator(),):
+    Container(
       padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -215,8 +213,8 @@ class _AddProfile extends State<AddProfile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(profile['name']),
-                  Text(profile['phone']),
-                  Text(profile['email'])
+                Text(profile['phone']),
+                 Text(profile['email'])
                 ],
               ),
               IconButton(
@@ -313,6 +311,31 @@ class _AddProfile extends State<AddProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
+                          Icons.add_location,
+                          size: 30,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("Add Sales Location"),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new AddSaleLocation()));
+                  },
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
                           Icons.date_range,
                           size: 30,
                           color: Colors.green,
@@ -328,7 +351,7 @@ class _AddProfile extends State<AddProfile> {
                   onTap: (){
                     Navigator.push(
                         context, new MaterialPageRoute(
-                        builder: (context) => new SetDeliveryDate()));
+                        builder: (context) => new AddDeliveryDate()));
                   },
                 ),
                 Container(

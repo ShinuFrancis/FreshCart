@@ -32,7 +32,7 @@ class _LoginSample extends State<LoginSample> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var verify;
-  var email,phone,otp,name;
+  var phone,otp;
   var verificationId;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -48,7 +48,7 @@ class _LoginSample extends State<LoginSample> {
   var progress=true;
   bool isnew=false;
   void check()async{
-    var url = 'http://192.168.50.75:3300/user/check/phone';
+    var url = Prefmanager.baseurl+'/user/check/phone';
     Map data = {
       "phone": widget.phone,
     };
@@ -83,7 +83,7 @@ class _LoginSample extends State<LoginSample> {
         var url = Prefmanager.baseurl+'/user/signupseller';
           Map data = {
             "token":idToken,
-          "phone":widget.phone,
+            "phone":widget.phone,
             "email":_emailController.text,
             "name":_nameController.text,
             "lat":lat.toString(),
@@ -102,9 +102,10 @@ class _LoginSample extends State<LoginSample> {
              await Prefmanager.setuserid(json.decode(response.body)['signindata']['id']);
             print("Navigation");
             pro=false;
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (
-                context) =>ViewCategory()),
-            );
+            ProductView();
+            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (
+            //     context) =>ViewCategory()),
+            // );
           }
           else
             Fluttertoast.showToast(
@@ -156,7 +157,8 @@ class _LoginSample extends State<LoginSample> {
           //automaticallyImplyLeading: true,
         ),
 
-        body: Form(
+        body:
+        Form(
           key: _formKey,
           child: Padding(
             padding: EdgeInsets.all(10),
@@ -185,9 +187,7 @@ class _LoginSample extends State<LoginSample> {
                       else
                         return null;
                     },
-                    onSaved:(v) {
-                      name = v;
-                    },
+
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -223,9 +223,7 @@ class _LoginSample extends State<LoginSample> {
                       else
                         return null;
                       },
-                        onSaved:(v) {
-                          email = v;
-                        },
+
                         decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -255,7 +253,7 @@ class _LoginSample extends State<LoginSample> {
 
                   Container(
                       alignment: Alignment.centerLeft,
-                      child: Text("Enter OTP:", style:TextStyle(fontWeight:FontWeight.bold, fontSize: 20, color: Colors.blue))
+                      child: Text("Enter OTP:", style:TextStyle(fontWeight:FontWeight.bold, fontSize: 20, color: Colors.green))
                   ),
             OTPTextField(
               length: 6,
@@ -384,6 +382,33 @@ class _LoginSample extends State<LoginSample> {
     } catch (e) {
       print(e);
     }
+  }
+  List product=[] ;
+  void ProductView () async {
+    setState(() {
+      progress = true;
+    });
+    var url = Prefmanager.baseurl + '/product/myproducts';
+    print("ghjkjklk");
+    var token = await Prefmanager.getToken();
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'x-auth-token': token
+    };
+    var response = await http.get(url, headers: requestHeaders);
+    print(json.decode(response.body));
+    if (json.decode(response.body)['status']) {
+      Navigator.pushReplacement(
+                      context, new MaterialPageRoute(
+                      builder: (context) => new AddProfile()));
+    }
+    else{
+      Navigator.pushReplacement(
+                      context, new MaterialPageRoute(
+                      builder: (context) => new ViewCategory()));
+    }
+
   }
 
 }
