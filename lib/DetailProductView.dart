@@ -64,7 +64,27 @@ class _DetailProductView extends State<DetailProductView>{
       onWillPop: ()async=>false,
       child: Scaffold(
 
+        appBar: AppBar(
 
+            title: Text("Product View"),
+            centerTitle: true,
+
+            //leading: Icon(Icons.arrow_back),
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back,color:Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: Colors.green,
+            actions: <Widget>[
+
+
+
+
+              // Here we take the value from the MyHomePage object that was created by
+              // the App.build method, and use it to set our appbar title.
+              //title: Text(widget.title),
+            ]
+        ),
         body: progress ? Center(child:  CircularProgressIndicator(),):
 
         SafeArea(
@@ -72,7 +92,7 @@ class _DetailProductView extends State<DetailProductView>{
             child: Container(
               //IconButton(icon: Icon(Icons.arrow_back),color: Colors.black, onPressed: () => { }),
               margin: const EdgeInsets.all(10.0),
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
 
                 gradient: LinearGradient(
@@ -85,7 +105,7 @@ class _DetailProductView extends State<DetailProductView>{
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(child: IconButton(icon: Icon(Icons.arrow_back),color: Colors.black,alignment:Alignment.topLeft,onPressed: () => {Navigator.of(context).pop(), })),
+                      //Container(child: IconButton(icon: Icon(Icons.arrow_back),color: Colors.black,alignment:Alignment.topLeft,onPressed: () => {Navigator.of(context).pop(), })),
                       Stack(
                         children: [
 

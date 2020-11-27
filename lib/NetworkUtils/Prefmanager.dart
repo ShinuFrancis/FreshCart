@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefmanager{
-  //static final baseurl="http://192.168.50.75:3300";
-  static final baseurl="http://192.168.50.110:3300";
+  static final baseurl="http://192.168.50.75:3300";
+  //static final baseurl="http://192.168.50.110:3300";
 
   static setToken(var token)async{
     SharedPreferences prefs=await SharedPreferences.getInstance();

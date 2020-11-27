@@ -130,14 +130,15 @@ class _AddProduct extends State<AddProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title:Text("Add Product",style: TextStyle(color: Colors.black,fontSize: 20),),
+        backgroundColor: Colors.green,
+        title:Text("Add Product",style: TextStyle(color: Colors.white,fontSize: 20),),
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back,color:Colors.black12),
+          icon: new Icon(Icons.arrow_back,color:Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10),

@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/AddProduct.dart';
+import 'package:freshcart_seller/AddSaleLocation.dart';
 import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
@@ -75,6 +76,9 @@ class _ViewCategory extends State<ViewCategory> {
     if (json.decode(response.body)['status']) {
       listcat = json.decode(response.body)['data'];
 
+      Navigator.push(
+          context, new MaterialPageRoute(
+          builder: (context) => new AddSaleLocation()));
       print(listcat[0]['name']);
     }
 
@@ -107,7 +111,7 @@ class _ViewCategory extends State<ViewCategory> {
 
             //leading: Icon(Icons.arrow_back),
            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back,color:Colors.white),
+              icon: new Icon(Icons.arrow_back,color:Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor: Colors.green,
@@ -240,15 +244,17 @@ class _ViewCategory extends State<ViewCategory> {
         body:
         SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
 
             children: <Widget>[
 
 
               progress?Center( child: CircularProgressIndicator(),):
               Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(20),
 
-                  child:Text("View Category", style: TextStyle(fontSize: 18,color:Colors.green)),
+                  child:Text("Category", style: TextStyle(fontSize: 18,color:Colors.black)),
               ),
              SizedBox(
                height: 20,

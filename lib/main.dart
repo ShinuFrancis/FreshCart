@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -82,10 +83,14 @@ class SecondScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var email,phone;
+  Future<bool>_willpopCallback()async{
+    exit(0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return new WillPopScope(
+      onWillPop:_willpopCallback,
       child: Scaffold(
           key: _scaffoldKey,
           body: SafeArea(

@@ -75,17 +75,17 @@ class _ViewProduct extends State<ViewProduct>{
     onWillPop: ()async=>false,
     child: Scaffold(
     appBar: AppBar(
-    title: Text("Product List",style: TextStyle(color: Colors.blue,fontSize: 20),),
+    title: Text("Product List",style: TextStyle(color: Colors.white,fontSize: 20),),
     centerTitle: true,
     // iconTheme: IconThemeData(
     // color: Colors.black
     // ),
         elevation: 0.0,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back,color:Colors.black12),
+          icon: new Icon(Icons.arrow_back,color:Colors.black),
           onPressed: () => Navigator.of(context).pop(true),
         ),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.green,
     //elevation: 0.0,
     actions: <Widget>[
     ]

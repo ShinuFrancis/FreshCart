@@ -122,7 +122,7 @@ var city=[];
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back,color:Colors.white),
+          icon: new Icon(Icons.arrow_back,color:Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -198,13 +198,20 @@ var city=[];
                       textField: 'display',
                       valueField: 'value',
                       required: true,
-                      onSaved: (newVal) {
-                      cityArray.add(newVal);
-                      setState(() {
-                        selectedCity= newVal;
-                        print(selectedCity);
-                      });
-                    },
+                    //   onSaved: (newVal) {
+                    //   cityArray.add(newVal);
+                    //   setState(() {
+                    //     selectedCity= newVal;
+                    //     print(selectedCity);
+                    //   });
+                    // }
+                     onSaved: (value) {
+                       selectedCity="";
+                       print('The value is $value');
+                       print(value is List);
+                       selectedCity = value;
+                       // value.forEach((element) {_mySelection.add("$element"); });
+                     }
                   ),
                 ),
 
@@ -244,10 +251,8 @@ var city=[];
 var url = Prefmanager.baseurl+'/user/Edit';
 var token = await Prefmanager.getToken();
     Map<String, dynamic> data = {
-      "name":"hhjjk",
-      "email":"sfk@gmail.com",
-      "phone":"9876543212",
-       "salelocations":cityArray,
+
+       "salelocations":selectedCity,
     };
 
 
@@ -256,6 +261,9 @@ var body =json.encode(data);
 var response = await http.post(url, headers:{"Content-Type":"application/json", "x-auth-token":token}, body:body);
 print(json.decode(response.body));
     if(json.decode(response.body)['status']) {
+      Navigator.push(
+          context, new MaterialPageRoute(
+          builder: (context) => new AddProfile()));
 
       Fluttertoast.showToast(
           msg: json.decode(response.body)['msg'],

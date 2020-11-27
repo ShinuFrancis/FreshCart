@@ -20,49 +20,16 @@ class AddDeliveryDate extends StatefulWidget {
 
 
 class _AddDeliveryDate extends State<AddDeliveryDate> {
+  DateTime selectedDate = DateTime.now();
   var formattedDate = new DateFormat('dd-MM-yyyy');
   void initState(){
     super.initState();
-    category();
     DeliveryDate();
 
 
   }
 
-  var listcat=[];
-  bool prog=true;
-  void  category() async {
-    print("pro");
-    var url =  Prefmanager.baseurl+'/category/getlist';
-    var token = await Prefmanager.getToken();
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'x-auth-token':token
-    };
-    var response = await http.get(url,headers:requestHeaders);
-    print(json.decode(response.body));
-    if (json.decode(response.body)['status']) {
-      listcat = json.decode(response.body)['data'];
-
-      print(listcat[0]['name']);
-    }
-
-    else
-      Fluttertoast.showToast(
-          msg: json.decode(response.body)['msg'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          fontSize: 20.0
-      );
-
-    setState(() {
-
-    });
-    prog=false;
-  }
+ bool pro=true;
   var date=[];
   void  DeliveryDate() async {
     print("pro");
@@ -76,9 +43,10 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
     var response = await http.get(url,headers:requestHeaders);
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
+
       date = json.decode(response.body)['data'];
 
-      print(date[0]['deliveryDate']);
+      //print(date[0]['deliveryDate']);
     }
 
     else
@@ -94,7 +62,7 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
     setState(() {
 
     });
-    prog=false;
+    pro=false;
   }
 
 
@@ -107,11 +75,12 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
       child: Scaffold(
         appBar: AppBar(
 
-            title: Text("FRESH CART"),
+            title: Text("Delivery Date"),
+            centerTitle: true,
 
             //leading: Icon(Icons.arrow_back),
             leading: new IconButton(
-              icon: new Icon(Icons.arrow_back,color:Colors.white),
+              icon: new Icon(Icons.arrow_back,color:Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor: Colors.green,
@@ -129,14 +98,15 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
         SingleChildScrollView(
           child: Column(
 
+
               children: <Widget>[
 
 
-                prog?Center( child: CircularProgressIndicator(),):
+                pro?Center( child: CircularProgressIndicator(),):
                 Container(
                   padding: EdgeInsets.all(10),
 
-                  child:Text("Delivery Date", style: TextStyle(fontSize: 18,color:Colors.green)),
+                  //child:Text("Delivery Date", style: TextStyle(fontSize: 18,color:Colors.black)),
                 ),
                 SizedBox(
                   height: 20,
@@ -144,52 +114,64 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
                 Container(
                   padding: EdgeInsets.all(20),
                   child: GridView.count(
+                    childAspectRatio:0.9,
 
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3 ,
+                    crossAxisCount: 2 ,
 
-                    children: List.generate(listcat.length,(index){
-                      return GestureDetector(
-                          child: Container(
-                            child: Card(
+                    children: List.generate(date.length,(index){
+                      return Container(
+                        child: Card(
 
-                              child: Column(
+                          child: Column(
 
-                                children: [
-                                  SizedBox(
-                                    height: 30,
-
-                                  ),
-                                  Icon(
-                                    Icons.description,
-                                    size: 20,
-                                    color: Colors.green,
-                                  ),
-                                  //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
-
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(listcat[index]['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  //Text(formattedDate.format(DateTime.parse(date[index]['deliveryDate']))),
-                                  //Text(date[index]['deliveryDate'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
-                                ],
+                            children: [
+                              SizedBox(
+                                height: 30,
 
                               ),
+                              Icon(
+                                Icons.description,
+                                size: 40,
+                                color: Colors.green,
+                              ),
+                              //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
 
-                            ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(date[index]['category']['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              date[index]['deliveryDate']==null?SizedBox.shrink():Text(formattedDate.format(DateTime.parse(date[index]['deliveryDate']))),
+                              //Text(date[index]['deliveryDate'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
+                              SizedBox(
+                                height: 10,
+                              ),
+
+                              //selectedDate.difference(DateTime.parse(date[index]['deliveryDate'])).inDays>0?
+                        MaterialButton(
+                                textColor: Colors.black,
+                                padding: EdgeInsets.all(16),
+                                child: Text('Update delivery date',style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
+                                onPressed: () {
+                                  print(selectedDate);
+                                  print(date[index]['deliveryDate']);
+                                  print(formattedDate.format(selectedDate).compareTo(date[index]['deliveryDate']));
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => SetDeliveryDate(date[index]['category']['name'],date[index]['deliveryDate'])));
+                                },
+                              )
+                            //:SizedBox.shrink()
+                            ],
+
+
                           ),
-                          onTap:() {
 
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => SetDeliveryDate()));
 
-                          }
-
+                        ),
                       );
 
 

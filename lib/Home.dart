@@ -76,6 +76,7 @@ class _AddProfile extends State<AddProfile> {
         appBar: AppBar(
 
             title: Text("FRESH CART"),
+            centerTitle: true,
 
             //leading: Icon(Icons.menu),
 
@@ -116,6 +117,7 @@ class _AddProfile extends State<AddProfile> {
         // ),
 
         drawer: Drawer(
+
           child:progress?Center( child: CircularProgressIndicator(),):
           ListView(
             // Important: Remove any padding from the ListView.
@@ -195,6 +197,7 @@ class _AddProfile extends State<AddProfile> {
 
     body:progress ? Center(child:  CircularProgressIndicator(),):
     Container(
+
       padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -242,6 +245,7 @@ class _AddProfile extends State<AddProfile> {
           Container(
             //height: 300,
             //width:MediaQuery.of(context).size.width/1,
+
             height:MediaQuery.of(context).size.height-320,
 
             child: GridView.extent(

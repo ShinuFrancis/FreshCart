@@ -11,7 +11,8 @@ import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 class SetDeliveryDate extends StatefulWidget {
-
+  final String name,deliveryDate;
+  SetDeliveryDate(this.name,this.deliveryDate);
 
 
   @override
@@ -24,33 +25,45 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController deliveryController = TextEditingController();
-  var myselection,deliverydate;
+  TextEditingController categoryController = TextEditingController();
+
+  var myselection,deliverydate,cat;
 
   var  selectedvalue;
 
 
   @override
+  var formattedDate = new DateFormat('dd-MM-yyyy');
   void initState() {
     super.initState();
-    category();
+    print(widget.name);
+    print(widget.deliveryDate);
+    DeliveryDate();
+    //category();
+
 
   }
-  bool progress=true;
-  var listcat=[];
-  void  category() async {
+  bool pro=true;
+  var date=[];
+  void  DeliveryDate() async {
     print("pro");
-    var url = Prefmanager.baseurl + '/category/getlist';
+    var url =  Prefmanager.baseurl+'/user/getmycategories';
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'x-auth-token': token
+      'x-auth-token':token
     };
-    var response = await http.get(url, headers: requestHeaders);
+    var response = await http.get(url,headers:requestHeaders);
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
-      listcat = json.decode(response.body)['data'];
-      print(listcat[0]['name']);
+      date = json.decode(response.body)['data'];
+      categoryController.text=widget.name;
+      deliveryController.text=formattedDate.format(DateTime.parse(widget.deliveryDate));
+      print(categoryController.text);
+      print(deliveryController.text);
+
+      //print(date[0]['deliveryDate']);
     }
 
     else
@@ -66,9 +79,10 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
     setState(() {
 
     });
-    progress = false;
+    pro=false;
   }
-    @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +91,7 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back,color:Colors.white),
+          icon: new Icon(Icons.arrow_back,color:Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -87,25 +101,46 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
           key: _formKey,
           child: Column(
               children: <Widget>[
+                // Container(
+                //   padding: EdgeInsets.all(20),
+                //   child: DropdownButton(
+                //     autofocus: true,
+                //     isExpanded: true,
+                //     hint: new Text('Category'),
+                //     items: .map((item) {
+                //       return new DropdownMenuItem(
+                //         child: new Text(item['name']),
+                //         value: item['_id'].toString(),
+                //       );
+                //     }).toList(),
+                //     onChanged: (newVal) {
+                //       setState(() {
+                //         myselection = newVal;
+                //         print(myselection);
+                //       });
+                //     },
+                //     value: myselection,
+                //
+                //   ),
+                // ),
                 Container(
                   padding: EdgeInsets.all(20),
-                  child: DropdownButton(
+                  child: TextFormField(
                     autofocus: true,
-                    isExpanded: true,
-                    hint: new Text('Category'),
-                    items: listcat.map((item) {
-                      return new DropdownMenuItem(
-                        child: new Text(item['name']),
-                        value: item['_id'].toString(),
-                      );
-                    }).toList(),
-                    onChanged: (newVal) {
-                      setState(() {
-                        myselection = newVal;
-                        print(myselection);
-                      });
+                    decoration: InputDecoration(
+                      labelText: 'Category',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'category';
+                      }
+
+
+                      else
+                        return null;
                     },
-                    value: myselection,
+
+                    controller: categoryController,
 
                   ),
                 ),
@@ -127,10 +162,7 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
 
                       },
 
-                      onSaved:(v){
-                        deliverydate=v;
 
-                      },
 
                       controller: deliveryController,
                       decoration: InputDecoration(
@@ -223,15 +255,15 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
     var url = Prefmanager.baseurl +'/Product/Adddeliverydate';
     var token = await Prefmanager.getToken();
     Map data={
-      "x-auth-token":token,
-      "category":myselection,
-      "deliverydate":deliverydate
+     // "x-auth-token":token,
+      "category":categoryController.text,
+      "deliverydate":deliveryController.text
 
     };
     print(token);
     print(data.toString());
     var body =json.encode(data);
-    var response = await http.post(url, headers:{"Content-Type":"application/json", "x-auth-token":token}, body:body);
+    var response = await http.post(url, headers:{"Content-Type":"application/json","x-auth-token":token}, body:body);
     print(json.decode(response.body));
     if(json.decode(response.body)['status']) {
       Fluttertoast.showToast(
