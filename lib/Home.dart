@@ -11,7 +11,9 @@ import 'package:freshcart_seller/AddSaleLocation.dart';
 import 'package:freshcart_seller/EditProduct.dart';
 import 'package:freshcart_seller/EditProfile.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/PurchaseRequest.dart';
 import 'package:freshcart_seller/SetDeliveryDate.dart';
+import 'package:freshcart_seller/UpdateSaleLocation.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
@@ -126,12 +128,12 @@ class _AddProfile extends State<AddProfile> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.all(40),
                     alignment: Alignment.bottomCenter,
                     child:CircleAvatar(
                       radius: 60.0,
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('Assets/sigup.png'),
+                      backgroundImage: AssetImage('Assets/green.png'),
 
                     ),
                   ),
@@ -142,7 +144,7 @@ class _AddProfile extends State<AddProfile> {
                     child: Container(
                       padding: EdgeInsets.all(10),
 
-                     child:Text(profile['name']),
+                     child:Text(profile['name'],style: TextStyle(fontWeight: FontWeight.bold,fontSize:18),),
                      ),
                   ),
 
@@ -196,244 +198,268 @@ class _AddProfile extends State<AddProfile> {
         ),
 
     body:progress ? Center(child:  CircularProgressIndicator(),):
-    Container(
+    Card(
+      child: Container(
 
-      padding: EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 50.0,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage('Assets/sigup.png'),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(profile['name']),
-                Text(profile['phone']),
-                 Text(profile['email'])
-                ],
-              ),
-              IconButton(
-                  icon: new Icon(Icons.edit),
-                  color:Colors.black,
-                  onPressed: () async{
-                    bool pro=await
-                    Navigator.push(
-                        context, new MaterialPageRoute(builder: (context) =>new Profile()));
-                    if(pro){
-                      print("pro");
-                      viewprofile();
+        height:MediaQuery.of(context).size.height-70 ,
+
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 50.0,
+                  backgroundColor: Colors.white,
+                  backgroundImage: AssetImage('Assets/green.png'),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(profile['name']),
+                  Text(profile['phone']),
+                   Text(profile['email'])
+                  ],
+                ),
+                IconButton(
+                    icon: new Icon(Icons.edit),
+                    color:Colors.black,
+                    onPressed: () async{
+                      bool pro=await
+                      Navigator.push(
+                          context, new MaterialPageRoute(builder: (context) =>new Profile()));
+                      if(pro){
+                        print("pro");
+                        viewprofile();
+                      }
+                      else{}
                     }
-                    else{}
-                  }
-              ),
+                ),
 
 
-            ],
-          ),
-              SizedBox(
-                height: 10,
-              ),
+              ],
+            ),
+                SizedBox(
+                  height: 10,
+                ),
 
-          Container(
-            //height: 300,
-            //width:MediaQuery.of(context).size.width/1,
+            Container(
+              //height: 300,
+              //width:MediaQuery.of(context).size.width/1,
 
-            height:MediaQuery.of(context).size.height-320,
+              height:MediaQuery.of(context).size.height-250,
 
-            child: GridView.extent(
-              shrinkWrap: true,
+              child: GridView.extent(
+                shrinkWrap: true,
 
-              primary: false,
-              padding: const EdgeInsets.all(10),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 20,
-              maxCrossAxisExtent: 180.0,
-              children: <Widget>[
-                GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
+                primary: false,
+                padding: const EdgeInsets.all(15),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 20,
+                maxCrossAxisExtent: 180.0,
+                children: <Widget>[
+                  GestureDetector(
+                      child: Card(
+
+                        elevation: 5.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: 40,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Add Product",textAlign: TextAlign.center,),
+
+                          ],
+                        ),
+                      ),
+                      onTap:() {Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new ViewCategory()));
+
+                      }
+                  ),
+                  GestureDetector(
+                    child: Card(
+                      elevation: 5.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.add,
-                            size: 30,
+                            Icons.collections,
+                            size: 40,
                             color: Colors.green,
                           ),
                           SizedBox(
                             height: 20,
                           ),
-                          Text("Add Product"),
-
+                          Text("View Products",textAlign: TextAlign.center,),
                         ],
                       ),
                       color: Colors.white,
                     ),
-                    onTap:() {Navigator.push(
-                        context, new MaterialPageRoute(
-                        builder: (context) => new ViewCategory()));
+                    onTap: (){
+                      Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new ViewProduct()));
+                    },
+                  ),
+                  GestureDetector(
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_location,
+                            size: 40,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Sales Location",textAlign: TextAlign.center,),
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new UpdateSaleLocation()));
+                    },
+                  ),
+                  GestureDetector(
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.date_range,
+                            size: 40,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Delivery Date",textAlign: TextAlign.center,),
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new AddDeliveryDate()));
+                    },
+                  ),
+                  GestureDetector(
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_shopping_cart,
+                            size: 40,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Purchase Request",textAlign: TextAlign.center,),
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                    onTap: (){
+                      Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new PurchaseRequest()));
+                    },
+                  ),
+                  GestureDetector(
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.collections,
+                            size: 40,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Orders",textAlign: TextAlign.center,),
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Card(
 
-                    }
-                ),
-                GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.collections,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("View Products"),
-                      ],
+                      elevation: 5.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.description,
+                            size: 40,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Delivery History",textAlign: TextAlign.center),
+                        ],
+                      ),
+                      color: Colors.white,
                     ),
-                    color: Colors.white,
                   ),
-                  onTap: (){
-                    Navigator.push(
-                        context, new MaterialPageRoute(
-                        builder: (context) => new ViewProduct()));
-                  },
-                ),
-                GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add_location,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("Add Sales Location"),
-                      ],
-                    ),
-                    color: Colors.white,
-                  ),
-                  onTap: (){
-                    Navigator.push(
-                        context, new MaterialPageRoute(
-                        builder: (context) => new AddSaleLocation()));
-                  },
-                ),
-                GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.date_range,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text("Set Delivery Date"),
-                      ],
-                    ),
-                    color: Colors.white,
-                  ),
-                  onTap: (){
-                    Navigator.push(
-                        context, new MaterialPageRoute(
-                        builder: (context) => new AddDeliveryDate()));
-                  },
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_shopping_cart,
-                        size: 30,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Purchase Request"),
-                    ],
-                  ),
-                  color: Colors.white,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.description,
-                        size: 30,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Delivery History"),
-                    ],
-                  ),
-                  color: Colors.white,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.collections,
-                        size: 30,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("View Orders"),
-                    ],
-                  ),
-                  color: Colors.white,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_location_alt_outlined,
-                        size: 30,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Delivery Locations"),
-                    ],
-                  ),
-                  color: Colors.white,
-                ),
-              ],
+
+                  // Container(
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       Icon(
+                  //         Icons.add_location_alt_outlined,
+                  //         size: 30,
+                  //         color: Colors.green,
+                  //       ),
+                  //       SizedBox(
+                  //         height: 20,
+                  //       ),
+                  //       Text("Delivery Locations"),
+                  //     ],
+                  //   ),
+                  //   color: Colors.white,
+                  // ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ),
 

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:freshcart_seller/AddSaleLocation.dart';
 import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewProduct.dart';
@@ -323,7 +324,7 @@ class _AddProduct extends State<AddProduct> {
         }
         Navigator.push(
             context, new MaterialPageRoute(
-            builder: (context) => new AddProfile()));
+            builder: (context) => new AddSaleLocation()));
         Fluttertoast.showToast(
             msg: json.decode(response.body)['msg'],
             toastLength: Toast.LENGTH_SHORT,

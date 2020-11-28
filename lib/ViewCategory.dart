@@ -76,9 +76,7 @@ class _ViewCategory extends State<ViewCategory> {
     if (json.decode(response.body)['status']) {
       listcat = json.decode(response.body)['data'];
 
-      Navigator.push(
-          context, new MaterialPageRoute(
-          builder: (context) => new AddSaleLocation()));
+
       print(listcat[0]['name']);
     }
 

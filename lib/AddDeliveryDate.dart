@@ -6,13 +6,17 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freshcart_seller/AddProduct.dart';
-import 'package:freshcart_seller/Home.dart';
+
+import 'package:freshcart_seller/DeliveryDate.dart';import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/SetDeliveryDate.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
 import 'package:freshcart_seller/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+
+import 'DeliveryDate.dart';
+import 'DeliveryDate.dart';
 class AddDeliveryDate extends StatefulWidget {
   @override
   _AddDeliveryDate createState() => _AddDeliveryDate();
@@ -148,23 +152,33 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
                               ),
                               date[index]['deliveryDate']==null?SizedBox.shrink():Text(formattedDate.format(DateTime.parse(date[index]['deliveryDate']))),
                               //Text(date[index]['deliveryDate'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
-                              SizedBox(
-                                height: 10,
-                              ),
-
-                              //selectedDate.difference(DateTime.parse(date[index]['deliveryDate'])).inDays>0?
-                        MaterialButton(
-                                textColor: Colors.black,
+                              date[index]['deliveryDate']==null?
+                              RaisedButton(
+                                textColor: Colors.red,
+                                   color: Colors.green,
                                 padding: EdgeInsets.all(16),
+                                child: Text('Add delivery date',style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                onPressed: () {
+                                  Navigator.push(context,MaterialPageRoute(builder: (context)=> DeliveryDates(date[index]['category']['name'],date[index]['category']['_id'])));
+                                },
+                              ):selectedDate.difference(DateTime.parse(date[index]['deliveryDate'])).inDays>0?
+                        RaisedButton(
+                          textColor: Colors.red,
+                          color: Colors.green,
+                                padding: EdgeInsets.all(16),
+
                                 child: Text('Update delivery date',style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
+
                                 onPressed: () {
                                   print(selectedDate);
                                   print(date[index]['deliveryDate']);
                                   print(formattedDate.format(selectedDate).compareTo(date[index]['deliveryDate']));
-                                  Navigator.push(context,MaterialPageRoute(builder: (context) => SetDeliveryDate(date[index]['category']['name'],date[index]['deliveryDate'])));
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => SetDeliveryDate(date[index]['category']['name'],date[index]['deliveryDate'],date[index]['category']['_id'])));
                                 },
                               )
-                            //:SizedBox.shrink()
+                            :SizedBox.shrink()
                             ],
 
 

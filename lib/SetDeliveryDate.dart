@@ -11,8 +11,8 @@ import 'package:freshcart_seller/ViewProduct.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 class SetDeliveryDate extends StatefulWidget {
-  final String name,deliveryDate;
-  SetDeliveryDate(this.name,this.deliveryDate);
+  final String name,deliveryDate,_id;
+  SetDeliveryDate(this.name,this.deliveryDate,this._id);
 
 
   @override
@@ -126,6 +126,7 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
                 Container(
                   padding: EdgeInsets.all(20),
                   child: TextFormField(
+                    readOnly: true,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: 'Category',
@@ -256,7 +257,7 @@ class _SetDeliveryDate extends State< SetDeliveryDate> {
     var token = await Prefmanager.getToken();
     Map data={
      // "x-auth-token":token,
-      "category":categoryController.text,
+      "category":widget._id,
       "deliverydate":deliveryController.text
 
     };
