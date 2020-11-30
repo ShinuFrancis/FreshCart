@@ -13,6 +13,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="freshcart_seller"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCaccNxbzwR9tMvkppT7bT7zNKjChc_yAw"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -41,6 +41,7 @@ dependencies:
   otp_text_field: ^1.0.1
   multiselect_formfield: ^ 0.1.4
   intl: ^0.16.1
+  google_maps_flutter: ^1.0.6
 
 
 

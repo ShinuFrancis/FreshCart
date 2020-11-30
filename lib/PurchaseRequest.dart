@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
+import 'package:freshcart_seller/RequestMap.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,89 +132,129 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                 //
                                 // },
 
-                                child: new Container(
-                                  padding: new EdgeInsets.all(10.0),
-
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-
-                                        children: [
-
-                                          CircleAvatar(
-                                            radius: 40.0,
-                                            backgroundColor: Colors.white,
-                                            backgroundImage: AssetImage('Assets/green.png'),
-                                          ),
-
-                                          new Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(purchase[index]['product']['productname'],style: TextStyle(fontSize: 15)),
-                                              SizedBox(
-                                                height: 10,
+                               child: new Container(
+                                 padding: new EdgeInsets.all(20.0),
+                                 child: Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: [
+                                     Expanded(
+                                       flex: 2,
+                                       child: new Column(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         children: <Widget>[
+                                           Row(
+                                             children: [
+                                               CircleAvatar(
+                                                     radius: 40.0,
+                                                     backgroundColor: Colors.white,
+                                                     backgroundImage: AssetImage('Assets/green.png'),
+                                                   ),
+                                               SizedBox(
+                                                 width: 20,
+                                               ),
+                                               Text("Product:",style: TextStyle(
+                                                   fontSize: 15,fontWeight: FontWeight.bold),),
+                                               Expanded(
+                                                   flex: 2,
+                                                   child: Text(purchase[index]['product']['productname'],
+                                                     style: TextStyle(
+                                                         fontSize: 15,fontWeight: FontWeight.bold),
+                                                     maxLines: 2,
+                                                     overflow: TextOverflow
+                                                         .ellipsis,)),
+                                               Text("Quantity:",style: TextStyle(
+                                                   fontSize: 15,fontWeight: FontWeight.bold),),
+                                               Text(purchase[index]['quantity'].toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)
                                               ),
-                                              Text(purchase[index]['deliveryaddress']['state']),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              //Text(purchase[index]['deliveryaddress']['city']
+
+                                             ],
+                                           ),
+
+                                           SizedBox(
+                                             height: 10,
+                                           ),
+
+                                           Row(
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+                                               Text("Contact:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                                             ],
+                                           ),
+
+                                           Row(
+                                             children: [
+                                               Expanded(
+                                                   flex:1,
+                                                   child: Text(purchase[index]['customer']['phone'])
+                                                 ),
+
+                                             ],
+                                           ),
+                                           Row(
+                                             children: [
+                                               Expanded(
+                                                   flex:1,
+                                                   child: Text(purchase[index]['customer']['name'])
+                                               ),
+
+                                             ],
+                                           ),
+
+                                           Row(
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+                                               Text("Delivery Address:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                                             ],
+                                           ),
+
+                                           Row(
+                                             children: [
+                                               Expanded(
+                                                 flex:1,
+                                                   child: Text(purchase[index]['deliveryaddress']['fulladdress'])),
+
+                                             ],
+                                           ),
 
 
 
+                                           SizedBox(
+                                             height: 20,
+                                           ),
 
-                                              // Row(
-                                              //   children: [
-                                              //     //Text("Mobile::",style: TextStyle(fontSize: 20)),
-                                              //     //Text(purchase[index]['quantity'],style: TextStyle(fontSize: 15)
-                                              //     //),
-                                              //   ],
-                                              // ),
-                                              // SizedBox(
-                                              //   height: 10,
-                                              // ),
-                                              // Row(
-                                              //   children: [
-                                              //     //Text("Mobile::",style: TextStyle(fontSize: 20)),
-                                              //     Text(purchase[index]['deliveryaddress']['state']
-                                              //     ),
-                                              //   ],
-                                              // ),
-                                              // SizedBox(
-                                              //   height: 10,
-                                              // ),
-                                              // Row(
-                                              //   children: [
-                                              //     //Text("Mobile::",style: TextStyle(fontSize: 20)),
-                                              //     Text(purchase[index]['deliveryaddress']['city']
-                                              //     ),
-                                              //   ],
-                                              // ),
-                                              // SizedBox(
-                                              //   height: 10,
-                                              // ),
-                                              // Row(
-                                              //   children: [
-                                              //     //Text("Mobile::",style: TextStyle(fontSize: 20)),
-                                              //     Text(purchase[index]['deliveryaddress']['fulladdress']
-                                              //     ),
-                                              //   ],
-                                              // ),
+                                           Row(
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+                                               FlatButton(
+                                                   textColor: Colors.green,
+                                                   color: Colors.white,
+                                                   child: Text('View in Map',style: TextStyle(
+                                                       fontSize: 15,fontWeight: FontWeight.bold)),
+                                                   onPressed: ()  {
+
+                                                     Navigator.push(
+                                                         context, new MaterialPageRoute(
+                                                         builder: (context) => RequestMap(purchase[index])));
+
+                                                   }
+
+                                               ),
+
+                                             ],
+                                           ),
+                                           SizedBox(
+                                             height: 10,
+                                           ),
 
 
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
 
-                                ),
+                                         ],
+                                       ),
+                                     ),
+                                   ],
+                                 ),
 
+                               ),
 
                               ),
                             );

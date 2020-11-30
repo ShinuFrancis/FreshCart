@@ -10,6 +10,7 @@ import 'package:freshcart_seller/AddProduct.dart';
 import 'package:freshcart_seller/AddSaleLocation.dart';
 import 'package:freshcart_seller/EditProduct.dart';
 import 'package:freshcart_seller/EditProfile.dart';
+import 'package:freshcart_seller/MyOrder.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/PurchaseRequest.dart';
 import 'package:freshcart_seller/SetDeliveryDate.dart';
@@ -413,6 +414,11 @@ class _AddProfile extends State<AddProfile> {
                       ),
                       color: Colors.white,
                     ),
+                    onTap:(){
+                      Navigator.push(
+                          context, new MaterialPageRoute(
+                          builder: (context) => new MyOrder()));
+                    },
                   ),
                   GestureDetector(
                     child: Card(
