@@ -69,6 +69,7 @@ flutter:
   - Assets/verification.jpg
   - Assets/spl.png
   - Assets/green.png
+  - Assets/product.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

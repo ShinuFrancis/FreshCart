@@ -420,28 +420,28 @@ class _AddProfile extends State<AddProfile> {
                           builder: (context) => new MyOrder()));
                     },
                   ),
-                  GestureDetector(
-                    child: Card(
-
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.description,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Delivery History",textAlign: TextAlign.center),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   child: Card(
+                  //
+                  //     elevation: 5.0,
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.description,
+                  //           size: 40,
+                  //           color: Colors.green,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 20,
+                  //         ),
+                  //         Text("Delivery History",textAlign: TextAlign.center),
+                  //       ],
+                  //     ),
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
 
                   // Container(
                   //   padding: const EdgeInsets.all(8),

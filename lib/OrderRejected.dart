@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:freshcart_seller/MyOrder.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/OrderApproved.dart';
 import 'package:freshcart_seller/OrderDelivered.dart';
@@ -9,14 +10,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-class MyOrder extends StatefulWidget {
+class OrderRejected extends StatefulWidget {
 
   @override
-  _MyOrder createState() => new _MyOrder();
+  _OrderRejected createState() => new _OrderRejected();
 }
 
 
-class _MyOrder extends State< MyOrder>{
+class _OrderRejected extends State< OrderRejected>{
 
 
   @override
@@ -35,7 +36,7 @@ class _MyOrder extends State< MyOrder>{
     setState(() {
       progress=true;
     });
-    var url = Prefmanager.baseurl+'/Purchase/myorders';
+    var url = Prefmanager.baseurl+'/Purchase/myorders?status='+'Rejected';
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -73,7 +74,7 @@ class _MyOrder extends State< MyOrder>{
       onWillPop: ()async=>false,
       child: Scaffold(
           appBar: AppBar(
-              title: Text("My Orders",style: TextStyle(color: Colors.white,fontSize: 20),),
+              title: Text("Rejected Orders",style: TextStyle(color: Colors.white,fontSize: 20),),
               centerTitle: true,
               // iconTheme: IconThemeData(
               // color: Colors.black
@@ -90,6 +91,7 @@ class _MyOrder extends State< MyOrder>{
 
           ),
           body:progress?Center( child: CircularProgressIndicator(),):
+
           Column(
               children: [
                 Container(
@@ -99,34 +101,33 @@ class _MyOrder extends State< MyOrder>{
                     scrollDirection: Axis.horizontal,
                     children: [
                       GestureDetector(
-                      child:Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 4,
-                        margin: const EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
+                        child:Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width / 4,
+                          margin: const EdgeInsets.only(right: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Colors.white,
+                          ),
+                          child: Text("All"),
                         ),
-                        child: Text("All",style: TextStyle(color: Colors.red),),
-                      ),
                         onTap:(){
-
                           Navigator.push(
                               context, new MaterialPageRoute(
                               builder: (context) => new MyOrder()));
                         },
                       ),
                       GestureDetector(
-                      child:Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 3,
-                        margin: const EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
+                        child:Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width / 3,
+                          margin: const EdgeInsets.only(right: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Colors.white,
+                          ),
+                          child: Text("Approved"),
                         ),
-                        child: Text("Approved"),
-                      ),
                         onTap:(){
                           Navigator.push(
                               context, new MaterialPageRoute(
@@ -134,16 +135,16 @@ class _MyOrder extends State< MyOrder>{
                         },
                       ),
                       GestureDetector(
-                      child:Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 3,
-                        margin: const EdgeInsets.only(right: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
+                        child:Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width / 3,
+                          margin: const EdgeInsets.only(right: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Colors.white,
+                          ),
+                          child: Text("Rejected",style: TextStyle(color: Colors.red),),
                         ),
-                        child: Text("Rejected"),
-                      ),
                         onTap:(){
                           Navigator.push(
                               context, new MaterialPageRoute(
@@ -151,27 +152,39 @@ class _MyOrder extends State< MyOrder>{
                         },
                       ),
                       GestureDetector(
-                      child:Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width / 3,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
+                        child:Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width / 3,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: Colors.white,
+                          ),
+                          child: Text("Delivered"),
                         ),
-                        child: Text("Delivered"),
-                      ),
                         onTap:(){
                           Navigator.push(
                               context, new MaterialPageRoute(
                               builder: (context) => new OrderDelivered()));
                         },
                       ),
+
                     ],
                   ),
 
 
                 ),
-                Expanded(
+                order.length==0?
+                Container(
+                  height: 200,
+                  width: double.infinity,
+                  //color: Colors.grey,
+                  alignment: Alignment.bottomCenter,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(30),
+                  child: Text("No Rejected Request",
+                      style: TextStyle(fontSize: 20)),
+                )
+                :Expanded(
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (ScrollNotification scrollInfo) {
                       if (!pageLoading && scrollInfo.metrics.pixels ==
@@ -302,9 +315,26 @@ class _MyOrder extends State< MyOrder>{
 
 
                                             SizedBox(
-                                              height: 20,
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Text("Rejected Reason:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                                              ],
                                             ),
 
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                    flex:1,
+                                                    child: Text(order[index]['rejectreason'])),
+
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
@@ -364,7 +394,6 @@ class _MyOrder extends State< MyOrder>{
 
 
   }
-
 
 }
 

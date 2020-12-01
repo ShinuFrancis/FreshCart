@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:freshcart_seller/MyOrder.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
-import 'package:freshcart_seller/OrderApproved.dart';
 import 'package:freshcart_seller/OrderDelivered.dart';
 import 'package:freshcart_seller/OrderMap.dart';
 import 'package:freshcart_seller/OrderRejected.dart';
@@ -9,15 +9,17 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-class MyOrder extends StatefulWidget {
+class OrderApproved extends StatefulWidget {
+  // final  details;
+  // OrderMap(this.details);
 
   @override
-  _MyOrder createState() => new _MyOrder();
+  _OrderApproved createState() => new _OrderApproved();
 }
 
 
-class _MyOrder extends State< MyOrder>{
-
+class _OrderApproved extends State< OrderApproved>{
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _MyOrder extends State< MyOrder>{
     setState(() {
       progress=true;
     });
-    var url = Prefmanager.baseurl+'/Purchase/myorders';
+    var url = Prefmanager.baseurl+'/Purchase/myorders?status='+'Approved';
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -73,7 +75,7 @@ class _MyOrder extends State< MyOrder>{
       onWillPop: ()async=>false,
       child: Scaffold(
           appBar: AppBar(
-              title: Text("My Orders",style: TextStyle(color: Colors.white,fontSize: 20),),
+              title: Text("Approved Orders",style: TextStyle(color: Colors.white,fontSize: 20),),
               centerTitle: true,
               // iconTheme: IconThemeData(
               // color: Colors.black
@@ -107,10 +109,9 @@ class _MyOrder extends State< MyOrder>{
                           borderRadius: BorderRadius.circular(15.0),
                           color: Colors.white,
                         ),
-                        child: Text("All",style: TextStyle(color: Colors.red),),
+                        child: Text("All"),
                       ),
                         onTap:(){
-
                           Navigator.push(
                               context, new MaterialPageRoute(
                               builder: (context) => new MyOrder()));
@@ -125,7 +126,7 @@ class _MyOrder extends State< MyOrder>{
                           borderRadius: BorderRadius.circular(15.0),
                           color: Colors.white,
                         ),
-                        child: Text("Approved"),
+                        child: Text("Approved",style: TextStyle(color: Colors.red),),
                       ),
                         onTap:(){
                           Navigator.push(
@@ -166,12 +167,24 @@ class _MyOrder extends State< MyOrder>{
                               builder: (context) => new OrderDelivered()));
                         },
                       ),
+
                     ],
                   ),
 
 
                 ),
-                Expanded(
+                order.length==0?
+                Container(
+                  height: 200,
+                  width: double.infinity,
+                  //color: Colors.grey,
+                  alignment: Alignment.bottomCenter,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(30),
+                  child: Text("No new products awaiting delivery",
+                      style: TextStyle(fontSize:18)),
+                )
+                :Expanded(
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (ScrollNotification scrollInfo) {
                       if (!pageLoading && scrollInfo.metrics.pixels ==
@@ -364,7 +377,6 @@ class _MyOrder extends State< MyOrder>{
 
 
   }
-
 
 }
 

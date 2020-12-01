@@ -127,7 +127,7 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title:Text("Add Sales Location",style: TextStyle(color: Colors.white,fontSize: 20),),
+        title:Text("Sales Location",style: TextStyle(color: Colors.white,fontSize: 20),),
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(

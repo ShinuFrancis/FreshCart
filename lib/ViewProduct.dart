@@ -148,19 +148,24 @@ class _ViewProduct extends State<ViewProduct>{
       Container(
         padding: EdgeInsets.all(20),
         // alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(70.0),
-          child: FadeInImage(
-
-            image: NetworkImage(
-                "https://scitechdaily.com/images/Twain-Betta-Fish.jpg"),
-            placeholder: AssetImage(
-                "Assets/sigup.png"),
-            fit: BoxFit.cover,
-            width: 50,
-            height: 50,
-
-          ),
+        // child: ClipRRect(
+        //   borderRadius: BorderRadius.circular(70.0),
+        //   child: FadeInImage(
+        //
+        //     image: NetworkImage(
+        //         "https://scitechdaily.com/images/Twain-Betta-Fish.jpg"),
+        //     placeholder: AssetImage(
+        //         "Assets/sigup.png"),
+        //     fit: BoxFit.cover,
+        //     width: 50,
+        //     height: 50,
+        //
+        //   ),
+        // ),
+       child: CircleAvatar(
+          radius: 40.0,
+          backgroundColor: Colors.white,
+          backgroundImage: AssetImage('Assets/product.jpg'),
         ),
       ),
 

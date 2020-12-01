@@ -112,12 +112,12 @@ class _DetailProductView extends State<DetailProductView>{
                           Center(
                             child: FadeInImage(
                               //image:AssetImage(Assets/login.jpg),
-                              image: NetworkImage("https://scitechdaily.com/images/Twain-Betta-Fish.jpg"),
+                              image: NetworkImage("https://ik.imagekit.io/dunzo/dunzo-catalog-prod/tr:w-300,h-300,cm-pad_resize_store_thumbnail/stores/NXB1a2RQU0FrVUxVcmtiUUQ1ZUJjQT09-1598000173793-store_image.jpg"),
 
                               placeholder: AssetImage("assets/fadein.jpg"),
                               fit: BoxFit.cover,
                               width:double.infinity,
-                              height: 200,
+                              height: 300,
                             ),
                           ),
                         ],
@@ -137,7 +137,7 @@ class _DetailProductView extends State<DetailProductView>{
                           children: [
                             Expanded(
                               flex:1,
-                                child: Text("Product Description:")),
+                                child: Text("Product Description")),
                             Expanded(
                               flex: 1,
                               child: Text(product['description']),
@@ -198,6 +198,7 @@ class _DetailProductView extends State<DetailProductView>{
                             child: Text('Delete'),
                             onPressed: () {
                               // Navigator.push(context, new MaterialPageRoute(builder: (context) =>EditFish()));
+                              showAlertDialog(context);
                               DeleteProduct();
                             },
                           ),
@@ -278,6 +279,15 @@ class _DetailProductView extends State<DetailProductView>{
       );
     progress=false;
 
+  }
+
+  void showAlertDialog(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
   }
 
 

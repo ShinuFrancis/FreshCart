@@ -8,17 +8,18 @@ import 'package:freshcart_seller/PurchaseRejected.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class RequestMap extends StatefulWidget {
+class OrderMap extends StatefulWidget {
   final  details;
-  RequestMap(this.details);
+  OrderMap(this.details);
   @override
-  _RequestMap createState() => new _RequestMap();
+  _OrderMap createState() => new _OrderMap();
 }
 
-class _RequestMap extends State<RequestMap> {
+class _OrderMap extends State<OrderMap> {
 
+  TextEditingController priceController = new TextEditingController();
 
- @override
+  @override
   void initState() {
     super.initState();
     print(widget.details);
@@ -30,15 +31,15 @@ class _RequestMap extends State<RequestMap> {
     // print(lat);
     // print(lon);
   }
- BitmapDescriptor pinLocationIcon;
- Set<Marker> _markers = Set();
+  BitmapDescriptor pinLocationIcon;
+  Set<Marker> _markers = Set();
   Completer<GoogleMapController> _controller = Completer();
   bool approved=false;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-          title: Text("Purchase Request",style: TextStyle(color: Colors.white,fontSize: 20),),
+          title: Text("Orders",style: TextStyle(color: Colors.white,fontSize: 20),),
           centerTitle: true,
           // iconTheme: IconThemeData(
           // color: Colors.black
@@ -60,7 +61,10 @@ class _RequestMap extends State<RequestMap> {
             Container(
               height:250,
               child: GoogleMap(
+                myLocationEnabled: true,
+                markers: _markers,
                 mapType: MapType.hybrid,
+
                 initialCameraPosition: CameraPosition(
                   target: LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
                   zoom: 14.4746,
@@ -70,13 +74,15 @@ class _RequestMap extends State<RequestMap> {
                   setState(() {
                     _markers.add(
                         Marker(
-                          markerId: MarkerId("ssfdgfhfh"),
-                          position:LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
-                          //icon: pinLocationIcon
+                            markerId: MarkerId("ssfdgfhfh"),
+                            position:LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
+                            //icon: pinLocationIcon
                         )
                     );
                   });
+
                 },
+
               ),
             ),
             Container(
@@ -92,7 +98,7 @@ class _RequestMap extends State<RequestMap> {
                         Row(
                           children: [
                             CircleAvatar(
-                              radius: 40.0,
+                              radius: 30.0,
                               backgroundColor: Colors.white,
                               backgroundImage: AssetImage('Assets/product.jpg'),
                             ),
@@ -177,38 +183,38 @@ class _RequestMap extends State<RequestMap> {
                         SizedBox(
                           height: 40,
                         ),
-
+                        widget.details['status']=='Approved'?
+                        Column(
+                          children:[
+                            TextField(
+                              controller: priceController,
+                              //obscureText: true,
+                              textAlign: TextAlign.left,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'PLEASE ENTER TOTAL PRICE',
+                                hintStyle: TextStyle(color: Colors.grey),
+                              ),
+                            ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MaterialButton(
                                 textColor: Colors.red,
                                 color: Colors.white,
-                                child: Text('Approve',style: TextStyle(
+                                child: Text('Mark As Delivered',style: TextStyle(
                                     fontSize: 15,fontWeight: FontWeight.bold)),
                                 onPressed: ()  {
-                                  approved=true;
+
                                   SendData();
                                 }
 
                             ),
-                            MaterialButton(
-                                textColor: Colors.red,
-                                color: Colors.white,
-                                child: Text('Reject',style: TextStyle(
-                                    fontSize: 15,fontWeight: FontWeight.bold)),
-                                onPressed: ()  {
-                                  approved=false;
-                                  Navigator.push(
-                                      context, new MaterialPageRoute(
-                                      builder: (context) => PurchaseRejected(widget.details['_id'],approved)));
 
-                                }
-
-                            ),
 
                           ],
-                        ),
+                        )]):SizedBox.shrink(),
+
                         SizedBox(
                           height: 10,
                         ),
@@ -229,12 +235,13 @@ class _RequestMap extends State<RequestMap> {
     );
   }
   void SendData() async {
-    var url = Prefmanager.baseurl +'/Purchase/Approve';
+    var url = Prefmanager.baseurl +'/Purchase/deliver';
     var token = await Prefmanager.getToken();
     Map data = {
       "x-auth-token": token,
       "id": widget.details['_id'],
-      "approve": approved
+      "totalprice":priceController.text
+
     };
 
     print(data.toString());

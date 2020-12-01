@@ -41,7 +41,7 @@ class _AddSaleLocation extends State< AddSaleLocation> {
     stateList();
    // CityList();
   }
-  bool progress=true;  bool cityProgress=true;
+  bool progress=true;
 
   var state=[];
 
@@ -81,7 +81,7 @@ class _AddSaleLocation extends State< AddSaleLocation> {
 var city=[];
 
   void  cityList( var id) async {
-    setState(() => cityProgress = true);
+    // setState(() => cityProgress = true);
     print("pro");
     var url = Prefmanager.baseurl + '/location/citylist?state='+id;
     var token = await Prefmanager.getToken();
@@ -109,7 +109,7 @@ var city=[];
           fontSize: 20.0
       );
     //cityProgress = false;
-    setState(() =>cityProgress = false);
+    //setState(() =>cityProgress = false);
 
   }
 
@@ -118,7 +118,7 @@ var city=[];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title:Text("Add Sales Location",style: TextStyle(color: Colors.white,fontSize: 20),),
+        title:Text("Sales Location",style: TextStyle(color: Colors.white,fontSize: 20),),
         centerTitle: true,
         elevation: 0.0,
         leading: new IconButton(
@@ -158,8 +158,8 @@ var city=[];
                 SizedBox(
                   height:10,
                 ),
-                cityProgress ?
-                Center(child: CircularProgressIndicator(),):
+
+               // Center(child: CircularProgressIndicator(),):
                 Container(
                   padding: EdgeInsets.all(20),
                   // child: DropdownButton(

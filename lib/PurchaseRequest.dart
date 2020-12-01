@@ -86,7 +86,20 @@ class _PurchaseRequest extends State<PurchaseRequest>{
 
           ),
           body:progress?Center( child: CircularProgressIndicator(),):
-          Column(
+           purchase.length==0?
+           Container(
+             height: 200,
+             width: double.infinity,
+             //color: Colors.grey,
+             alignment: Alignment.bottomCenter,
+             margin: EdgeInsets.all(20),
+             padding: EdgeInsets.all(30),
+             child: Text("No Purchase Requst Found",
+                 style: TextStyle(fontSize: 20)),
+           )
+
+          //Text("No Purchase Request Found",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
+          :Column(
               children: [
                 Expanded(
                   child: NotificationListener<ScrollNotification>(
@@ -147,7 +160,7 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                                CircleAvatar(
                                                      radius: 40.0,
                                                      backgroundColor: Colors.white,
-                                                     backgroundImage: AssetImage('Assets/green.png'),
+                                                     backgroundImage: AssetImage('Assets/product.jpg'),
                                                    ),
                                                SizedBox(
                                                  width: 20,
@@ -225,8 +238,8 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                            Row(
                                              mainAxisAlignment: MainAxisAlignment.start,
                                              children: [
-                                               FlatButton(
-                                                   textColor: Colors.green,
+                                               MaterialButton(
+                                                   textColor: Colors.red,
                                                    color: Colors.white,
                                                    child: Text('View in Map',style: TextStyle(
                                                        fontSize: 15,fontWeight: FontWeight.bold)),
