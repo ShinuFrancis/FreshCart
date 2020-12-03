@@ -125,6 +125,7 @@ class _ViewProduct extends State<ViewProduct>{
 
     return
     Card(
+      elevation: 4.0,
     child: InkWell(
     onTap: ()async{
       bool pro=await
@@ -143,6 +144,8 @@ class _ViewProduct extends State<ViewProduct>{
     padding: new EdgeInsets.all(10.0),
 
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
 
       Container(
@@ -176,9 +179,7 @@ class _ViewProduct extends State<ViewProduct>{
 
     Row(
     children: [
-    Expanded(
-    flex: 1,
-    child: Text(product[index]['productname'],style: TextStyle(fontSize: 15),maxLines:2,overflow: TextOverflow.ellipsis,)),
+    Text(product[index]['productname'],style: TextStyle(fontSize: 15),maxLines:2,overflow: TextOverflow.ellipsis,),
 
     ],
     ),
@@ -186,9 +187,6 @@ class _ViewProduct extends State<ViewProduct>{
         height: 10,
       ),
 
-    SizedBox(
-    height: 10,
-    ),
 
     Row(
     children: [
@@ -207,9 +205,7 @@ class _ViewProduct extends State<ViewProduct>{
          ),
         ],
       ),
-      SizedBox(
-        height: 10,
-      ),
+
 
 
     ],

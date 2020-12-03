@@ -125,120 +125,7 @@ class _ViewCategory extends State<ViewCategory> {
         ),
 
 
-        // bottomNavigationBar: BottomAppBar(
-        //   color: Colors.green,
-        //   child: new Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       Expanded(child: IconButton(icon: Icon(Icons.home,color: Colors.white,),onPressed: () {
-        //         Navigator.pushReplacement(
-        //             context, new MaterialPageRoute(
-        //             builder: (context) => new AddProfile()));
-        //       }
-        //       ),
-        //       ),
-        //
-        //       Expanded(child: IconButton(icon: Icon(Icons.person,color: Colors.white,),onPressed: () {
-        //         Navigator.push(
-        //             context, new MaterialPageRoute(
-        //             builder: (context) => new Viewprofile()));
-        //       },),
-        //       ),
-        //     ],
-        //   ),
-        // ),
 
-        // drawer: Drawer(
-        //   child:progress?Center( child: CircularProgressIndicator(),):
-        //   ListView(
-        //     // Important: Remove any padding from the ListView.
-        //     padding: EdgeInsets.zero,
-        //     children: <Widget>[
-        //       Row(
-        //         children: [
-        //           Container(
-        //             padding: EdgeInsets.all(30),
-        //             alignment: Alignment.bottomCenter,
-        //             child: profile[ "photo"] !=null ? CircleAvatar(
-        //
-        //               radius: 60.0,
-        //               backgroundColor: Colors.white,
-        //
-        //               backgroundImage:NetworkImage(Prefmanager.baseurl+"/u/"+profile[ "photo"]),
-        //
-        //             ) : CircleAvatar(
-        //               radius: 60.0,
-        //               backgroundColor: Colors.blue,
-        //               backgroundImage: AssetImage('Assets/sigup.png'),
-        //
-        //             ),
-        //           ),
-        //
-        //
-        //           Expanded(
-        //             flex:1,
-        //             child: Container(
-        //               padding: EdgeInsets.all(10),
-        //
-        //               child:Text(profile["name"],style: TextStyle(fontSize: 20,
-        //                   //fontStyle: FontStyle.italic,
-        //                   fontWeight: FontWeight.bold)),
-        //             ),
-        //           ),
-        //
-        //         ],
-        //       ),
-        //
-        //
-        //       ListTile(
-        //         leading: Icon(Icons.home), title: Text("Home"),
-        //         onTap: () {
-        //           //Navigator.pop(context);
-        //           Navigator.push(context,MaterialPageRoute(builder: (context) => AddProfile()));
-        //         },
-        //       ),
-        //       ListTile(
-        //         leading: Icon(Icons.account_circle), title: Text("My Account"),
-        //         onTap: () {
-        //           Navigator.push(
-        //               context, new MaterialPageRoute(
-        //               builder: (context) => new Viewprofile()));
-        //         },
-        //       ),
-        //       ListTile(
-        //         leading: Icon(Icons.collections), title: Text("View orders"),
-        //         onTap: () {
-        //           Navigator.pop(context);
-        //         },
-        //       ),
-        //       ListTile(
-        //         leading: Icon(Icons.add), title: Text("Add Product"),
-        //         onTap: () {
-        //           // Navigator.push(
-        //           //     context, new MaterialPageRoute(
-        //           //     builder: (context) => new ViewCategory());
-        //         },
-        //       ),
-        //
-        //       ListTile(
-        //         leading: Icon(Icons.home), title: Text("Change Password"),
-        //         onTap: () {
-        //           // Navigator.pushReplacement(
-        //           //     context, new MaterialPageRoute(builder: (context) => new ChangePassword()));
-        //         },
-        //       ),
-        //
-        //       ListTile(
-        //         leading: Icon(Icons.account_circle), title: Text("Logout"),
-        //         onTap: () {
-        //           //Navigator.pop(context);
-        //           Prefmanager.clear();
-        //           Navigator.push(context,MaterialPageRoute(builder: (context) => SecondScreen()));
-        //         },
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body:
         SingleChildScrollView(
           child: Column(
@@ -258,6 +145,7 @@ class _ViewCategory extends State<ViewCategory> {
                height: 20,
              ),
               Container(
+                width: 800,
                 padding: EdgeInsets.all(20),
                 child: GridView.count(
 
@@ -278,8 +166,8 @@ class _ViewCategory extends State<ViewCategory> {
 
                                 ),
                                 Icon(
-                                  Icons.description,
-                                  size: 20,
+                                  Icons.category,
+                                  size:40,
                                   color: Colors.green,
                                 ),
                                 //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),

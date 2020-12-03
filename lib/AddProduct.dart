@@ -142,7 +142,7 @@ class _AddProduct extends State<AddProduct> {
 
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(20),
         child: Form(
           key: _formKey,
           child: Column(

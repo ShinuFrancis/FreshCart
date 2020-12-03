@@ -145,7 +145,7 @@ class _AddProfile extends State<AddProfile> {
                     child: Container(
                       padding: EdgeInsets.all(10),
 
-                     child:Text(profile['name'],style: TextStyle(fontWeight: FontWeight.bold,fontSize:18),),
+                     child:Text(profile['name'],style: TextStyle(fontSize:18),),
                      ),
                   ),
 
@@ -199,17 +199,18 @@ class _AddProfile extends State<AddProfile> {
         ),
 
     body:progress ? Center(child:  CircularProgressIndicator(),):
-    Card(
-      child: Container(
+    Container(
 
-        height:MediaQuery.of(context).size.height-70 ,
 
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
+      height:MediaQuery.of(context).size.height-70 ,
+
+      padding: EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -221,9 +222,9 @@ class _AddProfile extends State<AddProfile> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(profile['name']),
-                  Text(profile['phone']),
-                   Text(profile['email'])
+                    Text(profile['name'],style: TextStyle(fontSize:15)),
+                  Text(profile['phone'],style: TextStyle(fontSize:15)),
+                   Text(profile['email'],style: TextStyle(fontSize:15))
                   ],
                 ),
                 IconButton(
@@ -244,228 +245,229 @@ class _AddProfile extends State<AddProfile> {
 
               ],
             ),
-                SizedBox(
-                  height: 10,
+          ),
+              SizedBox(
+                height: 10,
+              ),
+
+          Container(
+            color: Colors.green,
+            width: double.infinity,
+            height:MediaQuery.of(context).size.height-210 ,
+            child: GridView.extent(
+              shrinkWrap: true,
+
+              primary: false,
+              padding: const EdgeInsets.all(1),
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1,
+              maxCrossAxisExtent: 200.0,
+              children: <Widget>[
+                GestureDetector(
+                    child: Container(
+
+
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            size: 50,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("ADD PRODUCT",textAlign: TextAlign.center,style: TextStyle(fontSize:16),),
+
+                        ],
+                      ),
+                      color: Colors.white,
+                    ),
+                    onTap:() {Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new ViewCategory()));
+
+                    }
+                ),
+                GestureDetector(
+                  child: Container(
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.collections,
+                          size: 50,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("VIEW PRODUCTS",textAlign: TextAlign.center,style: TextStyle(fontSize:16)),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new ViewProduct()));
+                  },
                 ),
 
-            Container(
-              //height: 300,
-              //width:MediaQuery.of(context).size.width/1,
 
-              height:MediaQuery.of(context).size.height-250,
+                GestureDetector(
+                  child: Container(
 
-              child: GridView.extent(
-                shrinkWrap: true,
-
-                primary: false,
-                padding: const EdgeInsets.all(15),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 20,
-                maxCrossAxisExtent: 180.0,
-                children: <Widget>[
-                  GestureDetector(
-                      child: Card(
-
-                        elevation: 5.0,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 40,
-                              color: Colors.green,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("Add Product",textAlign: TextAlign.center,),
-
-                          ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add_location,
+                          size: 50,
+                          color: Colors.green,
                         ),
-                      ),
-                      onTap:() {Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new ViewCategory()));
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("SALES LOCATION",textAlign: TextAlign.center,style: TextStyle(fontSize:16)),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new UpdateSaleLocation()));
+                  },
+                ),
+                GestureDetector(
+                  child: Container(
 
-                      }
-                  ),
-                  GestureDetector(
-                    child: Card(
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.collections,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("View Products",textAlign: TextAlign.center,),
-                        ],
-                      ),
-                      color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.date_range,
+                          size: 50,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("DELIVERY DATE",textAlign: TextAlign.center,style: TextStyle(fontSize:16)),
+                      ],
                     ),
-                    onTap: (){
-                      Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new ViewProduct()));
-                    },
+                    color: Colors.white,
                   ),
-                  GestureDetector(
-                    child: Card(
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add_location,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Sales Location",textAlign: TextAlign.center,),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new UpdateSaleLocation()));
-                    },
-                  ),
-                  GestureDetector(
-                    child: Card(
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.date_range,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Delivery Date",textAlign: TextAlign.center,),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new AddDeliveryDate()));
-                    },
-                  ),
-                  GestureDetector(
-                    child: Card(
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add_shopping_cart,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Purchase Request",textAlign: TextAlign.center,),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new PurchaseRequest()));
-                    },
-                  ),
-                  GestureDetector(
-                    child: Card(
-                      elevation: 5.0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.collections,
-                            size: 40,
-                            color: Colors.green,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Orders",textAlign: TextAlign.center,),
-                        ],
-                      ),
-                      color: Colors.white,
-                    ),
-                    onTap:(){
-                      Navigator.push(
-                          context, new MaterialPageRoute(
-                          builder: (context) => new MyOrder()));
-                    },
-                  ),
-                  // GestureDetector(
-                  //   child: Card(
-                  //
-                  //     elevation: 5.0,
-                  //     child: Column(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       crossAxisAlignment: CrossAxisAlignment.center,
-                  //       children: [
-                  //         Icon(
-                  //           Icons.description,
-                  //           size: 40,
-                  //           color: Colors.green,
-                  //         ),
-                  //         SizedBox(
-                  //           height: 20,
-                  //         ),
-                  //         Text("Delivery History",textAlign: TextAlign.center),
-                  //       ],
-                  //     ),
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new AddDeliveryDate()));
+                  },
+                ),
+                GestureDetector(
+                  child: Container(
 
-                  // Container(
-                  //   padding: const EdgeInsets.all(8),
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Icon(
-                  //         Icons.add_location_alt_outlined,
-                  //         size: 30,
-                  //         color: Colors.green,
-                  //       ),
-                  //       SizedBox(
-                  //         height: 20,
-                  //       ),
-                  //       Text("Delivery Locations"),
-                  //     ],
-                  //   ),
-                  //   color: Colors.white,
-                  // ),
-                ],
-              ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add_shopping_cart,
+                          size: 50,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("PURCHASE REQUEST",textAlign: TextAlign.center,style: TextStyle(fontSize:16)),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new PurchaseRequest()));
+                  },
+                ),
+                GestureDetector(
+                  child: Container(
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.collections,
+                          size: 50,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text("ORDERS",textAlign: TextAlign.center,style: TextStyle(fontSize:16)),
+                      ],
+                    ),
+                    color: Colors.white,
+                  ),
+                  onTap:(){
+                    Navigator.push(
+                        context, new MaterialPageRoute(
+                        builder: (context) => new MyOrder()));
+                  },
+                ),
+                // GestureDetector(
+                //   child: Card(
+                //
+                //     elevation: 5.0,
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         Icon(
+                //           Icons.description,
+                //           size: 40,
+                //           color: Colors.green,
+                //         ),
+                //         SizedBox(
+                //           height: 20,
+                //         ),
+                //         Text("Delivery History",textAlign: TextAlign.center),
+                //       ],
+                //     ),
+                //     color: Colors.white,
+                //   ),
+                // ),
+
+                // Container(
+                //   padding: const EdgeInsets.all(8),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Icon(
+                //         Icons.add_location_alt_outlined,
+                //         size: 30,
+                //         color: Colors.green,
+                //       ),
+                //       SizedBox(
+                //         height: 20,
+                //       ),
+                //       Text("Delivery Locations"),
+                //     ],
+                //   ),
+                //   color: Colors.white,
+                // ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
 
