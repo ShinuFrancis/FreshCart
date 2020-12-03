@@ -22,6 +22,14 @@ class _RequestMap extends State<RequestMap> {
   void initState() {
     super.initState();
     print(widget.details);
+    print(widget.details['deliveryaddress']['location'][0]);
+    _markers.add(
+        Marker(
+          markerId: MarkerId("fghh"),
+          position:LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
+          icon: pinLocationIcon
+        )
+    );
     //print(widget.details["deliveryaddress"]);
 
 
@@ -65,16 +73,11 @@ class _RequestMap extends State<RequestMap> {
                   target: LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
                   zoom: 14.4746,
                 ),
+                markers: _markers,
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
                   setState(() {
-                    _markers.add(
-                        Marker(
-                          markerId: MarkerId("ssfdgfhfh"),
-                          position:LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
-                          //icon: pinLocationIcon
-                        )
-                    );
+
                   });
                 },
               ),

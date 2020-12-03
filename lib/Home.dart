@@ -273,7 +273,7 @@ class _AddProfile extends State<AddProfile> {
                         children: [
                           Icon(
                             Icons.add,
-                            size: 50,
+                            size:80,
                             color: Colors.green,
                           ),
                           SizedBox(
@@ -300,7 +300,7 @@ class _AddProfile extends State<AddProfile> {
                       children: [
                         Icon(
                           Icons.collections,
-                          size: 50,
+                          size: 80,
                           color: Colors.green,
                         ),
                         SizedBox(
@@ -328,7 +328,7 @@ class _AddProfile extends State<AddProfile> {
                       children: [
                         Icon(
                           Icons.add_location,
-                          size: 50,
+                          size: 80,
                           color: Colors.green,
                         ),
                         SizedBox(
@@ -354,7 +354,7 @@ class _AddProfile extends State<AddProfile> {
                       children: [
                         Icon(
                           Icons.date_range,
-                          size: 50,
+                          size: 80,
                           color: Colors.green,
                         ),
                         SizedBox(
@@ -380,7 +380,7 @@ class _AddProfile extends State<AddProfile> {
                       children: [
                         Icon(
                           Icons.add_shopping_cart,
-                          size: 50,
+                          size: 80,
                           color: Colors.green,
                         ),
                         SizedBox(
@@ -406,7 +406,7 @@ class _AddProfile extends State<AddProfile> {
                       children: [
                         Icon(
                           Icons.collections,
-                          size: 50,
+                          size: 80,
                           color: Colors.green,
                         ),
                         SizedBox(

@@ -139,7 +139,7 @@ class _ViewCategory extends State<ViewCategory> {
               Container(
                   padding: EdgeInsets.all(20),
 
-                  child:Text("Category", style: TextStyle(fontSize: 18,color:Colors.black)),
+                  child:Text("Select Category", style: TextStyle(fontSize: 18,color:Colors.black,fontWeight: FontWeight.bold)),
               ),
              SizedBox(
                height: 20,

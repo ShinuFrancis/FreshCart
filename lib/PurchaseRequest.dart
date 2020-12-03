@@ -25,13 +25,13 @@ class _PurchaseRequest extends State<PurchaseRequest>{
   bool progress=false;
 
   int len,total;
-  int page=1,count=10;
+  int page=1,count=6;
   List purchase=[] ;
   void PurchaseView () async {
     setState(() {
       progress=true;
     });
-    var url = Prefmanager.baseurl+'/Purchase/pending';
+    var url = Prefmanager.baseurl+'/Purchase/pending?count='+count.toString()+'&page='+page.toString();
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -108,7 +108,7 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                           scrollInfo.metrics.maxScrollExtent) {
                         print(total);
                         print(purchase.length);
-                        if(total>purchase.length){
+                        if(purchase.length>total){
                           PurchaseView();
                           setState(() {
                             pageLoading = true;

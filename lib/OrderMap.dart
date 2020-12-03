@@ -28,6 +28,12 @@ class _OrderMap extends State<OrderMap> {
     for(int i=0;i<widget.details['orderdata'].length;i++) {
       _markers.add(
           Marker(
+            infoWindow: InfoWindow(
+              title: 'Delivery Address',
+              snippet: '${widget
+                  .details['orderdata'][i]['deliveryaddress']['fulladdress']}',
+
+            ),
             markerId: MarkerId("$i"),
             position: LatLng(widget
                 .details['orderdata'][i]['deliveryaddress']['location'][0],
@@ -94,18 +100,18 @@ class _OrderMap extends State<OrderMap> {
               ),
             ),
             Container(
-              height:MediaQuery.of(context).size.height-100 ,
-              padding: new EdgeInsets.all(10.0),
+              height:MediaQuery.of(context).size.height-10 ,
+              padding: new EdgeInsets.all(5.0),
                       child:Card(
                         child: InkWell(
                           child: new Container(
-                            padding: new EdgeInsets.all(20.0),
+                            padding: new EdgeInsets.all(10.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 50,
-                                  //color:Colors.grey,
+                                  //height: 40,
+                                  //color:Colors.green,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -120,13 +126,14 @@ class _OrderMap extends State<OrderMap> {
                                               Text(formattedDate.format(DateTime.parse(widget.details['orderdate']))),
                                             ],
                                           ),
+                                          widget.details['total']>0?
                                           Column(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text("Total:"),
-                                              //Text(widget.details[index]['total'].toString()),
+                                              Text(widget.details['total'].toString()),
                                             ],
-                                          ),
+                                          ):SizedBox.shrink()
 
                                         ],
                                       ),
@@ -271,10 +278,34 @@ class _OrderMap extends State<OrderMap> {
 
                                                           ],
                                                         ),
-                                                        SizedBox(
-                                                          height: 40,
+                                                        Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                Text("OrderStatus:"),
+                                                                Text(
+                                                                  widget.details['orderdata'][k]['status'],style: TextStyle(color: Colors.red),),
+
+                                                                // Column(
+                                                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                //   children: [
+                                                                //     Text("Price:"),
+                                                                //     Text(
+                                                                //         order[index]['orderdata'][k]['totalprice'].toString()),
+                                                                //   ],
+                                                                // ),
+
+
+                                                              ],
+                                                            ),
+                                                          ],
                                                         ),
-                                                        widget.details['status']=='Approved'?
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        widget.details['orderdata'][k]['status']=='Approved'?
                                                         Column(
                                                             children:[
                                                               TextField(
@@ -297,7 +328,7 @@ class _OrderMap extends State<OrderMap> {
                                                                           fontSize: 15,fontWeight: FontWeight.bold)),
                                                                       onPressed: ()  {
 
-                                                                        SendData();
+                                                                        SendData(widget.details['orderdata'][k]['_id']);
                                                                       }
 
                                                                   ),
@@ -342,12 +373,12 @@ class _OrderMap extends State<OrderMap> {
 
     );
   }
-  void SendData() async {
+  void SendData(_id) async {
     var url = Prefmanager.baseurl +'/Purchase/deliver';
     var token = await Prefmanager.getToken();
     Map data = {
       "x-auth-token": token,
-      "id": widget.details['_id'],
+      "id": _id,
       "totalprice":priceController.text
 
     };

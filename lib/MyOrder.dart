@@ -31,23 +31,27 @@ class _MyOrder extends State< MyOrder>{
   bool progress=false;
 
   int len,total;
-  int page=1,count=10;
+  int page=1,count=5;
   List order=[] ;
   void OrderView () async {
     setState(() {
       progress=true;
     });
-    var url = Prefmanager.baseurl+'/Purchase/groupedmyorders';
+    var url = Prefmanager.baseurl+'/Purchase/groupedmyorders?count='+count.toString()+'&page='+page.toString();
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'x-auth-token':token
+      'x-auth-token':token,
+
     };
+    print(requestHeaders.toString());
+
     var response = await http.get(url,headers:requestHeaders);
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
       total=json.decode(response.body)['count'];
+      len=json.decode(response.body)['pages'];
       for(int i=0;i<json.decode(response.body)['data'].length;i++)
         order.add(json.decode(response.body)['data'][i]);
       page++;
@@ -63,6 +67,7 @@ class _MyOrder extends State< MyOrder>{
     setState(() {
 
     });
+
 
   }
   bool pageLoading = false;
@@ -91,7 +96,8 @@ class _MyOrder extends State< MyOrder>{
               ]
 
           ),
-          body:progress?Center( child: CircularProgressIndicator(),):
+          body:
+          //progress?Center( child: CircularProgressIndicator(),):
           Column(
               children: [
                 Container(
@@ -179,8 +185,7 @@ class _MyOrder extends State< MyOrder>{
                       if (!pageLoading && scrollInfo.metrics.pixels ==
                           scrollInfo.metrics.maxScrollExtent) {
                         print(total);
-                        print(order.length);
-                        if(total>order.length){
+                        if(total>len){
                           OrderView();
                           setState(() {
                             pageLoading = true;
@@ -189,6 +194,7 @@ class _MyOrder extends State< MyOrder>{
                         else{
                           setState(() {
                             pageLoading = false;
+                            print("No Data");
                           });
                         }
 
@@ -204,6 +210,8 @@ class _MyOrder extends State< MyOrder>{
 
                           return
                             Card(
+                              color: Colors.white,
+                              elevation:4.0,
                               child: InkWell(
                                 child: new Container(
                                   padding: new EdgeInsets.all(20.0),
@@ -211,8 +219,8 @@ class _MyOrder extends State< MyOrder>{
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
-                                        height: 50,
-                                        //color:Colors.grey,
+                                        height:40,
+                                       // color:Colors.grey,
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -227,13 +235,14 @@ class _MyOrder extends State< MyOrder>{
                                                     Text(formattedDate.format(DateTime.parse(order[index]['orderdate']))),
                                                   ],
                                                 ),
+                                                order[index]['total']>0?
                                                 Column(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text("Total:"),
                                                     Text(order[index]['total'].toString()),
                                                   ],
-                                                ),
+                                                ):SizedBox.shrink(),
 
                                               ],
                                             ),
@@ -378,21 +387,31 @@ class _MyOrder extends State< MyOrder>{
 
                                                                 ],
                                                               ),
-                                                              Row(
+                                                          Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
                                                                 children: [
-                                                                  Text("OrderStatus:"),
-                                                                  Expanded(
-                                                                      flex: 1,
-                                                                      child: Text(
-                                                                          order[index]['orderdata'][k]['status'])),
+                                                                  Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                    children: [
+                                                                      Text("OrderStatus:"),
+                                                                      Text(
+                                                                          order[index]['orderdata'][k]['status'],style: TextStyle(color: Colors.red),),
 
+                                                                      // Column(
+                                                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      //   children: [
+                                                                      //     Text("Price:"),
+                                                                      //     Text(
+                                                                      //         order[index]['orderdata'][k]['totalprice'].toString()),
+                                                                      //   ],
+                                                                      // ),
+
+
+                                                                    ],
+                                                                  ),
                                                                 ],
                                                               ),
 
-
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
 
 
                                                               SizedBox(
@@ -445,6 +464,7 @@ class _MyOrder extends State< MyOrder>{
 
                                         ],
                                       ),
+
                                     ],
                                   ),
                             ),

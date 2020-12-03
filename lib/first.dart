@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -308,7 +309,7 @@ class _LoginSample extends State<LoginSample> {
   Future<void> verifyPhone() async {
     print(widget.phone);
     setState(() {
-      // startTimer();
+       startTimer();
       // textEditingController.clear();
     });
 
@@ -344,6 +345,35 @@ class _LoginSample extends State<LoginSample> {
     }
 
 
+  }
+  Timer _timer;
+  int _start = 120;
+  String sendPin;
+
+  void startTimer() {
+    _start = 110;
+
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+          (Timer timer) => setState(
+            () {
+          if (_start == 0) {
+            timer.cancel();
+            Fluttertoast.showToast(
+                msg: "Sorry OTP Expires!", backgroundColor: Colors.black);
+          } else {
+            _start = _start - 1;
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
   _getCurrentLocation() {
     geolocator

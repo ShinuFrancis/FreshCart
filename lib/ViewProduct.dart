@@ -165,6 +165,7 @@ class _ViewProduct extends State<ViewProduct>{
         //
         //   ),
         // ),
+
        child: CircleAvatar(
           radius: 40.0,
           backgroundColor: Colors.white,
@@ -179,6 +180,7 @@ class _ViewProduct extends State<ViewProduct>{
 
     Row(
     children: [
+      Text("Product Name:"),
     Text(product[index]['productname'],style: TextStyle(fontSize: 15),maxLines:2,overflow: TextOverflow.ellipsis,),
 
     ],
@@ -190,7 +192,7 @@ class _ViewProduct extends State<ViewProduct>{
 
     Row(
     children: [
-    //Text("Mobile::",style: TextStyle(fontSize: 20)),
+    Text("Description:"),
     Text(product[index]['description']??" ",style: TextStyle(fontSize: 15)
     ),
     ],
@@ -200,7 +202,7 @@ class _ViewProduct extends State<ViewProduct>{
     ),
       Row(
         children: [
-          //Text("Mobile::",style: TextStyle(fontSize: 20)),
+          Text("Category:"),
           Text(product[index]['category']['name'],style: TextStyle(fontSize: 15)
          ),
         ],
