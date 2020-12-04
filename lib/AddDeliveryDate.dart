@@ -107,38 +107,52 @@ class _AddDeliveryDate extends State<AddDeliveryDate> {
 
 
                 pro?Center( child: CircularProgressIndicator(),):
+                    SizedBox(
+                      height: 30,
+                    ),
                 Container(
                   padding: EdgeInsets.all(10),
+                  height: 300.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://black.bird.eu/media/contenttype/blog/cache/640x/estimated-delivery-date-for-magento_3.png'),
+                      fit: BoxFit.contain,
+                    ),
+                    //shape: BoxShape.circle,
+                  ),
 
                   //child:Text("Delivery Date", style: TextStyle(fontSize: 18,color:Colors.black)),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                // SizedBox(
+                //   height: 10,
+                // ),
                 Container(
                   padding: EdgeInsets.all(20),
                   child: GridView.count(
-                    childAspectRatio:0.9,
+                    childAspectRatio:0.45,
 
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2 ,
+                    crossAxisCount: 3 ,
 
                     children: List.generate(date.length,(index){
                       return Container(
+                        height: MediaQuery.of(context).size.height/2,
                         child: Card(
 
                           child: Column(
 
                             children: [
                               SizedBox(
-                                height: 30,
+                                height: 50,
 
                               ),
                               Icon(
                                 Icons.category,
-                                size: 50,
+                                size: 80,
                                 color: Colors.green,
                               ),
                               //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),

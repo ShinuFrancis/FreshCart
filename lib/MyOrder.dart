@@ -119,7 +119,7 @@ class _MyOrder extends State< MyOrder>{
                       ),
                         onTap:(){
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context, new MaterialPageRoute(
                               builder: (context) => new MyOrder()));
                         },
@@ -136,7 +136,7 @@ class _MyOrder extends State< MyOrder>{
                         child: Text("Approved"),
                       ),
                         onTap:(){
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context, new MaterialPageRoute(
                               builder: (context) => new OrderApproved()));
                         },
@@ -153,7 +153,7 @@ class _MyOrder extends State< MyOrder>{
                         child: Text("Rejected"),
                       ),
                         onTap:(){
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context, new MaterialPageRoute(
                               builder: (context) => new OrderRejected()));
                         },
@@ -169,7 +169,7 @@ class _MyOrder extends State< MyOrder>{
                         child: Text("Delivered"),
                       ),
                         onTap:(){
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context, new MaterialPageRoute(
                               builder: (context) => new OrderDelivered()));
                         },
@@ -203,289 +203,273 @@ class _MyOrder extends State< MyOrder>{
                       return true;
                     },
 
-                    child: ListView.builder(
+    child: ListView.builder(
+    itemCount: order.length,
+    itemBuilder: (BuildContext context,int index){
+    return
+    Card(
+    elevation: 8.0,
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    SizedBox(
+    height:10
+    ),
+    Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+    children: [
+    Text("Ordered on "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.red,fontSize:14,fontWeight: FontWeight.bold),),
+    Spacer(),
+    order[index]['total']>0?
+    Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
 
-                        itemCount:order.length,
-                        itemBuilder:(BuildContext context,int index) {
-
-                          return
-                            Card(
-                              color: Colors.white,
-                              elevation:4.0,
-                              child: InkWell(
-                                child: new Container(
-                                  padding: new EdgeInsets.all(20.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height:40,
-                                       // color:Colors.grey,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                //Text("OrderDate:"),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text("OrderDate:"),
-                                                    Text(formattedDate.format(DateTime.parse(order[index]['orderdate']))),
-                                                  ],
-                                                ),
-                                                order[index]['total']>0?
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text("Total:"),
-                                                    Text(order[index]['total'].toString()),
-                                                  ],
-                                                ):SizedBox.shrink(),
-
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            flex: 2,
-                                            child: Column(
-                                              children:
-                                                List.generate(order[index]['orderdata'].length, (k) {
-                                                  return Column(
-                                                    mainAxisAlignment: MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        children:
-                                                        List.generate(
-                                                            order[index]['orderdata'][k]['customer']
-                                                                .length, (c) {
-                                                          return new Column(
-                                                            mainAxisAlignment: MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: <Widget>[
-                                                              Column(
-                                                                  children:
-                                                                  List.generate(
-                                                                      order[index]['orderdata'][k]['product']
-                                                                          .length, (
-                                                                      j) {
-                                                                    return Row(
-                                                                      children: [
-
-                                                                        CircleAvatar(
-                                                                          radius: 40.0,
-                                                                          backgroundColor: Colors
-                                                                              .white,
-                                                                          backgroundImage: AssetImage(
-                                                                              'Assets/product.jpg'),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: 20,
-                                                                        ),
-                                                                        Text(
-                                                                          "Product:",
-                                                                          style: TextStyle(
-                                                                              fontSize: 15,
-                                                                              fontWeight: FontWeight
-                                                                                  .bold),),
-                                                                        Expanded(
-                                                                            flex: 2,
-                                                                            child: Text(
-                                                                              order[index]['orderdata'][k]['product'][j]['productname'],
-                                                                              style: TextStyle(
-                                                                                  fontSize: 15,
-                                                                                  fontWeight: FontWeight
-                                                                                      .bold),
-                                                                              maxLines: 2,
-                                                                              overflow: TextOverflow
-                                                                                  .ellipsis,)),
-                                                                        Text(
-                                                                          "Quantity:",
-                                                                          style: TextStyle(
-                                                                              fontSize: 15,
-                                                                              fontWeight: FontWeight
-                                                                                  .bold),),
-                                                                        Text(
-                                                                            order[index]['orderdata'][k]['quantity']
-                                                                                .toString() +
-                                                                                order[index]['orderdata'][k]['product'][j]['unit'],
-                                                                            style: TextStyle(
-                                                                                fontSize: 15,
-                                                                                fontWeight: FontWeight
-                                                                                    .bold)
-                                                                        ),
+    ],
+    ),
+    ),
 
 
-                                                                      ],
-                                                                    );
-                                                                  })),
-
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-
-                                                              Row(
-                                                                mainAxisAlignment: MainAxisAlignment
-                                                                    .start,
-                                                                children: [
-                                                                  Text("Contact:",
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight
-                                                                            .bold,
-                                                                        fontSize: 15),),
-                                                                ],
-                                                              ),
-
-                                                              Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                      flex: 1,
-                                                                      child: Text(
-                                                                          order[index]['orderdata'][k]['customer'][c]['phone'])
-                                                                  ),
-
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                      flex: 1,
-                                                                      child: Text(
-                                                                          order[index]['orderdata'][k]['customer'][c]['name'])
-                                                                  ),
-
-                                                                ],
-                                                              ),
-
-                                                              Row(
-                                                                mainAxisAlignment: MainAxisAlignment
-                                                                    .start,
-                                                                children: [
-                                                                  Text(
-                                                                    "Delivery Address:",
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight
-                                                                            .bold,
-                                                                        fontSize: 15),),
-                                                                ],
-                                                              ),
-
-                                                              Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                      flex: 1,
-                                                                      child: Text(
-                                                                          order[index]['orderdata'][k]['deliveryaddress']['fulladdress'])),
-
-                                                                ],
-                                                              ),
-                                                          Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                                    children: [
-                                                                      Text("OrderStatus:"),
-                                                                      Text(
-                                                                          order[index]['orderdata'][k]['status'],style: TextStyle(color: Colors.red),),
-
-                                                                      // Column(
-                                                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      //   children: [
-                                                                      //     Text("Price:"),
-                                                                      //     Text(
-                                                                      //         order[index]['orderdata'][k]['totalprice'].toString()),
-                                                                      //   ],
-                                                                      // ),
+    Column(
+    children:
+    List.generate(order[index]['orderdata'].length,(p){
+    return Column(
+    children: [
 
 
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
+    Row(
+    children: [
+    SizedBox(
+    width: 5,
+    ),
 
+    Expanded(
+    child: new Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children:[
+    Container(
+    padding: EdgeInsets.all(8),
+    child: ClipRRect(
+    borderRadius:BorderRadius.circular(15.0),
+    child:FadeInImage(
+    // image:NetworkImage(
+    //     Prefmanager.baseurl+"/document/get/"+profile[index]["icon"]) ,
+    image: AssetImage('Assets/product.jpg'),
+    placeholder: AssetImage('Assets/product.jpg'),
+    fit: BoxFit.fill,
+    width:70,
+    height:70,
+    ),
+    ),
+    ),
+    Expanded(
 
+    child:Column(
+    children:
+    List.generate(order[index]['orderdata'][p]['product'].length,(k){
+    return Column(
+    children:[
+    SizedBox(
+    height: 5,
+    ),
 
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
+    Row(
+    children:[
+    Text(order[index]['orderdata'][p]['product'][k]['productname'],style:TextStyle(fontSize:16,fontWeight: FontWeight.bold,)),
+    // Expanded(flex:1,child: Text(profile[index]['bid']['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+    ],
+    ),
+    SizedBox(
+    height:10,
+    ),
+    Row(
+    children: [
+    Text("Quantity : "+order[index]['orderdata'][p]['quantity'].toString()+order[index]['orderdata'][p]['product'][k]['unit'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
 
+    ],
+    ),
+    SizedBox(
+    height:10
+    ),
+    Row(
+    children:[
+    order[index]['orderdata'][p]['status']=='Delivered'&&order[index]['orderdata'][p]['totalprice']!=null?
+    Text("Price : "+order[index]['orderdata'][p]['totalprice'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
+    ]
+    ),
 
-                                                            ],
-                                                          );
-                                                        }
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                }
-                                            ),
+      SizedBox(
+    height:5,
+    ),
 
-                                      ),
-                                      ),
-                                      ]
-
-                              ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .start,
-                                        children: [
-                                          MaterialButton(
-                                              textColor: Colors
-                                                  .red,
-                                              color: Colors
-                                                  .white,
-                                              child: Text(
-                                                  'View in Map',
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight
-                                                          .bold)),
-                                              onPressed: () {
-                                                Navigator
-                                                    .push(
-                                                    context,
-                                                    new MaterialPageRoute(
-                                                        builder: (
-                                                            context) =>
-                                                            OrderMap(
-                                                                order[index])));
-                                              }
-
-                                          ),
-
-                                        ],
-                                      ),
-
-                                    ],
-                                  ),
-                            ),
-                            ),
-                            );
-
-
-                        }
-                    ),
-                  ),
+    ]
+    );
+    })
+    ),
+    ),
+      Column(
+        children:
+        List.generate(order[index]['orderdata'][p]['customer'].length,(c){
+          return Column(
+              children:[
+                SizedBox(
+                  height: 5,
                 ),
-                Container(
-                  height: pageLoading ? 50.0 : 0,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: new CircularProgressIndicator(),
-                  ),
+                Row(
+                  children: [
+                    Text("Customer Details:",style: TextStyle(fontWeight: FontWeight.bold),),
+                  ],
                 ),
+
+                Row(
+                  children:[
+                    Text("Name:"+order[index]['orderdata'][p]['customer'][c]['name'],style:TextStyle(fontSize:12,fontWeight: FontWeight.bold,color: Colors.grey)),
+                    // Expanded(flex:1,child: Text(profile[index]['bid']['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+                  ],
+                ),
+                SizedBox(
+                  height:5,
+                ),
+                Row(
+                  children: [
+                    Text("Phone: "+order[index]['orderdata'][p]['customer'][c]['phone'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+
+                  ],
+                ),
+                SizedBox(
+                    height:10
+                ),
+
+
+                SizedBox(
+                  height:5,
+                ),
+
               ]
-          )
+          );
+        })
       ),
+    ],
+    ),
+
+    ),
+
+    ],
+    ),
+      Container(
+        color:Colors.grey[50],
+        padding:EdgeInsets.all(8.0),
+        width:MediaQuery.of(context).size.width,
+        //width:double.infinity,
+        child:Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment:CrossAxisAlignment.start,
+                mainAxisAlignment:MainAxisAlignment.start,
+                children: [
+                  Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                  SizedBox(
+                      height:10
+                  ),
+
+          Expanded(
+              flex:0,
+              child: Text(
+                  order[index]['orderdata'][p]['deliveryaddress']['fulladdress'],style: TextStyle(color:Colors.black,fontSize:12),),
+               ),
+                ],
+              ),
+            )
+          ],
+        ),
+
+      ),
+      Container(
+          color:Colors.grey[50],
+          padding:EdgeInsets.all(8.0),
+          width:MediaQuery.of(context).size.width,
+          //width:double.infinity,
+          child:Row(
+            children: [
+              Column(
+                crossAxisAlignment:CrossAxisAlignment.start,
+                mainAxisAlignment:MainAxisAlignment.start,
+                children: [
+                  Text("Order status",style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                  SizedBox(
+                      height:10
+                  ),
+
+                  if(order[index]['orderdata'][p]['status']=='Pending')
+                    Text("Order awaiting Approval",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
+                  if(order[index]['orderdata'][p]['status']=='Approved')
+                    Text("Order approved ",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
+                  if(order[index]['orderdata'][p]['status']=='Rejected')
+                    Text("Order rejected  due to "+order[index]['orderdata'][p]['rejectreason'],style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
+                  // Text(orders[index]['orderdata'][p]['rejectreason'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
+                  if(order[index]['orderdata'][p]['status']=='Delivered')
+                    Text("Delivered on "+formattedDate.format(DateTime.parse(order[index]['orderdata'][p]['deliverydate'])),style: TextStyle(color:Colors.green,fontSize:12,fontWeight: FontWeight.bold),)
+                ],
+              )
+            ],
+          ),
+
+      ),
+
+    ]
+    );
+    }
+    ),
+
+    ),
+      Container(
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment
+              .center,
+          children: [
+            MaterialButton(
+                textColor: Colors
+                    .red,
+                color: Colors
+                    .white,
+                child: Text(
+                    'View in Map',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight
+                            .bold)),
+                onPressed: () {
+                  Navigator
+                      .push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (
+                              context) =>
+                              OrderMap(
+                                  order[index])));
+                }
+
+            ),
+
+          ],
+        ),
+
+      ),
+      ]
+
+    ),
+
+
+    );
+
+    }
+    )
+
+          ),
+                ),
+          ]
+          )
+          ),
     );
 
 

@@ -165,8 +165,30 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
                 //   ),
                 // ),
                 SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.all(20),
+
+                  child:Text("Update Sales Location", style: TextStyle(fontSize: 18,color:Colors.black,fontWeight: FontWeight.bold)),
+                ),
+                Container(
+                  height: 200.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://www.disruptivestatic.com/wp-content/uploads/2018/01/geo-targeting-blog-1.jpg'),
+                      fit: BoxFit.fill,
+                    ),
+                    //shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
                   height:10,
                 ),
+
 
 
                 Container(

@@ -25,6 +25,12 @@ class _RequestMap extends State<RequestMap> {
     print(widget.details['deliveryaddress']['location'][0]);
     _markers.add(
         Marker(
+            infoWindow: InfoWindow(
+              title: 'Delivery Address',
+              snippet: '${widget
+                  .details['deliveryaddress']['fulladdress']}',
+
+            ),
           markerId: MarkerId("fghh"),
           position:LatLng(widget.details['deliveryaddress']['location'][0],widget.details['deliveryaddress']['location'][1]),
           icon: pinLocationIcon
@@ -66,7 +72,7 @@ class _RequestMap extends State<RequestMap> {
         child: Column(
           children: [
             Container(
-              height:250,
+              height:300,
               child: GoogleMap(
                 mapType: MapType.hybrid,
                 initialCameraPosition: CameraPosition(
@@ -94,93 +100,119 @@ class _RequestMap extends State<RequestMap> {
                       children: <Widget>[
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: 40.0,
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage('Assets/product.jpg'),
+                            ClipRRect(
+                              borderRadius:BorderRadius.circular(15.0),
+                              child:FadeInImage(
+                                // image:NetworkImage(
+                                //     Prefmanager.baseurl+"/document/get/"+profile[index]["icon"]) ,
+                                image: AssetImage('Assets/product.jpg'),
+                                placeholder: AssetImage('Assets/product.jpg'),
+                                fit: BoxFit.fill,
+                                width:70,
+                                height:70,
+                              ),
                             ),
                             SizedBox(
                               width: 20,
                             ),
-                            Text("Product:",style: TextStyle(
-                                fontSize: 15,fontWeight: FontWeight.bold),),
-                            Expanded(
-                                flex: 2,
-                                child: Text(widget.details['product']['productname'],
-                                  style: TextStyle(
-                                      fontSize: 15,fontWeight: FontWeight.bold),
-                                  maxLines: 2,
-                                  overflow: TextOverflow
-                                      .ellipsis,)),
-                            Text("Quantity:",style: TextStyle(
-                                fontSize: 15,fontWeight: FontWeight.bold),),
-                            Expanded(
-                              flex: 1,
-                              child: Text(widget.details['quantity'].toString()+widget.details['product']['unit'],style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)
-                              ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(widget.details['product']['productname'],
+                                        style: TextStyle(
+                                            fontSize: 18,fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Quantity:"+widget.details['quantity'].toString()+widget.details['product']['unit'],
+                                        style: TextStyle(
+                                            fontSize: 18,fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+
+                              ],
                             ),
+
+
+
 
                           ],
                         ),
+
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color:Colors.grey[50],
+                          padding:EdgeInsets.all(8.0),
+                          width:MediaQuery.of(context).size.width,
+                          //width:double.infinity,
+                          child:Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                  mainAxisAlignment:MainAxisAlignment.start,
+                                  children: [
+                                    Text("Customer Details:",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                    SizedBox(
+                                        height:10
+                                    ),
+                                    Text(
+                                      widget.details['customer']['name'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                    Text(
+                                      widget.details['customer']['phone'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+
+                        ),
+
+
+                        Container(
+                          color:Colors.grey[50],
+                          padding:EdgeInsets.all(8.0),
+                          width:MediaQuery.of(context).size.width,
+                          //width:double.infinity,
+                          child:Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                  mainAxisAlignment:MainAxisAlignment.start,
+                                  children: [
+                                    Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                    SizedBox(
+                                        height:10
+                                    ),
+
+                                    Expanded(
+                                      flex:0,
+                                      child: Text(
+                                        widget.details['deliveryaddress']['fulladdress'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+
+                        ),
+
+
 
                         SizedBox(
                           height: 20,
                         ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("Contact:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                                flex:1,
-                                child: Text(widget.details['customer']['phone'])
-                            ),
-
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                                flex:1,
-                                child: Text(widget.details['customer']['name'])
-                            ),
-
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Delivery Address:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-
-                        Row(
-                          children: [
-                            Expanded(
-                                flex:1,
-                                child: Text(widget.details['deliveryaddress']['fulladdress'])),
-
-                          ],
-                        ),
-
-
 
                         SizedBox(
-                          height: 40,
+                          height: 10,
                         ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -218,18 +250,19 @@ class _RequestMap extends State<RequestMap> {
 
 
 
+
                       ],
                     ),
                   ),
                 ],
               ),
 
-            ),
+            )
           ],
-        ),
-      ),
-
+                    ),
+                  ),
     );
+
   }
   void SendData() async {
     var url = Prefmanager.baseurl +'/Purchase/Approve';

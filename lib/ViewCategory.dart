@@ -142,45 +142,60 @@ class _ViewCategory extends State<ViewCategory> {
                   child:Text("Select Category", style: TextStyle(fontSize: 18,color:Colors.black,fontWeight: FontWeight.bold)),
               ),
              SizedBox(
-               height: 20,
+               height: 5,
              ),
               Container(
-                width: 800,
+                padding: EdgeInsets.all(10),
+                height: 250.0,
+                width:600,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        'https://previews.123rf.com/images/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                  //shape: BoxShape.circle,
+                ),
+
+                //child:Text("Delivery Date", style: TextStyle(fontSize: 18,color:Colors.black)),
+              ),
+              Container(
+                width: 1000,
                 padding: EdgeInsets.all(20),
                 child: GridView.count(
-
+                      childAspectRatio: 0.45,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 3 ,
                   children: List.generate(listcat.length,(index){
                     return GestureDetector(
-                        child: Container(
-                          child: Card(
-
+                        child: Card(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height/2,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
 
                               children: [
                                 SizedBox(
-                                  height: 30,
+                                  height: 80,
 
                                 ),
                                 Icon(
                                   Icons.category,
-                                  size:40,
+                                  size:80,
                                   color: Colors.green,
                                 ),
                                 //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
 
                                 SizedBox(
-                                  height: 10,
+                                  height: 20,
                                 ),
-                                Text(listcat[index]['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
+                                Text(listcat[index]['name'],style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.center),
 
                               ],
 
                             ),
-
                           ),
                         ),
                         onTap:() {

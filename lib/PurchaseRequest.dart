@@ -86,20 +86,20 @@ class _PurchaseRequest extends State<PurchaseRequest>{
 
           ),
           body:progress?Center( child: CircularProgressIndicator(),):
-           purchase.length==0?
-           Container(
-             height: 200,
-             width: double.infinity,
-             //color: Colors.grey,
-             alignment: Alignment.bottomCenter,
-             margin: EdgeInsets.all(20),
-             padding: EdgeInsets.all(30),
-             child: Text("No Purchase Requst Found",
-                 style: TextStyle(fontSize: 20)),
-           )
+          purchase.length==0?
+          Container(
+            height: 200,
+            width: double.infinity,
+            //color: Colors.grey,
+            alignment: Alignment.bottomCenter,
+            margin: EdgeInsets.all(20),
+            padding: EdgeInsets.all(30),
+            child: Text("No Purchase Requst Found",
+                style: TextStyle(fontSize: 20)),
+          )
 
           //Text("No Purchase Request Found",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
-          :Column(
+              :Column(
               children: [
                 Expanded(
                   child: NotificationListener<ScrollNotification>(
@@ -145,129 +145,162 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                 //
                                 // },
 
-                               child: new Container(
-                                 padding: new EdgeInsets.all(20.0),
-                                 child: Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Expanded(
-                                       flex: 2,
-                                       child: new Column(
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         children: <Widget>[
-                                           Row(
-                                             children: [
-                                               CircleAvatar(
-                                                     radius: 40.0,
-                                                     backgroundColor: Colors.white,
-                                                     backgroundImage: AssetImage('Assets/product.jpg'),
-                                                   ),
-                                               SizedBox(
-                                                 width: 20,
-                                               ),
-                                               Text("Product:",style: TextStyle(
-                                                   fontSize: 15,fontWeight: FontWeight.bold),),
-                                               Expanded(
-                                                   flex: 2,
-                                                   child: Text(purchase[index]['product']['productname'],
-                                                     style: TextStyle(
-                                                         fontSize: 15,fontWeight: FontWeight.bold),
-                                                     maxLines: 2,
-                                                     overflow: TextOverflow
-                                                         .ellipsis,)),
-                                               Text("Quantity:",style: TextStyle(
-                                                   fontSize: 15,fontWeight: FontWeight.bold),),
-                                               Text(purchase[index]['quantity'].toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)
+                                child: new Container(
+                                  padding: new EdgeInsets.all(20.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: new Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:BorderRadius.circular(15.0),
+                                                  child:FadeInImage(
+                                                    // image:NetworkImage(
+                                                    //     Prefmanager.baseurl+"/document/get/"+profile[index]["icon"]) ,
+                                                    image: AssetImage('Assets/product.jpg'),
+                                                    placeholder: AssetImage('Assets/product.jpg'),
+                                                    fit: BoxFit.fill,
+                                                    width:70,
+                                                    height:70,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(purchase[index]['product']['productname'],
+                                                          style: TextStyle(
+                                                              fontSize: 18,fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Quantity:"+purchase[index]['quantity'].toString()+purchase[index]['product']['unit'],
+                                                            style: TextStyle(
+                                                                fontSize: 18,fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
+
+                                                  ],
+                                                ),
+
+
+
+
+                                              ],
+                                            ),
+
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              color:Colors.grey[50],
+                                              padding:EdgeInsets.all(8.0),
+                                              width:MediaQuery.of(context).size.width,
+                                              //width:double.infinity,
+                                              child:Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:CrossAxisAlignment.start,
+                                                      mainAxisAlignment:MainAxisAlignment.start,
+                                                      children: [
+                                                        Text("Customer Details:",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                                        SizedBox(
+                                                            height:10
+                                                        ),
+                                                        Text(
+                                                          purchase[index]['customer']['name'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                                        Text(
+                                                          purchase[index]['customer']['phone'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
                                               ),
 
-                                             ],
-                                           ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
 
-                                           SizedBox(
-                                             height: 10,
-                                           ),
+                                            Container(
+                                              color:Colors.grey[50],
+                                              padding:EdgeInsets.all(8.0),
+                                              width:MediaQuery.of(context).size.width,
+                                              //width:double.infinity,
+                                              child:Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:CrossAxisAlignment.start,
+                                                      mainAxisAlignment:MainAxisAlignment.start,
+                                                      children: [
+                                                        Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                                        SizedBox(
+                                                            height:10
+                                                        ),
 
-                                           Row(
-                                             mainAxisAlignment: MainAxisAlignment.start,
-                                             children: [
-                                               Text("Contact:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                                             ],
-                                           ),
+                                                        Expanded(
+                                                          flex:0,
+                                                          child: Text(
+                                                            purchase[index]['deliveryaddress']['fulladdress'],style: TextStyle(color:Colors.black,fontSize:14),),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
 
-                                           Row(
-                                             children: [
-                                               Expanded(
-                                                   flex:1,
-                                                   child: Text(purchase[index]['customer']['phone'])
-                                                 ),
-
-                                             ],
-                                           ),
-                                           Row(
-                                             children: [
-                                               Expanded(
-                                                   flex:1,
-                                                   child: Text(purchase[index]['customer']['name'])
-                                               ),
-
-                                             ],
-                                           ),
-
-                                           Row(
-                                             mainAxisAlignment: MainAxisAlignment.start,
-                                             children: [
-                                               Text("Delivery Address:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                                             ],
-                                           ),
-
-                                           Row(
-                                             children: [
-                                               Expanded(
-                                                 flex:1,
-                                                   child: Text(purchase[index]['deliveryaddress']['fulladdress'])),
-
-                                             ],
-                                           ),
+                                            ),
 
 
 
-                                           SizedBox(
-                                             height: 20,
-                                           ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
 
-                                           Row(
-                                             mainAxisAlignment: MainAxisAlignment.start,
-                                             children: [
-                                               MaterialButton(
-                                                   textColor: Colors.red,
-                                                   color: Colors.white,
-                                                   child: Text('View in Map',style: TextStyle(
-                                                       fontSize: 15,fontWeight: FontWeight.bold)),
-                                                   onPressed: ()  {
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                MaterialButton(
+                                                    textColor: Colors.red,
+                                                    color: Colors.white,
+                                                    child: Text('View in Map',style: TextStyle(
+                                                        fontSize: 15,fontWeight: FontWeight.bold)),
+                                                    onPressed: ()  {
 
-                                                     Navigator.push(
-                                                         context, new MaterialPageRoute(
-                                                         builder: (context) => RequestMap(purchase[index])));
+                                                      Navigator.push(
+                                                          context, new MaterialPageRoute(
+                                                          builder: (context) => RequestMap(purchase[index])));
 
-                                                   }
+                                                    }
 
-                                               ),
+                                                ),
 
-                                             ],
-                                           ),
-                                           SizedBox(
-                                             height: 10,
-                                           ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
 
 
 
-                                         ],
-                                       ),
-                                     ),
-                                   ],
-                                 ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
 
-                               ),
+                                ),
 
                               ),
                             );

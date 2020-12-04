@@ -79,7 +79,7 @@ class _OrderMap extends State<OrderMap> {
         child: Column(
           children: [
             Container(
-              height:250,
+              height:350,
               child: GoogleMap(
                 myLocationEnabled: true,
                 markers: _markers,
@@ -99,274 +99,266 @@ class _OrderMap extends State<OrderMap> {
 
               ),
             ),
-            Container(
-              height:MediaQuery.of(context).size.height-10 ,
-              padding: new EdgeInsets.all(5.0),
-                      child:Card(
-                        child: InkWell(
-                          child: new Container(
-                            padding: new EdgeInsets.all(10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  //height: 40,
-                                  //color:Colors.green,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          //Text("OrderDate:"),
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("OrderDate:"),
-                                              Text(formattedDate.format(DateTime.parse(widget.details['orderdate']))),
-                                            ],
-                                          ),
-                                          widget.details['total']>0?
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("Total:"),
-                                              Text(widget.details['total'].toString()),
-                                            ],
-                                          ):SizedBox.shrink()
+        Card(
+          elevation: 8.0,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                    height:10
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text("Ordered on "+formattedDate.format(DateTime.parse(widget.details['orderdate'].toString())),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                      Spacer(),
+                      widget.details['total']>0?
+                      Text("Total price "+widget.details['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
 
-                                        ],
+                    ],
+                  ),
+                ),
+
+
+                Column(
+                  children:
+                  List.generate(widget.details['orderdata'].length,(p){
+                    return Column(
+                        children: [
+
+
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+
+                              Expanded(
+                                child: new Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children:[
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: ClipRRect(
+                                        borderRadius:BorderRadius.circular(15.0),
+                                        child:FadeInImage(
+                                          // image:NetworkImage(
+                                          //     Prefmanager.baseurl+"/document/get/"+profile[index]["icon"]) ,
+                                          image: AssetImage('Assets/product.jpg'),
+                                          placeholder: AssetImage('Assets/product.jpg'),
+                                          fit: BoxFit.fill,
+                                          width:70,
+                                          height:70,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+
+                                      child:Column(
+                                          children:
+                                          List.generate(widget.details['orderdata'][p]['product'].length,(k){
+                                            return Column(
+                                                children:[
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+
+                                                  Row(
+                                                    children:[
+                                                      Text(widget.details['orderdata'][p]['product'][k]['productname'],style:TextStyle(fontSize:16,fontWeight: FontWeight.bold,)),
+                                                      // Expanded(flex:1,child: Text(profile[index]['bid']['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height:10,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text("Quantity : "+widget.details['orderdata'][p]['quantity'].toString()+widget.details['orderdata'][p]['product'][k]['unit'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                      height:10
+                                                  ),
+                                                  Row(
+                                                      children:[
+                                                        widget.details['orderdata'][p]['status']=='Delivered'&&widget.details['orderdata'][p]['totalprice']!=null?
+                                                        Text("Price : "+widget.details['orderdata'][p]['totalprice'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
+                                                      ]
+                                                  ),
+
+                                                  SizedBox(
+                                                    height:5,
+                                                  ),
+
+                                                ]
+                                            );
+                                          })
+                                      ),
+                                    ),
+                                    Column(
+                                        children:
+                                        List.generate(widget.details['orderdata'][p]['customer'].length,(c){
+                                          return Column(
+                                              children:[
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("Customer Details:",style: TextStyle(fontWeight: FontWeight.bold),),
+                                                  ],
+                                                ),
+
+                                                Row(
+                                                  children:[
+                                                    Text("Name:"+widget.details['orderdata'][p]['customer'][c]['name'],style:TextStyle(fontSize:12,fontWeight: FontWeight.bold,color: Colors.grey)),
+                                                    // Expanded(flex:1,child: Text(profile[index]['bid']['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height:5,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("Phone: "+widget.details['orderdata'][p]['customer'][c]['phone'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                    height:10
+                                                ),
+
+
+                                                SizedBox(
+                                                  height:5,
+                                                ),
+
+                                              ]
+                                          );
+                                        })
+                                    ),
+                                  ],
+                                ),
+
+                              ),
+
+                            ],
+                          ),
+                          Container(
+                            color:Colors.grey[50],
+                            padding:EdgeInsets.all(8.0),
+                            width:MediaQuery.of(context).size.width,
+                            //width:double.infinity,
+                            child:Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    mainAxisAlignment:MainAxisAlignment.start,
+                                    children: [
+                                      Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                      SizedBox(
+                                          height:10
+                                      ),
+
+                                      Expanded(
+                                        flex:0,
+                                        child: Text(
+                                          widget.details['orderdata'][p]['deliveryaddress']['fulladdress'],style: TextStyle(color:Colors.black,fontSize:12),),
                                       ),
                                     ],
                                   ),
+                                )
+                              ],
+                            ),
+
+                          ),
+                          Container(
+                            color:Colors.grey[50],
+                            padding:EdgeInsets.all(8.0),
+                            width:MediaQuery.of(context).size.width,
+                            //width:double.infinity,
+                            child:Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                  mainAxisAlignment:MainAxisAlignment.start,
+                                  children: [
+                                    Text("Order status",style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                    SizedBox(
+                                        height:10
+                                    ),
+
+                                    if(widget.details['orderdata'][p]['status']=='Pending')
+                                      Text("Order awaiting Approval",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
+                                    if(widget.details['orderdata'][p]['status']=='Approved')
+                                      Text("Order approved by seller",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
+                                    if(widget.details['orderdata'][p]['status']=='Rejected')
+                                      Text("Order rejected by seller due to "+widget.details['orderdata'][p]['rejectreason'],style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
+                                    // Text(orders[index]['orderdata'][p]['rejectreason'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
+                                    if(widget.details['orderdata'][p]['status']=='Delivered')
+                                      Text("Delivered on "+formattedDate.format(DateTime.parse(widget.details['orderdata'][p]['deliverydate'])),style: TextStyle(color:Colors.green,fontSize:12,fontWeight: FontWeight.bold),)
+                                  ],
                                 ),
-
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Column(
-                                          children:
-                                          List.generate(widget.details['orderdata'].length, (k) {
-                                            return Column(
-                                              mainAxisAlignment: MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  children:
-                                                  List.generate(
-                                                      widget.details['orderdata'][k]['customer']
-                                                          .length, (c) {
-                                                    return new Column(
-                                                      mainAxisAlignment: MainAxisAlignment
-                                                          .spaceBetween,
-                                                      children: <Widget>[
-                                                        Column(
-                                                            children:
-                                                            List.generate(
-                                                                widget.details['orderdata'][k]['product']
-                                                                    .length, (
-                                                                j) {
-                                                              return Row(
-                                                                children: [
-
-                                                                  CircleAvatar(
-                                                                    radius: 40.0,
-                                                                    backgroundColor: Colors
-                                                                        .white,
-                                                                    backgroundImage: AssetImage(
-                                                                        'Assets/product.jpg'),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 20,
-                                                                  ),
-                                                                  Text(
-                                                                    "Product:",
-                                                                    style: TextStyle(
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight
-                                                                            .bold),),
-                                                                  Expanded(
-                                                                      flex: 2,
-                                                                      child: Text(
-                                                                        widget.details['orderdata'][k]['product'][j]['productname'],
-                                                                        style: TextStyle(
-                                                                            fontSize: 15,
-                                                                            fontWeight: FontWeight
-                                                                                .bold),
-                                                                        maxLines: 2,
-                                                                        overflow: TextOverflow
-                                                                            .ellipsis,)),
-                                                                  Text(
-                                                                    "Quantity:",
-                                                                    style: TextStyle(
-                                                                        fontSize: 15,
-                                                                        fontWeight: FontWeight
-                                                                            .bold),),
-                                                                  Text(
-                                                                      widget.details['orderdata'][k]['quantity']
-                                                                          .toString() +
-                                                                          widget.details['orderdata'][k]['product'][j]['unit'],
-                                                                      style: TextStyle(
-                                                                          fontSize: 15,
-                                                                          fontWeight: FontWeight
-                                                                              .bold)
-                                                                  ),
-
-
-                                                                ],
-                                                              );
-                                                            })),
-
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment
-                                                              .start,
-                                                          children: [
-                                                            Text("Contact:",
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight
-                                                                      .bold,
-                                                                  fontSize: 15),),
-                                                          ],
-                                                        ),
-
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                                flex: 1,
-                                                                child: Text(
-                                                                    widget.details['orderdata'][k]['customer'][c]['phone'])
-                                                            ),
-
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                                flex: 1,
-                                                                child: Text(
-                                                                    widget.details['orderdata'][k]['customer'][c]['name'])
-                                                            ),
-
-                                                          ],
-                                                        ),
-
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment
-                                                              .start,
-                                                          children: [
-                                                            Text(
-                                                              "Delivery Address:",
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight
-                                                                      .bold,
-                                                                  fontSize: 15),),
-                                                          ],
-                                                        ),
-
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                                flex: 1,
-                                                                child: Text(
-                                                                    widget.details['orderdata'][k]['deliveryaddress']['fulladdress'])),
-
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              children: [
-                                                                Text("OrderStatus:"),
-                                                                Text(
-                                                                  widget.details['orderdata'][k]['status'],style: TextStyle(color: Colors.red),),
-
-                                                                // Column(
-                                                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                //   children: [
-                                                                //     Text("Price:"),
-                                                                //     Text(
-                                                                //         order[index]['orderdata'][k]['totalprice'].toString()),
-                                                                //   ],
-                                                                // ),
-
-
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        widget.details['orderdata'][k]['status']=='Approved'?
-                                                        Column(
-                                                            children:[
-                                                              TextField(
-                                                                controller: priceController,
-                                                                //obscureText: true,
-                                                                textAlign: TextAlign.left,
-                                                                decoration: InputDecoration(
-                                                                  border: InputBorder.none,
-                                                                  hintText: 'PLEASE ENTER TOTAL PRICE',
-                                                                  hintStyle: TextStyle(color: Colors.grey),
-                                                                ),
-                                                              ),
-                                                              Row(
-                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                children: [
-                                                                  MaterialButton(
-                                                                      textColor: Colors.red,
-                                                                      color: Colors.white,
-                                                                      child: Text('Mark As Delivered',style: TextStyle(
-                                                                          fontSize: 15,fontWeight: FontWeight.bold)),
-                                                                      onPressed: ()  {
-
-                                                                        SendData(widget.details['orderdata'][k]['_id']);
-                                                                      }
-
-                                                                  ),
-
-
-                                                                ],
-                                                              )]):SizedBox.shrink(),
-
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-
-                                                      ],
-                                                    );
-                                                  }
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          }
-                                          ),
-
-                                        ),
-                                      ),
-                                    ]
-
-                                ),
-
                               ],
                             ),
                           ),
-                        ),
-                      ),
+                          Card(
+                            elevation: 0.6,
+                            child: widget.details['orderdata'][p]['status']=='Approved'?
+                            Column(
+                                children:[
+                                  TextField(
+                                    controller: priceController,
+                                    //obscureText: true,
+                                    textAlign: TextAlign.left,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'PLEASE ENTER TOTAL PRICE',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      MaterialButton(
+                                          textColor: Colors.red,
+                                          color: Colors.white,
+                                          child: Text('Mark As Delivered',style: TextStyle(
+                                              fontSize: 15,fontWeight: FontWeight.bold)),
+                                          onPressed: ()  {
+
+                                            SendData(widget.details['orderdata'][p]['_id']);
+                                          }
+
+                                      ),
 
 
+                                    ],
+                                  ),
+                                ]
+                            ):SizedBox.shrink(),
+                          ),
+                        ]
+
+                    );
+
+                  }
+                  ),
 
 
-            ),
+                ),
+
+
+              ]
+
+          ),
+
+        ),
+
           ],
         ),
       ),
