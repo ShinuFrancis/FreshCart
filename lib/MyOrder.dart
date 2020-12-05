@@ -31,7 +31,7 @@ class _MyOrder extends State< MyOrder>{
   bool progress=false;
 
   int len,total;
-  int page=1,count=5;
+  int page=1,count=10;
   List order=[] ;
   void OrderView () async {
     setState(() {
@@ -222,7 +222,7 @@ class _MyOrder extends State< MyOrder>{
     Text("Ordered on "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.red,fontSize:14,fontWeight: FontWeight.bold),),
     Spacer(),
     order[index]['total']>0?
-    Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
+    Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
 
     ],
     ),
@@ -410,11 +410,14 @@ class _MyOrder extends State< MyOrder>{
                   if(order[index]['orderdata'][p]['status']=='Delivered')
                     Text("Delivered on "+formattedDate.format(DateTime.parse(order[index]['orderdata'][p]['deliverydate'])),style: TextStyle(color:Colors.green,fontSize:12,fontWeight: FontWeight.bold),)
                 ],
-              )
+              ),
+              Spacer(flex: 20,),
             ],
           ),
 
+
       ),
+
 
     ]
     );

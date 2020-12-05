@@ -29,11 +29,14 @@ class _OrderMap extends State<OrderMap> {
       _markers.add(
           Marker(
             infoWindow: InfoWindow(
+              //anchor : Offset(0.45, 0.8),
+
               title: 'Delivery Address',
               snippet: '${widget
                   .details['orderdata'][i]['deliveryaddress']['fulladdress']}',
 
             ),
+
             markerId: MarkerId("$i"),
             position: LatLng(widget
                 .details['orderdata'][i]['deliveryaddress']['location'][0],
@@ -111,10 +114,10 @@ class _OrderMap extends State<OrderMap> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Text("Ordered on "+formattedDate.format(DateTime.parse(widget.details['orderdate'].toString())),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                      Text("Ordered on "+formattedDate.format(DateTime.parse(widget.details['orderdate'].toString())),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
                       Spacer(),
                       widget.details['total']>0?
-                      Text("Total price "+widget.details['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
+                      Text("Total price "+widget.details['total'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
 
                     ],
                   ),
@@ -223,7 +226,7 @@ class _OrderMap extends State<OrderMap> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Text("Phone: "+widget.details['orderdata'][p]['customer'][c]['phone'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                                    Text("Phone:"+widget.details['orderdata'][p]['customer'][c]['phone'],style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
 
                                                   ],
                                                 ),
@@ -295,9 +298,9 @@ class _OrderMap extends State<OrderMap> {
                                     if(widget.details['orderdata'][p]['status']=='Pending')
                                       Text("Order awaiting Approval",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
                                     if(widget.details['orderdata'][p]['status']=='Approved')
-                                      Text("Order approved by seller",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
+                                      Text("Order approved ",style: TextStyle(color:Colors.orange,fontSize:12,fontWeight: FontWeight.bold),),
                                     if(widget.details['orderdata'][p]['status']=='Rejected')
-                                      Text("Order rejected by seller due to "+widget.details['orderdata'][p]['rejectreason'],style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
+                                      Text("Order rejected  due to "+widget.details['orderdata'][p]['rejectreason'],style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
                                     // Text(orders[index]['orderdata'][p]['rejectreason'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
                                     if(widget.details['orderdata'][p]['status']=='Delivered')
                                       Text("Delivered on "+formattedDate.format(DateTime.parse(widget.details['orderdata'][p]['deliverydate'])),style: TextStyle(color:Colors.green,fontSize:12,fontWeight: FontWeight.bold),)
@@ -306,41 +309,45 @@ class _OrderMap extends State<OrderMap> {
                               ],
                             ),
                           ),
-                          Card(
-                            elevation: 0.6,
-                            child: widget.details['orderdata'][p]['status']=='Approved'?
-                            Column(
-                                children:[
-                                  TextField(
-                                    controller: priceController,
-                                    //obscureText: true,
-                                    textAlign: TextAlign.left,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'PLEASE ENTER TOTAL PRICE',
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MaterialButton(
-                                          textColor: Colors.red,
-                                          color: Colors.white,
-                                          child: Text('Mark As Delivered',style: TextStyle(
-                                              fontSize: 15,fontWeight: FontWeight.bold)),
-                                          onPressed: ()  {
-
-                                            SendData(widget.details['orderdata'][p]['_id']);
-                                          }
-
+                          Container(
+                            //color:Colors.grey,
+                            child: Card(
+                              //color: Colors.transparent,
+                              elevation: 0.6,
+                              child: widget.details['orderdata'][p]['status']=='Approved'?
+                              Column(
+                                  children:[
+                                    TextField(
+                                      controller: priceController,
+                                      //obscureText: true,
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: 'PLEASE ENTER TOTAL PRICE',
+                                        hintStyle: TextStyle(color: Colors.black),
                                       ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        MaterialButton(
+                                            textColor: Colors.red,
+                                            color: Colors.white,
+                                            child: Text('Mark As Delivered',style: TextStyle(
+                                                fontSize: 15,fontWeight: FontWeight.bold)),
+                                            onPressed: ()  {
+
+                                              SendData(widget.details['orderdata'][p]['_id']);
+                                            }
+
+                                        ),
 
 
-                                    ],
-                                  ),
-                                ]
-                            ):SizedBox.shrink(),
+                                      ],
+                                    ),
+                                  ]
+                              ):SizedBox.shrink(),
+                            ),
                           ),
                         ]
 

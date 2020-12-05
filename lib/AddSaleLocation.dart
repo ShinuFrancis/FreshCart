@@ -133,6 +133,21 @@ var city=[];
           child: Column(
               children: <Widget>[
                 Container(
+                  height: 200.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://www.disruptivestatic.com/wp-content/uploads/2018/01/geo-targeting-blog-1.jpg'),
+                      fit: BoxFit.fill,
+                    ),
+                    //shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
+                  height:10,
+                ),
+                Container(
                   padding: EdgeInsets.all(20),
                   child: DropdownButton(
                     autofocus: true,

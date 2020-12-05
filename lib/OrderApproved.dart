@@ -229,7 +229,7 @@ class _OrderApproved extends State< OrderApproved>{
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           children: [
-                                            Text("Ordered on "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                            Text("Ordered on "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
                                             Spacer(),
                                             order[index]['total']>0?
                                             Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()

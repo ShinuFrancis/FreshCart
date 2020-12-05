@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:freshcart_seller/Home.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewProfile.dart';
 import 'package:http/http.dart' as http;
@@ -140,7 +141,7 @@ class _Profile extends State<Profile> {
 
                 Navigator.push(
                     context, new MaterialPageRoute(
-                    builder: (context) => new Viewprofile()));
+                    builder: (context) => new AddProfile()));
               }
           ),
           title: Text(

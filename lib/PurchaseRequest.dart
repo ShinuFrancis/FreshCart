@@ -50,7 +50,9 @@ class _PurchaseRequest extends State<PurchaseRequest>{
       Fluttertoast.showToast(
         msg: json.decode(response.body)['msg'],
         backgroundColor: Colors.grey,
-        textColor: Colors.black,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+
       );
     progress=false;
     pageLoading =false;

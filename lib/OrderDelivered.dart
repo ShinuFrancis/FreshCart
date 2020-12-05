@@ -32,7 +32,7 @@ class _OrderDelivered extends State< OrderDelivered>{
   bool progress=false;
 
   int len,total;
-  int page=1,count=5;
+  int page=1,count=10;
   List order=[] ;
   // ignore: non_constant_identifier_names
   void OrderView () async {
@@ -54,6 +54,8 @@ class _OrderDelivered extends State< OrderDelivered>{
     if (json.decode(response.body)['status']) {
       total=json.decode(response.body)['count'];
       len=json.decode(response.body)['pages'];
+      print(total);
+      print(len);
       for(int i=0;i<json.decode(response.body)['data'].length;i++)
         order.add(json.decode(response.body)['data'][i]);
       page++;
@@ -97,7 +99,8 @@ class _OrderDelivered extends State< OrderDelivered>{
               ]
 
           ),
-          body:progress?Center( child: CircularProgressIndicator(),):
+          body:
+          progress?Center( child: CircularProgressIndicator(),):
 
           Column(
               children: [
@@ -197,8 +200,9 @@ class _OrderDelivered extends State< OrderDelivered>{
                       if (!pageLoading && scrollInfo.metrics.pixels ==
                           scrollInfo.metrics.maxScrollExtent) {
                         print(total);
+                        print(len);
                         print(order.length);
-                        if(total>len){
+                        if(len>total){
                           OrderView();
                           setState(() {
                             pageLoading = true;
@@ -232,16 +236,14 @@ class _OrderDelivered extends State< OrderDelivered>{
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           children: [
-                                            Text("Ordered on "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                            Text("Order Date "+formattedDate.format(DateTime.parse(order[index]['orderdate'].toString())),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),),
                                             Spacer(),
                                             order[index]['total']>0?
-                                            Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
+                                            Text("Total price "+order[index]['total'].toString(),style: TextStyle(color:Colors.red,fontSize:12,fontWeight: FontWeight.bold),):SizedBox.shrink()
 
                                           ],
                                         ),
                                       ),
-
-
                                       Column(
                                         children:
                                         List.generate(order[index]['orderdata'].length,(p){
