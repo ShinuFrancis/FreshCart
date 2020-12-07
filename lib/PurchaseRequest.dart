@@ -215,7 +215,7 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                                       crossAxisAlignment:CrossAxisAlignment.start,
                                                       mainAxisAlignment:MainAxisAlignment.start,
                                                       children: [
-                                                        Text("Customer Details:",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                                        Text("Customer Details:",style: TextStyle(color:Colors.blue,fontSize:15,fontWeight: FontWeight.bold),),
                                                         SizedBox(
                                                             height:10
                                                         ),
@@ -246,7 +246,7 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                                       crossAxisAlignment:CrossAxisAlignment.start,
                                                       mainAxisAlignment:MainAxisAlignment.start,
                                                       children: [
-                                                        Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:15,fontWeight: FontWeight.bold),),
+                                                        Text("Delivery Address",style: TextStyle(color:Colors.indigo,fontSize:15,fontWeight: FontWeight.bold),),
                                                         SizedBox(
                                                             height:10
                                                         ),

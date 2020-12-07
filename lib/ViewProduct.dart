@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:freshcart_seller/DetailProductView.dart';
+import 'package:freshcart_seller/FilterList.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +26,42 @@ class _ViewProduct extends State<ViewProduct>{
   void initState() {
     super.initState();
     ProductView();
+    category();
 
+  }
+  bool prog=true;
+  var myselection;
+  var listcat=[];
+  void  category() async {
+    print("pro");
+    var url =  Prefmanager.baseurl+'/category/getlist';
+    var token = await Prefmanager.getToken();
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'x-auth-token':token
+    };
+    var response = await http.get(url,headers:requestHeaders);
+    print(json.decode(response.body));
+    if (json.decode(response.body)['status']) {
+      listcat = json.decode(response.body)['data'];
+      print(listcat[0]['name']);
+    }
+
+    else
+      Fluttertoast.showToast(
+          msg: json.decode(response.body)['msg'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
+
+    setState(() {
+
+    });
+    prog=false;
   }
   bool progress=false;
 
@@ -85,10 +121,14 @@ class _ViewProduct extends State<ViewProduct>{
           icon: new Icon(Icons.arrow_back,color:Colors.black),
           onPressed: () => Navigator.of(context).pop(true),
         ),
+
     backgroundColor: Colors.green,
     //elevation: 0.0,
+
     actions: <Widget>[
+
     ]
+
 
     ),
     body:progress?Center( child: CircularProgressIndicator(),):

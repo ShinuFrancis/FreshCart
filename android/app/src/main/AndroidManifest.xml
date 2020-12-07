@@ -11,8 +11,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="freshcart_seller"
-        android:icon="@mipmap/ic_launcher">
+        android:label="FreshCart"
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCaccNxbzwR9tMvkppT7bT7zNKjChc_yAw"/>
         <activity

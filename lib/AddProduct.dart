@@ -299,6 +299,7 @@ class _AddProduct extends State<AddProduct> {
     );
   }
   var productid;
+  var location;
   void sentdata() async {
     var url = Prefmanager.baseurl +'/Product/Add';
     var token = await Prefmanager.getToken();
@@ -316,24 +317,28 @@ class _AddProduct extends State<AddProduct> {
     print(json.decode(response.body));
       if(json.decode(response.body)['status']) {
         productid = await json.decode(response.body)['product']['_id'];
-        if(_image!=null){
-          addSinglePhoto();
+        location=await json.decode(response.body)['product'];
+        if(location['salelocations'].isEmpty){
+           Navigator.push(
+             context, new MaterialPageRoute(
+         builder: (context) => new AddSaleLocation(widget.id)));
+          //addSinglePhoto();
         }
         else{
           Navigator.of(context).pop(true);
         }
         Navigator.push(
             context, new MaterialPageRoute(
-            builder: (context) => new AddSaleLocation()));
-        Fluttertoast.showToast(
-            msg: json.decode(response.body)['msg'],
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            fontSize: 20.0
-        );
-        print("true");
+            builder: (context) => new AddProfile()));
+        // Fluttertoast.showToast(
+        //     msg: json.decode(response.body)['msg'],
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.CENTER,
+        //     backgroundColor: Colors.grey,
+        //     textColor: Colors.white,
+        //     fontSize: 20.0
+        // );
+        // print("true");
       }
       else {
         Fluttertoast.showToast(
@@ -350,7 +355,6 @@ class _AddProduct extends State<AddProduct> {
   addSinglePhoto() async {
 
     print("Omgae funnkjhk");
-
     var request = http.MultipartRequest('POST', Uri.parse(Prefmanager.baseurl + '/category/UploadImagesingle'));
     String token = await Prefmanager.getToken();
     Map <String,String>data={"id":productid};

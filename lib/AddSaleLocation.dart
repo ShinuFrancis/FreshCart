@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 class AddSaleLocation extends StatefulWidget {
+  final String _id;
+  AddSaleLocation(this._id);
 
 
 
@@ -263,11 +265,11 @@ var city=[];
   }
   Future <void> sentData() async {
 
-var url = Prefmanager.baseurl+'/user/Edit';
+var url = Prefmanager.baseurl+'/Product/Updatesalelocation';
 var token = await Prefmanager.getToken();
     Map<String, dynamic> data = {
-
-       "salelocations":selectedCity,
+          "category":widget._id,
+          "salelocations":selectedCity,
     };
 
 

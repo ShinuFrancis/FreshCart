@@ -382,7 +382,7 @@ class _OrderDelivered extends State< OrderDelivered>{
                                                           crossAxisAlignment:CrossAxisAlignment.start,
                                                           mainAxisAlignment:MainAxisAlignment.start,
                                                           children: [
-                                                            Text("Delivery Address",style: TextStyle(color:Colors.grey,fontSize:12,fontWeight: FontWeight.bold),),
+                                                            Text("Delivery Address",style: TextStyle(color:Colors.indigo,fontSize:12,fontWeight: FontWeight.bold),),
                                                             SizedBox(
                                                                 height:10
                                                             ),

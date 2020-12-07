@@ -13,6 +13,7 @@ import 'package:freshcart_seller/EditProfile.dart';
 import 'package:freshcart_seller/MyOrder.dart';
 import 'package:freshcart_seller/NetworkUtils/Prefmanager.dart';
 import 'package:freshcart_seller/PurchaseRequest.dart';
+import 'package:freshcart_seller/SalesLocation.dart';
 import 'package:freshcart_seller/SetDeliveryDate.dart';
 import 'package:freshcart_seller/UpdateSaleLocation.dart';
 import 'package:freshcart_seller/ViewCategory.dart';
@@ -33,7 +34,7 @@ class _AddProfile extends State<AddProfile> {
     viewprofile();
 
   }
-  var profile ;
+  var profile, pending ;
   var pro;
  bool progress=true;
   void  viewprofile() async {
@@ -50,7 +51,9 @@ class _AddProfile extends State<AddProfile> {
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
       profile = json.decode(response.body)['data'];
+      pending=json.decode(response.body)['pendingrequestcount'];
       print(profile);
+      print(pending);
     }
 
     else
@@ -342,7 +345,7 @@ class _AddProfile extends State<AddProfile> {
                   onTap: (){
                     Navigator.push(
                         context, new MaterialPageRoute(
-                        builder: (context) => new UpdateSaleLocation()));
+                        builder: (context) => new SalesLocation()));
                   },
                 ),
                 GestureDetector(
@@ -378,10 +381,20 @@ class _AddProfile extends State<AddProfile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.add_shopping_cart,
-                          size: 80,
-                          color: Colors.green,
+                        Stack(
+                          children: [
+                            Icon(
+                              Icons.add_shopping_cart,
+                              size: 80,
+                              color: Colors.green,
+                            ),
+                            pending>0?
+                            CircleAvatar(
+                              radius: 15.0,
+                              backgroundColor: Colors.grey,
+                              child: Text(pending.toString(),style: TextStyle(color:Colors.black),),
+                            ):SizedBox.shrink()
+                          ],
                         ),
                         SizedBox(
                           height: 20,
