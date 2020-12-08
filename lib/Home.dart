@@ -52,8 +52,8 @@ class _AddProfile extends State<AddProfile> {
     if (json.decode(response.body)['status']) {
       profile = json.decode(response.body)['data'];
       pending=json.decode(response.body)['pendingrequestcount'];
-      print(profile);
-      print(pending);
+      //print(profile);
+      //print(pending);
     }
 
     else

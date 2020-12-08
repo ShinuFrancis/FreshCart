@@ -58,6 +58,8 @@ class _AddSaleLocation extends State< AddSaleLocation> {
     };
     var response = await http.get(url, headers: requestHeaders);
     print(json.decode(response.body));
+    print("hgf");
+    print("hgf");
     if (json.decode(response.body)['status']) {
       state = json.decode(response.body)['data'];
     //  for(int i=0; i<json.decode(response.body)['data'].length ; i++)

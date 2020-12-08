@@ -135,17 +135,12 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                           return
                             Card(
                               child: InkWell(
-                                // onTap: ()async{
-                                //   bool pro=await
-                                //
-                                //   Navigator.push(
-                                //       context, new MaterialPageRoute(
-                                //       builder: (context) => DetailProductView(product[index]['_id'])));
-                                //   product.clear();
-                                //   page =1;
-                                //   ProductView();
-                                //
-                                // },
+                                onTap: ()async{
+                                  bool pro=await
+                                  Navigator.push(context, new MaterialPageRoute(builder: (context) => RequestMap(purchase[index])));
+
+
+                                },
 
                                 child: new Container(
                                   padding: new EdgeInsets.all(20.0),
@@ -270,26 +265,26 @@ class _PurchaseRequest extends State<PurchaseRequest>{
                                               height: 20,
                                             ),
 
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                MaterialButton(
-                                                    textColor: Colors.red,
-                                                    color: Colors.white,
-                                                    child: Text('View in Map',style: TextStyle(
-                                                        fontSize: 15,fontWeight: FontWeight.bold)),
-                                                    onPressed: ()  {
-
-                                                      Navigator.push(
-                                                          context, new MaterialPageRoute(
-                                                          builder: (context) => RequestMap(purchase[index])));
-
-                                                    }
-
-                                                ),
-
-                                              ],
-                                            ),
+                                            // Row(
+                                            //   mainAxisAlignment: MainAxisAlignment.start,
+                                            //   children: [
+                                            //     MaterialButton(
+                                            //         textColor: Colors.red,
+                                            //         color: Colors.white,
+                                            //         child: Text('View in Map',style: TextStyle(
+                                            //             fontSize: 15,fontWeight: FontWeight.bold)),
+                                            //         onPressed: ()  {
+                                            //
+                                            //           Navigator.push(
+                                            //               context, new MaterialPageRoute(
+                                            //               builder: (context) => RequestMap(purchase[index])));
+                                            //
+                                            //         }
+                                            //
+                                            //     ),
+                                            //
+                                            //   ],
+                                            // ),
                                             SizedBox(
                                               height: 10,
                                             ),

@@ -38,7 +38,7 @@ class _SalesLocation extends State<SalesLocation> {
   var location=[];
   void  SalesLocation() async {
     print("pro");
-    var url =  Prefmanager.baseurl+'/user/getmycategories';
+    var url =  Prefmanager.baseurl+'/user/getsalelocations';
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -111,62 +111,64 @@ class _SalesLocation extends State<SalesLocation> {
                   height: 30,
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  height: 300.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://www.disruptivestatic.com/wp-content/uploads/2018/01/geo-targeting-blog-1.jpg'),
-                      fit: BoxFit.contain,
-                    ),
-                    //shape: BoxShape.circle,
-                  ),
-
-                  //child:Text("Delivery Date", style: TextStyle(fontSize: 18,color:Colors.black)),
-                ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                Container(
+                  height: 600,
                   padding: EdgeInsets.all(20),
-                  child: GridView.count(
-                    childAspectRatio:0.45,
+                  child: ListView.builder(
 
+                    //childAspectRatio:0.25,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3 ,
+                    //physics: NeverScrollableScrollPhysics(),
+                    //crossAxisCount: 3 ,
+                  itemCount: location.length,
+                    itemBuilder: (BuildContext context, int index) {
 
-                    children: List.generate(location.length,(index){
+                   // },
+                   // children: List.generate(location.length,(index){
                       return Container(
-                        height: MediaQuery.of(context).size.height/2,
+                        height:300,
                         child: Card(
 
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
 
                             children: [
                               SizedBox(
-                                height: 50,
+                                height: 20,
 
                               ),
-                              Icon(
-                                Icons.category,
-                                size: 80,
-                                color: Colors.green,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+
+                                children: [
+                                  Container(
+                                    color:Colors.grey[50],
+                                    padding: EdgeInsets.all(10),
+                                    child: ClipRRect(
+                                      borderRadius:BorderRadius.circular(15.0),
+                                      child: Icon(
+                                        Icons.category,
+                                        size: 80,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text("Category:"+location[index]['category']['name'],style: TextStyle(color: Colors.red,fontSize: 16,fontWeight: FontWeight.bold)),
+                                ],
                               ),
                               //Icon(IconData(int.parse(listcat[index]["flutterIcon"]),fontFamily: "MaterialIcons"),color: Colors.blue),
 
                               SizedBox(
-                                height: 10,
+                                height: 2,
                               ),
-                              Text(location[index]['category']['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              //Text(location[index]['category']['name'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
+
                               //location[index]['seller']['salelocations']==null?SizedBox.shrink():Text(formattedDate.format(DateTime.parse(date[index]['deliveryDate']))),
                               //Text(date[index]['deliveryDate'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
-                               location[index]['seller']['seller']['salelocations'].isEmpty?
+                               location[index]['salelocations']==null||location[index]['salelocations'].isEmpty?
                               RaisedButton(
                                 textColor: Colors.red,
                                 color: Colors.green,
@@ -178,40 +180,73 @@ class _SalesLocation extends State<SalesLocation> {
                                   Navigator.push(context,MaterialPageRoute(builder: (context)=>AddSaleLocation(location[index]['category']['_id'])));
                                 },
                               ):
+                                   Container(
+                                     padding: EdgeInsets.all(5),
+                                     color: Colors.grey[50],
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.center,
+                                       children: [
+                                         Text("Sale Locations",textAlign: TextAlign.left,style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold,color: Colors.indigo)),
+                                         Container(
+                                           padding: EdgeInsets.all(10),
+                                         height: 90,
+                                         child: Column(
+                                      children:
+                                     List.generate(location[index]['salelocations'].length,(c){
+                                  return Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                Text(location[index]['salelocations'][c]['city'],style: TextStyle(color: Colors.black),textAlign: TextAlign.center),
+
+
+                                  ],
+                               );
+                               }
+                      ),
+                                         ),
+                                       ),
                               RaisedButton(
                                 textColor: Colors.red,
                                 color: Colors.green,
                                 padding: EdgeInsets.all(16),
 
-                                child: Text('Update Sales Location',style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold)),
+                                child: Text('Update Sales Location',style:TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold,)),
 
                                 onPressed: () {
+                                  //showAlertDialog();
+
 
                                   Navigator.push(context,MaterialPageRoute(builder: (context) => UpdateSaleLocation(location[index]['category']['_id'])));
                                 },
                               )
+                                       ]
+                      ),
 
-                            ],
-
-
-                          ),
-
+                                   ),
+                          ]
+                      ),
 
                         ),
+
                       );
 
 
-                    }),
+                    },
                   ),
                 ),
 
-              ]
-          ),
 
+              ]
+
+          ),
         ),
       ),
     );
   }
+
+
 
 }
 

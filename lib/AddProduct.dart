@@ -52,7 +52,7 @@ class _AddProduct extends State<AddProduct> {
     print(json.decode(response.body));
     if (json.decode(response.body)['status']) {
       listcat = json.decode(response.body)['data'];
-      print(listcat[0]['name']);
+      //print(listcat[0]['name']);
     }
 
     else
@@ -191,22 +191,8 @@ class _AddProduct extends State<AddProduct> {
                 SizedBox(
                   height:20,
                 ),
-                // TextFormField(
-                //   autofocus: true,
-                //   decoration: InputDecoration(
-                //     labelText: 'Product Count',
-                //   ),
-                //     //   validator: (v){
-                // //   if(v.isEmpty)
-                // //     return "Cannot be empty";
-                // //   else
-                // //     return null;
-                // // },
-                // //   onSaved: (v) {
-                // //     unit = v;
-                // //   },
-                // ),
                 new DropdownButton<String>(
+                  isExpanded: true,
                   hint: new Text('Unit'),
                   items: <String>['Count', 'Kg', 'gm', 'litre'].map((String value) {
                     return new DropdownMenuItem<String>(
@@ -319,6 +305,7 @@ class _AddProduct extends State<AddProduct> {
         productid = await json.decode(response.body)['product']['_id'];
         location=await json.decode(response.body)['product'];
         if(location['salelocations'].isEmpty){
+          print("ffgghg");
            Navigator.push(
              context, new MaterialPageRoute(
          builder: (context) => new AddSaleLocation(widget.id)));
@@ -326,10 +313,10 @@ class _AddProduct extends State<AddProduct> {
         }
         else{
           Navigator.of(context).pop(true);
+          Navigator.push(
+              context, new MaterialPageRoute(
+              builder: (context) => new AddProfile()));
         }
-        Navigator.push(
-            context, new MaterialPageRoute(
-            builder: (context) => new AddProfile()));
         // Fluttertoast.showToast(
         //     msg: json.decode(response.body)['msg'],
         //     toastLength: Toast.LENGTH_SHORT,

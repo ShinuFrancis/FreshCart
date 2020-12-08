@@ -88,7 +88,7 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
   bool progress=true;
   void  viewprofile() async {
     print("pro");
-    var url =  Prefmanager.baseurl+'/user/profile';
+    var url =  Prefmanager.baseurl+'/user/getsalelocations';
     var token = await Prefmanager.getToken();
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -96,11 +96,11 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
       'x-auth-token':token
     };
     var response = await http.get(url,headers:requestHeaders);
-    print(json.decode(response.body)["data"]["seller"]);
+   // print(json.decode(response.body)["data"]["seller"]);
     if (json.decode(response.body)['status']) {
       profile = json.decode(response.body)['data'];
-      for(int i=0;i<profile['seller']['salelocations'].length;i++)
-       InitialCity.add(profile['seller']['salelocations'][i]["_id"]);
+      for(int i=0;i<profile['salelocations'].length;i++)
+       InitialCity.add(profile['salelocations'][i]["_id"]);
     }
 
     else
@@ -140,29 +140,7 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
           key: _formKey,
           child: Column(
               children: <Widget>[
-                // Container(
-                //   padding: EdgeInsets.all(20),
-                //   child: DropdownButton(
-                //     autofocus: true,
-                //     isExpanded: true,
-                //     hint: new Text('State'),
-                //     items: state.map((item) {
-                //       return new DropdownMenuItem(
-                //         child: new Text(item['state']),
-                //         value: item['_id'].toString(),
-                //       );
-                //     }).toList(),
-                //     onChanged: (newVal) {
-                //       cityList(newVal);
-                //       setState(() {
-                //         myselection = newVal;
-                //         print(myselection);
-                //       });
-                //     },
-                //     value: myselection,
-                //
-                //   ),
-                // ),
+
                 SizedBox(
                   height: 10,
                 ),
@@ -196,7 +174,6 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
                   child: MultiSelectFormField(
                       title: Text("City"),
                       autovalidate: false,
-
                       validator: (value) {
                         if (value == null) {
                           return 'Please select one or more option(s)';
