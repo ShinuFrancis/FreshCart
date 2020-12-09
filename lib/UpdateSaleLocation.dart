@@ -39,12 +39,14 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
   @override
   void initState() {
     super.initState();
+    print(city);
 
     //stateList();
-    viewprofile();
+    //viewprofile();
     cityList('5fb620738b64e20aa84a0717');
 
   }
+
   var city=[];
   bool prog=true;
 
@@ -99,8 +101,10 @@ class _UpdateSaleLocation extends State< UpdateSaleLocation> {
    // print(json.decode(response.body)["data"]["seller"]);
     if (json.decode(response.body)['status']) {
       profile = json.decode(response.body)['data'];
-      for(int i=0;i<profile['salelocations'].length;i++)
-       InitialCity.add(profile['salelocations'][i]["_id"]);
+      for(int j=0;j<profile.length;j++)
+      for(int i=0;i<profile[j]['salelocations'].length;i++)
+      //  print("jnfcng");
+       InitialCity.add(profile[j]['salelocations'][i]["_id"]);
     }
 
     else
